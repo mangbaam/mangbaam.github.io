@@ -1,0 +1,20 @@
+I"E<p><img src="/assets/images/EffectiveKotlinCover.png" alt="이펙티브 코틀린 북커버" /></p>
+
+<h2 id="til-today-i-learned">TIL (Today I Learned)</h2>
+<p>코틀린은 모듈로 프로그램을 설계하는데 모듈은 클래스, 객체, 함수, 타입 별칭, 톱레벨 프로퍼티 등 다양한 요소로 구성된다.
+이런 요소 중 일부는 <strong>상태</strong>를 가질 수 있다.
+상태는 <code class="language-plaintext highlighter-rouge">var</code>을 사용하거나 <code class="language-plaintext highlighter-rouge">mutable</code>을 사용하는 경우이다.
+이번 장에서는 이런 상태를 적절히 관리하는 방법에 대해서 공부했다.</p>
+
+<h3 id="오늘-읽은-범위">오늘 읽은 범위</h3>
+<p>1장. 깨끗한 코드</p>
+
+<h3 id="책에서-기억하고-싶은-내용을-써보세요">책에서 기억하고 싶은 내용을 써보세요.</h3>
+<p>// 기계가 실행할 정도로 상세하게 요구사항을 명시하는 작업, 바로 이것이 프로그래밍이다. 이렇게 명시한 결과가 바로 코드다. (p.2)</p>
+
+<h3 id="오늘-읽은-소감은-떠오르는-생각을-가볍게-적어보세요">오늘 읽은 소감은? 떠오르는 생각을 가볍게 적어보세요</h3>
+<p>// 나같은 디자인 전공에게 그림을 그리는 행위에 빗대어 클린코드란 무엇인가를 설명해주는 내용 덕분에 조금 더 쉽게 이해할 수 있었던 챕터였다.</p>
+
+<h3 id="궁금한-내용이-있거나-잘-이해되지-않는-내용이-있다면-적어보세요">궁금한 내용이 있거나, 잘 이해되지 않는 내용이 있다면 적어보세요.</h3>
+<p>// 르블랑의 법칙? (LeBlanc’s Law states) - “Later equals never” is used in the context of software development, but may be applied more broadly to other areas. The law is attributed to Dave LeBlanc.</p>
+:ET

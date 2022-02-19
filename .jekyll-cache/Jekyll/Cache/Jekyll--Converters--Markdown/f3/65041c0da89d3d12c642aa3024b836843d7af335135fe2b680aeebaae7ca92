@@ -1,0 +1,38 @@
+I"B	<p><img src="/assets/images/EffectiveKotlinCover.png" alt="이펙티브 코틀린 북커버" /></p>
+
+<p><a href="1">책 내용 요약</a>
+(1) https://www.notion.so/mangbaam/Effective-Kotlin-2a5acacaa11d443e8da3a00a75b85450#5c8f10eea5f94f4fa0d9b1086a1c8be5</p>
+
+<h2 id="til-today-i-learned">TIL (Today I Learned)</h2>
+<p>코틀린은 모듈로 프로그램을 설계하는데 모듈은 <u>클래스, 객체, 함수, 타입 별칭, 톱레벨 프로퍼티 등</u> 다양한 요소로 구성된다.
+이런 요소 중 일부는 <strong>상태</strong>를 가질 수 있다.
+상태는 <code class="language-plaintext highlighter-rouge">var</code>을 사용하거나 <code class="language-plaintext highlighter-rouge">mutable</code>을 사용하는 경우이다.
+이번 장에서는 이런 상태를 적절히 관리하는 방법에 대해서 공부했다.</p>
+
+<h3 id="오늘-읽은-범위">오늘 읽은 범위</h3>
+<ul>
+  <li>1부. 좋은 코드
+    <ul>
+      <li>1장. 안정성
+        <ul>
+          <li>아이템1. 가변성을 제한하라</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="책에서-기억하고-싶은-내용을-써보세요">책에서 기억하고 싶은 내용을 써보세요.</h3>
+<p>코틀린에서 가변성을 제한하는 방법은 크게 다음 3가지가 있다.</p>
+<ul>
+  <li>읽기 전용 프로퍼티 (<code class="language-plaintext highlighter-rouge">val</code>)</li>
+  <li>가변 컬렉션과 읽기 전용 컬렉션 구분하기</li>
+  <li>데이터 클래스의 <code class="language-plaintext highlighter-rouge">copy</code></li>
+</ul>
+
+<h3 id="오늘-읽은-소감은-떠오르는-생각을-가볍게-적어보세요">오늘 읽은 소감은? 떠오르는 생각을 가볍게 적어보세요</h3>
+<p>// 나같은 디자인 전공에게 그림을 그리는 행위에 빗대어 클린코드란 무엇인가를 설명해주는 내용 덕분에 조금 더 쉽게 이해할 수 있었던 챕터였다.</p>
+
+<h3 id="궁금한-내용이-있거나-잘-이해되지-않는-내용이-있다면-적어보세요">궁금한 내용이 있거나, 잘 이해되지 않는 내용이 있다면 적어보세요.</h3>
+<p>// 르블랑의 법칙? (LeBlanc’s Law states) - “Later equals never” is used in the context of software development, but may be applied more broadly to other areas. The law is attributed to Dave LeBlanc.</p>
+:ET
