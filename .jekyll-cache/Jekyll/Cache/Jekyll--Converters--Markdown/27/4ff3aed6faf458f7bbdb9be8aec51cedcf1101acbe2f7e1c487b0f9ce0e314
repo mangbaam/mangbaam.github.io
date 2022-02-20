@@ -1,0 +1,246 @@
+I"+K<p><img src="/assets/images/CleanCodeCover.png" alt="클린 코드 책 커버" />
+#노마드코더 #북클럽 #노개북</p>
+
+<p><a href="https://www.notion.so/mangbaam/Clean-Code-3d0243ae513c4ab5bc5b8ce43ff6c68b#95059346a00e44b3b73fa85345676f4e">요약 내용 (Notion)</a></p>
+
+<h2 id="til-today-i-learned">TIL (Today I Learned)</h2>
+<p>변수, 함수, 인수, 클래스, 패키지, 소스 파일, 디렉터리 등등 소프트웨어의 다양한 부분에 이름이 붙는다. 이러한 이름을 잘 짓는 방법에 대해 공부했다.</p>
+
+<h3 id="오늘-읽은-범위">오늘 읽은 범위</h3>
+<p>2장. 의미 있는 이름</p>
+
+<h3 id="책에서-기억하고-싶은-내용을-써보세요">책에서 기억하고 싶은 내용을 써보세요.</h3>
+<h4 id="의도를-분명히-밝혀라">의도를 분명히 밝혀라</h4>
+<p>주석이 필요하다면 의도를 분명히 드러내지 못했다는 말이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span> <span class="nf">getThem</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span> <span class="n">list1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="nl">x:</span> <span class="n">theList</span><span class="o">)</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">==</span> <span class="mi">4</span><span class="o">)</span>
+            <span class="n">list1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">list1</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>이해하기 어려운 코드</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span> <span class="nf">getFlaggedCells</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span> <span class="n">flaggedCells</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="nl">cell:</span> <span class="n">gameBoard</span><span class="o">)</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cell</span><span class="o">[</span><span class="no">STATUS_VALUE</span><span class="o">]</span> <span class="o">==</span> <span class="no">FLAGGED</span><span class="o">)</span>
+            <span class="n">flaggedCells</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cell</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">flaggedCells</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>이해하기 쉬운 코드</em></p>
+
+<p>위 두 코드는 같은 동작을 하는 코드이지만 첫 번째 코드는 너무나 함축되어 있어 코드 맥락이 코드 자체에 명시적으로 드러나지 않는다.</p>
+
+<p>위 코드가 지뢰찾기 게임이라고 할 때 다음과 같이 int 배열을 간단한 클래스로 만들어서 의미를 부여해도 좋다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Cell</span><span class="o">&gt;</span> <span class="nf">getFlaggedCells</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Cell</span><span class="o">&gt;</span> <span class="n">flaggedCells</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Cell</span><span class="o">&gt;();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="nc">Cell</span> <span class="nl">cell:</span> <span class="n">gameBoard</span><span class="o">)</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cell</span><span class="o">.</span><span class="na">isFlagged</span><span class="o">())</span>
+            <span class="n">flaggedCells</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cell</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">flaggedCells</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="그릇된-정보를-피하라">그릇된 정보를 피하라</h4>
+<ul>
+  <li>나름 널리 쓰이는 의미 있는 단어라도 다른 의미로 해석될 수 있는 경우 피한다.</li>
+  <li>여러 계정을 그룹으로 묶을 때 실제 List가 아니라면 <code class="language-plaintext highlighter-rouge">accountList</code>와 같이 명명하지 않는다.
+    <ul>
+      <li>실제 컨테이너가 List 형인 경웅라도 컨테이너 유형을 이름에 넣지 않는 것이 바람직하다.</li>
+    </ul>
+  </li>
+  <li>서로 흡사한 이름을 사용하지 않도록 주의한다.</li>
+  <li>유사한 개념은 유사한 표기법을 사용한다. (일관성 유지)</li>
+  <li>헷갈리는 이름을 쓰지 말아라.
+    <ul>
+      <li>l(소문자 L)이나 O(대문자 o) 등을 이름으로 사용하면 1이나 0과 헷갈린다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="의미-있게-구분하라">의미 있게 구분하라</h4>
+<ul>
+  <li>컴파일러나 인터프리터만 통과하려고 연속된 숫자를 붙이거나 불용어를 추가하는 등의 방식은 적절치 않다.</li>
+  <li>예를 들어 <code class="language-plaintext highlighter-rouge">zork</code>라는 변수가 있다고 해서 <code class="language-plaintext highlighter-rouge">theZork</code>라고 이름 지으면 안된다.</li>
+  <li><code class="language-plaintext highlighter-rouge">Product</code> 클래스가 있다고 <code class="language-plaintext highlighter-rouge">ProductInfo</code>, <code class="language-plaintext highlighter-rouge">ProductData</code> 등으로 이름 짓는 경우도 마찬가지.</li>
+  <li>읽는 사람이 차이를 알도록 이름을 지어라.</li>
+</ul>
+
+<h4 id="발음하기-쉬운-이름을-사용하라">발음하기 쉬운 이름을 사용하라</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">DtaRcrd102</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">Date</span> <span class="n">genymdhms</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">Date</span> <span class="n">modymdhms</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">pszqint</span> <span class="o">=</span> <span class="s">"102"</span><span class="o">;</span>
+	<span class="c1">// ...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>발음하기 어려운 이름</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Customer</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">Date</span> <span class="n">generationTimestamp</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">Date</span> <span class="n">modificationTimestamp</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">recordId</span> <span class="o">=</span> <span class="s">"102"</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>발음하기 쉬운 이름</em></p>
+
+<p>둘째 코드는 지적인 대화가 가능해진다.</p>
+
+<h4 id="검색하기-쉬운-이름을-사용하라">검색하기 쉬운 이름을 사용하라.</h4>
+<ul>
+  <li>문자 하나를 사용하는 이름과 상수는 텍스트 코드에서 쉽게 눈에 띄지 않는다.
+    <ul>
+      <li>예를 들어 ‘7’을 검색하면 파일 이름이나 수식이 모두 검색된다.</li>
+      <li>‘e’와 같은 문자도 변수 이름으로 적합하지 못하다. 모든 프로그램, 거의 모든 문장에 등장할 것이다.</li>
+    </ul>
+  </li>
+  <li>한 문자로 나타내는 것은 간단한 메서드에서 로컬 변수 정도?</li>
+  <li><strong>이름 길이는 범위 크기에 비례해야 한다.</strong></li>
+</ul>
+
+<h4 id="인코딩을-피하라">인코딩을 피하라</h4>
+<p>유형이나 범위 정보까지 인코딩에 넣으면 그만큼 이름을 해독하기 어려워진다.</p>
+<ul>
+  <li>헝가리식 표기법
+    <ul>
+      <li>변수의 타입을 이름에 포함하는 것</li>
+      <li>과거 윈도 C API에서 주로 사용하던 표기법
+        <ul>
+          <li>당시에는 컴파일러가 타입을 점검하지 않았기에 타입을 기억하기 위한 단서로 사용되었다.</li>
+        </ul>
+      </li>
+      <li>현재는 컴파일러가 타입을 기억하고 강제하기 때문에 자주 사용되지 않는다.</li>
+    </ul>
+  </li>
+  <li>멤버 변수 접두어
+    <ul>
+      <li>멤버 변수에 <code class="language-plaintext highlighter-rouge">m_</code>이라는 접두어를 붙이는 것 -&gt; 이제는 그럴 필요가 없다.</li>
+    </ul>
+  </li>
+  <li>인터페이스 클래스와 구현 클래스
+    <ul>
+      <li>도형을 생성하는 <code class="language-plaintext highlighter-rouge">ABSTRACT FACTORY</code>를 구현한다고 할 때, 이 팩토리는 인터페이스 클래스다.</li>
+      <li>구현은 구체 클래스(concrete class)에서 한다.</li>
+      <li>옛날 코드에서는 인터페이스임을 알리기 위해 접두어 I를 붙였다.</li>
+      <li>저자의 의견으로는 다음과 같은 이름이 IShapeFactory보다 좋다고 한다.
+        <ul>
+          <li>ShapeFactoryImp</li>
+          <li>CShapeFactory</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="자신의-기억력을-자랑하지-마라">자신의 기억력을 자랑하지 마라</h4>
+<ul>
+  <li>명료함이 최고다</li>
+</ul>
+
+<hr />
+
+<h4 id="클래스-이름">클래스 이름</h4>
+<ul>
+  <li>클래스 이름과 객체 이름은 <strong>명사</strong>나 <strong>명사구</strong>가 적합하다.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Customer</code>, <code class="language-plaintext highlighter-rouge">WikiPage</code>, <code class="language-plaintext highlighter-rouge">Account</code>, <code class="language-plaintext highlighter-rouge">AddressParser</code> 등 ⭕</li>
+      <li><code class="language-plaintext highlighter-rouge">Manager</code>, <code class="language-plaintext highlighter-rouge">Processor</code>, <code class="language-plaintext highlighter-rouge">Data</code>, <code class="language-plaintext highlighter-rouge">Info</code> 등 ⚠️</li>
+      <li>동사 ❌</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="메서드-이름">메서드 이름</h4>
+<ul>
+  <li>메서드 이름은 <strong>동사</strong>나 <strong>동사구</strong>가 적합하다
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">postPayment</code>, <code class="language-plaintext highlighter-rouge">deletePage</code>, <code class="language-plaintext highlighter-rouge">save</code> 등</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>접근자</strong>, <strong>변경자</strong>, <strong>조건자</strong>는 javabean 표준에 따라 값 앞에 <code class="language-plaintext highlighter-rouge">get</code>, <code class="language-plaintext highlighter-rouge">set</code>, <code class="language-plaintext highlighter-rouge">is</code>를 붙인다.</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">string</span> <span class="n">name</span> <span class="o">=</span> <span class="n">employee</span><span class="o">.</span><span class="na">getName</span><span class="o">();</span>
+<span class="n">customer</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"mike"</span><span class="o">);</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">paycheck</span><span class="o">.</span><span class="na">isPosted</span><span class="o">())...</span>
+</code></pre></div>    </div>
+  </li>
+  <li>생성자를 중복 정의(overload) 할 때는 정적 팩토리 메서드를 사용한다.</li>
+  <li>메서드는 인수를 설명하는 이름을 사용한다.
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Complex</span> <span class="n">fulcrumPoint</span> <span class="o">=</span> <span class="nc">Complex</span><span class="o">.</span><span class="na">FromRealNumber</span><span class="o">(</span><span class="mf">23.0</span><span class="o">);</span>
+</code></pre></div>    </div>
+    <p>위 코드보다 아래 코드가 좋다.</p>
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Complex</span> <span class="n">fulcrumPoint</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Complex</span><span class="o">(</span><span class="mf">23.0</span><span class="o">);</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<hr />
+<h4 id="기발한-이름은-피하라">기발한 이름은 피하라</h4>
+<p>특정 문화에서만 사용하는 농담은 피하고, 의도를 분명하고 솔직하게 표현하라.</p>
+
+<h4 id="한-개념에-한-단어를-사용하라">한 개념에 한 단어를 사용하라</h4>
+<ul>
+  <li>추상적인 개념 하나에 단어 하나를 선택해 이를 고수한다
+    <ul>
+      <li>똑같은 메서드를 클래스마다 <code class="language-plaintext highlighter-rouge">fetch</code>, <code class="language-plaintext highlighter-rouge">retrieve</code>, <code class="language-plaintext highlighter-rouge">get</code>으로 제각각 부르면 혼란스럽다</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="말장난을-하지-마라">말장난을 하지 마라</h4>
+<ul>
+  <li>한 단어를 두 가지 목적으로 사용하지 마라.
+    <ul>
+      <li>지금까지 구현한 <code class="language-plaintext highlighter-rouge">add</code> 메서드가 기존 값 두 개를 더하거나 이어서 새로운 값을 만든다고 하자</li>
+      <li>새로 작성하는 메서드는 집합에 값 하나를 추가한다고 할 때 이 메서드를 <code class="language-plaintext highlighter-rouge">add</code>라 지어도 괜찮을까?
+        <ul>
+          <li>이 메서드는 기존의 <code class="language-plaintext highlighter-rouge">add</code> 메서드와 맥락이 다르다. 그러므로 <code class="language-plaintext highlighter-rouge">insert</code>나 <code class="language-plaintext highlighter-rouge">append</code>라는 이름이 적당하다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>다른 개념에 같은 단어를 사용한다면 말장난에 불과하다.</li>
+</ul>
+
+<h4 id="해법-영역에서-가져온-이름을-사용하라">해법 영역에서 가져온 이름을 사용하라</h4>
+<ul>
+  <li>코드를 읽는 사람도 프로그래머다</li>
+  <li>전산 용어, 알고리즘 이름, 패턴 이름, 수학 용어 등을 사용해도 좋다.</li>
+  <li>모든 이름을 문제 영역(domain)에서 가져오는 정책은 현명하지 못하다.</li>
+</ul>
+
+<h4 id="문제-영역에서-가져온-이름을-사용하라">문제 영역에서 가져온 이름을 사용하라</h4>
+<ul>
+  <li>적절한 프로그래머 용어가 없다면 문제 영역에서 이름을 가져온다.</li>
+  <li>그러면 전문가에게 의미를 물어 파악할 수 있다.</li>
+</ul>
+
+<h4 id="의미-있는-맥락을-추가하라">의미 있는 맥락을 추가하라</h4>
+<ul>
+  <li>스스로 의미가 분명한 이름이 있지만 대다수 이름은 그렇지 못하다.</li>
+  <li>그래서 클래스, 함수, 이름 공간에 넣어 맥락을 부여한다.</li>
+  <li>
+    <p>모든 방법이 실패하면 마지막 수단으로 접두어를 붙인다.</p>
+  </li>
+  <li>예를 들어 <code class="language-plaintext highlighter-rouge">firstName</code>, <code class="language-plaintext highlighter-rouge">lastName</code>, <code class="language-plaintext highlighter-rouge">street</code>, <code class="language-plaintext highlighter-rouge">houseNumber</code>, <code class="language-plaintext highlighter-rouge">city</code>, <code class="language-plaintext highlighter-rouge">state</code>, <code class="language-plaintext highlighter-rouge">zipcode</code> 라는 변수가 있을 때 변수를 훑어보면 주소라는 사실을 알 수 있다.</li>
+  <li>하지만 <code class="language-plaintext highlighter-rouge">state</code> 변수 하나만 사용된다면 <code class="language-plaintext highlighter-rouge">state</code>가 주소 일부라는 사실을 알기 힘들다</li>
+  <li>이때 <code class="language-plaintext highlighter-rouge">addr</code>라는 접두어를 추가해 <code class="language-plaintext highlighter-rouge">addrFirstName</code>, <code class="language-plaintext highlighter-rouge">addrLastName</code>, <code class="language-plaintext highlighter-rouge">addrState</code>라 쓰면 맥락이 분명해진다.</li>
+  <li><code class="language-plaintext highlighter-rouge">Address</code> 라는 클래스를 생성하면 더 좋다.</li>
+</ul>
+
+<hr />
+
+<h3 id="오늘-읽은-소감은-떠오르는-생각을-가볍게-적어보세요">오늘 읽은 소감은? 떠오르는 생각을 가볍게 적어보세요</h3>
+<p>// 나같은 디자인 전공에게 그림을 그리는 행위에 빗대어 클린코드란 무엇인가를 설명해주는 내용 덕분에 조금 더 쉽게 이해할 수 있었던 챕터였다.</p>
+
+<h3 id="궁금한-내용이-있거나-잘-이해되지-않는-내용이-있다면-적어보세요">궁금한 내용이 있거나, 잘 이해되지 않는 내용이 있다면 적어보세요.</h3>
+<p>정적 팩토리 메서드
+manager, helper
+모든 이름을 문제 도메인에서 가져오는 정책은 현명하지 못하다.</p>
+
+:ET
