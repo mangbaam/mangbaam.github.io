@@ -1,0 +1,228 @@
+I"|4<p><img src="/assets/images/CleanCodeCover.png" alt="클린 코드 책 커버" /></p>
+
+<p>#노마드코더 #북클럽 #노개북</p>
+
+<p><a href="https://www.notion.so/mangbaam/Clean-Code-3d0243ae513c4ab5bc5b8ce43ff6c68b#7f6776c8a54b4a08a20d50d7b1014dbe">내용 요약(Notion)</a></p>
+
+<h2 id="til-today-i-learned">TIL (Today I Learned)</h2>
+<p>좋은 주석과 나쁜 주석에 대해 알아보았다. 일반적으로 주석은 필요하지 않는 경우가 많다.</p>
+
+<h2 id="오늘-읽은-범위">오늘 읽은 범위</h2>
+<p>4장. 주석</p>
+
+<h2 id="책에서-기억하고-싶은-내용을-써보세요">책에서 기억하고 싶은 내용을 써보세요.</h2>
+<blockquote>
+  <p>나쁜 코드에 주석을 달지 마라. 새로 짜라.</p>
+
+  <p>-<em>브라이언 W. 커니헨, P.j.플라우거</em></p>
+</blockquote>
+
+<p><em>저자</em></p>
+<blockquote>
+  <p>주석은 기껏해야 필요악이다.</p>
+
+  <p>우리는 코드로 의도를 표현하지 못해 주석을 사용한다.</p>
+
+  <p>주석을 달 때마다 자신에게 표현력이 없다는 사실을 푸념해야 마땅하다.</p>
+</blockquote>
+
+<h3 id="주석은-나쁜-코드를-보완하지-못한다">주석은 나쁜 코드를 보완하지 못한다.</h3>
+<p>코드에 주석을 추가하는 일반적인 이유는 코드 품질이 나쁘기 때문이다.</p>
+
+<h3 id="코드로-의도를-표현하라">코드로 의도를 표현하라!</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 직원에게 복지 혜택을 받을 자격이 있는지 검사</span>
+<span class="k">if</span> <span class="o">((</span><span class="n">employee</span><span class="o">.</span><span class="na">flogs</span> <span class="o">&amp;</span> <span class="no">HOURLY_FLAG</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">employee</span><span class="o">.</span><span class="na">age</span> <span class="o">&gt;</span> <span class="mi">65</span><span class="o">))</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">(</span><span class="n">employee</span><span class="o">.</span><span class="na">isEligibleForFullBenefits</span><span class="o">())</span>
+</code></pre></div></div>
+<p>위 예제와 같이 코드로 대다수 의도를 표현할 수 있다. 주석으로 달려는 설명을 함수로 만들어 표현해도 충분하다.</p>
+
+<h3 id="좋은-주석">좋은 주석</h3>
+
+<h4 id="법적인-주석">법적인 주석</h4>
+<p>때로는 회사가 정립한 구현 표준에 맞춰 법적인 이유로 특정 주석을 넣으라고 명시한다.</p>
+
+<ul>
+  <li>저작권 정보</li>
+  <li>소유권 정보</li>
+  <li>계약 조건</li>
+  <li>법적인 정보</li>
+  <li>표준 라이선스</li>
+  <li>외부 문서</li>
+</ul>
+
+<h4 id="정보를-제공하는-주석">정보를 제공하는 주석</h4>
+<p>때로는 기본적인 정ㅂ조를 주석으로 제공하면 편리하다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// kk:mm:ss EEE, MMM dd, yyyy 형식이다.</span>
+<span class="nc">Pattern</span> <span class="n">timeMatcher</span> <span class="o">=</span> <span class="nc">Pattern</span><span class="o">.</span><span class="na">compile</span><span class="o">(</span>
+	<span class="s">"\\d*:\\d*:\\d* \\w*, \\w* \\d*, \\d*"</span>
+<span class="o">);</span>
+</code></pre></div></div>
+<p>위 코드의 주석은 코드에서 사용한 정규표현식이 시각과 날짜를 뜻한다고 설명한다.</p>
+
+<p>이왕이면 시각과 날짜를 변환하는 클래스를 만들어 코드를 옮겨주면 더 좋고 깔끔하겠다. 그러면 주석이 필요 없어진다.</p>
+
+<h4 id="의도를-설명하는-주석">의도를 설명하는 주석</h4>
+<p>때때로 주석은 구현을 이해하게 도와주는 선을 넘어 결정에 깔린 의도까지 설명한다.</p>
+
+<h4 id="의미를-명료하게-밝히는-주석">의미를 명료하게 밝히는 주석</h4>
+<ul>
+  <li>모호한 인수나 반환값은 그 의미를 읽기 좋게 표현하면 이해하기 쉬워진다</li>
+  <li>인수나 반환값이 표준 라이브러리나 변경하지 못하는 코드에 속한다면 의미를 명료하게 밝히는 주석이 유용하다.</li>
+</ul>
+
+<h4 id="결과를-경고하는-주석">결과를 경고하는 주석</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 여유 시간이 충분하지 않다면 실행하지 마십시오.</span>
+<span class="kd">public</span> <span class="nf">void_testWithReeallyBigFile</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">writeLinesToFile</span><span class="o">(</span><span class="mi">100000000</span><span class="o">);</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="todo-주석">TODO 주석</h4>
+<ul>
+  <li><em>앞으로 할 일</em>을 <code class="language-plaintext highlighter-rouge">//TODO</code> 주석으로 남겨두면 편하다.</li>
+  <li>주기적으로 <code class="language-plaintext highlighter-rouge">//TODO</code> 주석을 점검해 없애도 괜찮은 주석은 없애라.</li>
+</ul>
+
+<h4 id="중요성을-강조하는-주석">중요성을 강조하는 주석</h4>
+<p>대수롭지 않다고 여겨질 뭔가의 중요성을 강조하기 위해 주석이 사용된다.</p>
+
+<h4 id="공개-api에서-javadocs">공개 API에서 Javadocs</h4>
+<ul>
+  <li>공개 API를 구현한다면 반드시 훌륭한 Javadocs를 작성한다.</li>
+  <li>하지만 여느 주석과 마찬가지로 Javadocs역시 독자를 오도하거나, 잘못 위치하거나, 그릇된 정보를 전달할 가능성이 존재한다.</li>
+</ul>
+
+<hr />
+<h3 id="나쁜-주석">나쁜 주석</h3>
+<blockquote>
+  <p>대다수 주석이 이 범주에 속한다.</p>
+</blockquote>
+
+<h4 id="주절거리는-주석">주절거리는 주석</h4>
+<ul>
+  <li>특별한 이유 없이 의무감으로 남기는 주석</li>
+  <li>프로세스에서 하라고 하니까 마지못해 남기는 주석</li>
+</ul>
+
+<p>주석을 달기로 결정했다면 충분한 시간을 들여 최고의 주석을 달도록 노력한다.</p>
+
+<h4 id="같은-이야기를-중복하는-주석">같은 이야기를 중복하는 주석</h4>
+<p><img src="https://user-images.githubusercontent.com/44221447/155518466-e2f8a3fb-db29-4969-a7d4-ea93b03cdd95.png" alt="같은 이야기를 중복하는 주석 예제" /></p>
+
+<h4 id="오해할-여지가-있는-주석">오해할 여지가 있는 주석</h4>
+<p>때때로 의도는 좋았으나 프로그래머가 딱 맞을 정도로 엄밀하게는 주석을 달지 못하기도 한다.</p>
+
+<h4 id="의무적으로-다는-주석">의무적으로 다는 주석</h4>
+<p><img src="https://user-images.githubusercontent.com/44221447/155518705-1c9d7167-3b5c-48e0-afcb-c846e037b100.png" alt="의무적으로 다는 주석 예제" /></p>
+
+<h4 id="이력을-기록하는-주석">이력을 기록하는 주석</h4>
+<p><img src="https://user-images.githubusercontent.com/44221447/155518848-9c46c0b2-527c-4b94-98f7-594faa34e9dd.png" alt="이력을 기록하는 주석 예제" /></p>
+
+<ul>
+  <li>때때로 사람들은 모듈을 편집할 때마다 모듈 첫머리에 주석을 추가한다.</li>
+  <li>모듈 첫머리 주석은 지금까지 모듈에 가한 변경을 모두 기록하는 일종의 일지 혹은 로그가 된다.</li>
+  <li>과거에는 이러한 관례가 바람직했다.</li>
+  <li>현재는 <strong>소스 코드 관리 시스템</strong>이 있기 때문에 필요 없다.</li>
+</ul>
+
+<h4 id="있으나-마나-한-주석">있으나 마나 한 주석</h4>
+<p>너무 당연한 사실을 언급하며 새로운 정보를 제공하지 못하는 주석</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/** 월 중 일자 */</span>
+<span class="kd">private</span> <span class="kt">int</span> <span class="n">dayOfMonth</span><span class="o">;</span>
+</code></pre></div></div>
+
+<h4 id="무서운-잡음">무서운 잡음</h4>
+<p><img src="https://user-images.githubusercontent.com/44221447/155519178-ace1dd4a-7db0-4438-8d7f-7bf6c3ba2000.png" alt="무서운 잡음 예제" /></p>
+
+<p>위 코드는 잘 알려진 오픈 소스 라이브러리에서 가져온 코드다.
+위 Javadocs는 어떤 목적을 수행할까? -&gt; <strong>없다.</strong></p>
+
+<p>심지어 오류도 존재한다. (마지막 코드의 주석)</p>
+
+<h4 id="함수나-변수로-표현할-수-있다면-주석을-달지-마라">함수나 변수로 표현할 수 있다면 주석을 달지 마라</h4>
+
+<h4 id="위치를-표시하는-주석">위치를 표시하는 주석</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Action /////////////////////////////////////////</span>
+</code></pre></div></div>
+
+<ul>
+  <li>때때로 프로그래머는 소스 파일에서 특정 위치를 표시하려 주석을 사용한다.</li>
+  <li>극히 드물게 위와 같은 배너 아래 특정 기능을 모아놓으면 유용한 경우도 있다.</li>
+  <li>하지만 일반적으로 위와 같은 주석은 가독성만 낮추므로 제거해야 마땅하다.</li>
+</ul>
+
+<h4 id="닫는-괄호에-다는-주석">닫는 괄호에 다는 주석</h4>
+<ul>
+  <li>중첩이 심하고 장황한 함수라면 의미가 있을 수도 있다.</li>
+  <li>하지만  (우리가 선호하는) 작고 캡슐화 된 함수에는 잡음일 뿐이다.</li>
+  <li>닫는 괄호에 주석을 달아야겠다는 생각이 든다면 대신에 <em>함수를 줄이려 시도하자.</em></li>
+</ul>
+
+<h4 id="공로를-돌리거나-저자를-표시하는-주석">공로를 돌리거나 저자를 표시하는 주석</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* 릭이 추가함 */</span>
+</code></pre></div></div>
+
+<ul>
+  <li>소스 코드 관리 시스템은 누가 언제 무엇을 추가했는지 기억한다.</li>
+  <li>저자 이름으로 코드를 오염시킬 필요가 없다.</li>
+  <li>이런 주석이 오랫동안 코드에 방치되면 점차 부정확하고 쓸모없는 정보로 변하기 쉽다.</li>
+  <li>이런 정보는 <strong>소스 코드 관리 시스템</strong>에 저장하자.</li>
+</ul>
+
+<h4 id="주석으로-처리한-코드">주석으로 처리한 코드</h4>
+<ul>
+  <li>주석으로 처리된 코드는 다른 사람들이 지우기를 주저한다.</li>
+  <li><strong>소스 코드 관리 시스템</strong>이 우리를 대신해 코드를 기억해준다.</li>
+  <li>코드를 삭제하라. 잃어버릴 염려는 없다.</li>
+</ul>
+
+<h4 id="html-주석">HTML 주석</h4>
+<p><img src="https://user-images.githubusercontent.com/44221447/155520043-fe1e797d-2ccb-4539-a226-435aa392232b.png" alt="HTML 주석 예제" /></p>
+
+<p>소스 코드에서 HTML 주석은 <em>혐오 그 자체</em>다.</p>
+
+<h4 id="전역-정보">전역 정보</h4>
+<ul>
+  <li>주석을 달아야 한다면 근처에 있는 코드만 기술하라.</li>
+  <li>코드 일부에 주석을 다면서 시스템 전반적인 정보를 기술하지 마라.</li>
+</ul>
+
+<h4 id="너무-많은-정보">너무 많은 정보</h4>
+<ul>
+  <li>주석에다 흥미로운 역사나 관련 없는 정보를 장황하게 늘어놓지 마라.</li>
+</ul>
+
+<p>다음은 base64를 인코딩/디코딩 하는 함수를 테스트하는 모듈에서 가져온 주석이다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/155520287-2625a820-007b-4e4c-b94a-bd4d73d05daf.png" alt="너무 많은 정보 예제" /></p>
+
+<h4 id="모호한-관계">모호한 관계</h4>
+<ul>
+  <li>주석과 주석이 설명하는 코드는 둘 사이 관계가 명백해야 한다.</li>
+  <li>독자가 주석과 코드를 읽어보고 무슨 소린지 알아야 한다.</li>
+  <li>주석 자체가 다시 설명을 요구하지 말아야 한다.</li>
+</ul>
+
+<h4 id="함수-헤더">함수 헤더</h4>
+<ul>
+  <li>짧은 함수는 긴 설명이 필요 없다.</li>
+  <li>짧고 한 가지만 수행하며 이름을 잘 붙인 함수가 주석으로 헤더를 추가한 함수보다 훨씬 좋다.</li>
+</ul>
+
+<h4 id="비공개-코드에서-javadocs">비공개 코드에서 Javadocs</h4>
+<ul>
+  <li>공개 API는 Javadocs가 유용하지만 공개하지 않을 코드라면 Javadocs는 쓸모가 없다.</li>
+</ul>
+
+<hr />
+<h2 id="오늘-읽은-소감은-떠오르는-생각을-가볍게-적어보세요">오늘 읽은 소감은? 떠오르는 생각을 가볍게 적어보세요</h2>
+<p>// 나같은 디자인 전공에게 그림을 그리는 행위에 빗대어 클린코드란 무엇인가를 설명해주는 내용 덕분에 조금 더 쉽게 이해할 수 있었던 챕터였다.</p>
+
+<h2 id="궁금한-내용이-있거나-잘-이해되지-않는-내용이-있다면-적어보세요">궁금한 내용이 있거나, 잘 이해되지 않는 내용이 있다면 적어보세요.</h2>
+<p>// 르블랑의 법칙? (LeBlanc’s Law states) - “Later equals never” is used in the context of software development, but may be applied more broadly to other areas. The law is attributed to Dave LeBlanc.</p>
+
+:ET
