@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Effective Kotlin_1장. 안정성
+title: Effective Kotlin_1장. 안정성 / 아이템1. 가변성을 제한하라
 subtitle: 아이템1. 가변성을 제한하라
 categories: Book
 tags: [book, effective_kotlin]
