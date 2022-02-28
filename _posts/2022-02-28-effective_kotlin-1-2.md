@@ -216,6 +216,9 @@ Kotlin의 `sequence`는 Java8의 `stream`에 대응되는 개념으로 **lazy ev
 
 final: https://stackoverflow.com/questions/29225745/where-is-the-local-final-variable-in-method-stored-stack-heap
 
+캡처링
+1. https://umbum.dev/598
+2. https://tourspace.tistory.com/110
 
 
 
