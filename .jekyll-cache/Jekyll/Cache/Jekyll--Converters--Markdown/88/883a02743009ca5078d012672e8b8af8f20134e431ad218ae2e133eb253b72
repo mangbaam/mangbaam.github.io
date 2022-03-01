@@ -1,4 +1,4 @@
-I"�<<p><img src="/assets/images/CleanCodeCover.png" alt="클린 코드 책 커버" />
+I"�<<p><img src="/assets/images/CleanCodeCover.png" alt="클린 코드 책 커버" />
 #노마드코더 #북클럽 #노개북</p>
 
 <p><a href="(https://www.notion.so/mangbaam/Clean-Code-3d0243ae513c4ab5bc5b8ce43ff6c68b#b092bc78d617493c9ea4af8e5bbd0536)">내용 요약(Notion)</a></p>
@@ -12,9 +12,10 @@
 <h2 id="책에서-기억하고-싶은-내용을-써보세요">책에서 기억하고 싶은 내용을 써보세요.</h2>
 <blockquote>
   <p>코드 형식은 의사소통의 일환이다. 의사 소통은 전문 개발자의 일차적인 의무다.</p>
-  <h3 id="적절한-행-길이를-유지하라">적절한 행 길이를 유지하라</h3>
-  <p>파일 크기는 어느 정도가 적당할까?</p>
 </blockquote>
+
+<h3 id="적절한-행-길이를-유지하라">적절한 행 길이를 유지하라</h3>
+<p>파일 크기는 어느 정도가 적당할까?</p>
 
 <p>통계에 따르면 대부분 200줄 정도인 파일로도 커다란 시스템을 구축할 수 있다.</p>
 
