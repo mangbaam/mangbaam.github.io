@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Effective Kotlin_1장. 안정성 / 아이템2. 변수의 스코프를 최소화하라
-subtitle: 아이템2. 변수의 스코프를 최소화하라
+title: Effective Kotlin_아이템2. 변수의 스코프를 최소화하라
+subtitle: 1장. 안정성 - 아이템2. 변수의 스코프를 최소화하라
 categories: Book
 tags: [book, effective_kotlin]
 ---
 
-![클린 코드 책 커버](/assets/images/EffectiveKotlinCover.png)
+![이펙티브 코틀린 북커버](/assets/images/EffectiveKotlinCover.png)
 
 [내용 요약(Notion)][notion]
 
@@ -18,7 +18,7 @@ tags: [book, effective_kotlin]
   - 1장. 안정성
     - 아이템2. 변수의 스코프를 최소화하라
 
-## 책에서 기억하고 싶은 내용을 써보세요.
+## 책에서 기억하고 싶은 내용
 상태를 정의할 때는 변수와 프로터피의 스코프를 최소화하는 것이 좋다.
 - 프로퍼티보다는 지역 변수를 사용
 - 최대한 좁은 스코프를 갖게 변수를 사용
@@ -175,12 +175,12 @@ print(primes.take(10).toList())
 - 람다에서는 변수를 캡처한다.
 
 
-## 오늘 읽은 소감은? 떠오르는 생각을 가볍게 적어보세요
+## 오늘 읽은 소감
 변수나 프로퍼티의 스코프를 작게 만드는 습관은 오래 전부터 들여와서 이번 챕터의 내용을 받아들이는데 어렵지 않았다.
 
 그러나 (캡처링, 시퀀스와 같은) 몇몇 생소한 개념들이 등장해 별도의 학습이 필요했다.
 
-## 궁금한 내용이 있거나, 잘 이해되지 않는 내용이 있다면 적어보세요.
+## 궁금한 내용, 잘 이해되지 않는 내용
 이번 챕터의 마지막 부분에 등장한 캡처링은 처음 들어본 개념이었다. 더군다나 이 캡처링 상황을 설명하는 시퀀스 개념도 처음 들어본 개념이어서 관련된 내용 전체를 이해하기 힘들었다.
 
 ### 캡처링
@@ -223,6 +223,6 @@ final: https://stackoverflow.com/questions/29225745/where-is-the-local-final-var
 
 
 
-[notion]: (https://www.notion.so/mangbaam/Effective-Kotlin-2a5acacaa11d443e8da3a00a75b85450#fda32eb08a564b7c825ca79bafb9aede)
+[notion]: https://mangbaam.notion.site/2-e166b9dca4e043faafa311b5db8650b5
 
 [스택오버플로우]: https://stackoverflow.com/questions/29225745/where-is-the-local-final-variable-in-method-stored-stack-heap
