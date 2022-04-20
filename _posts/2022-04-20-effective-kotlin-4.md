@@ -11,7 +11,7 @@ tags: [book, effective_kotlin]
 [내용 요약(Notion)][notion]
 
 ## TIL (Today I Learned)
-
+타입을 확실하게 지정해야 하는 경우엔 **명시적으로** 타입을 지정하자
 
 ## 오늘 읽은 범위
 - 1부. 좋은 코드
