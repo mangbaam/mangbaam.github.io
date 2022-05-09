@@ -63,6 +63,13 @@ img {
   vertical-align: middle;
 }
 
+img + em {
+  display: block;
+  text-align: center;
+  font-size: .8rem;
+  color: light-grey;
+}
+
 
 
 /**
@@ -175,6 +182,13 @@ pre {
       border: none;
     }
   }
+}
+
+code + em {
+  display: block;
+  text-align: center;
+  font-size: .8rem;
+  color: light-grey;
 }
 
 
