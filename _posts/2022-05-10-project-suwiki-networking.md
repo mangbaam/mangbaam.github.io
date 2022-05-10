@@ -4,6 +4,7 @@ title: "[SUWIKI] Networking"
 subtitle: 🎈네트워킹은 이렇게 구현했어요
 categories: Project
 tags: [suwiki]
+comments: true
 ---
 ## Intro
 
