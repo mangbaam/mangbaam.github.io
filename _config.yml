@@ -24,7 +24,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: I am Mangbaam
+title: 맹뱀 블로그
 email: pmb0836@gmail.com
 author: mangbaam
 
@@ -182,7 +182,7 @@ lang: "ko"  # default lang is en
 
 # Disqus comments
 disqus:
-  shortname: mangbaam
+  shortname: https-mangbaam-github-io
 
 # Gitment comments
 # gitment:
