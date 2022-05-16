@@ -43,7 +43,7 @@ author: mangbaam
 copyright: "Copyright Mangbaam (c) 2022-{currentYear} {author}"
 
 description: >- # this means to ignore newlines until "baseurl:"
-  This blog is Mangbaam's tech blog about coding and Android etc.
+  안드로이드 개발자가 되기 위한 기록들
 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://mangbaam.github.io/" # the base hostname & protocol for your site, e.g. https://example.com
@@ -58,7 +58,7 @@ yat:
 # debug: false
 
 # If you don't want transparent header, you can set false
-# header_transparent: true
+header_transparent: false
 
 # If you want to change the content width, you can set to another value
 # content_width: "920px"
