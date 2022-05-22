@@ -8,13 +8,13 @@ tags: [tip, toolbar]
 
 ## 이전
 
-![before](https://user-images.githubusercontent.com/44221447/169689918-06c61e90-626d-4d79-a8bb-147d7eab83ea.png)
+![before](https://user-images.githubusercontent.com/44221447/169690473-801cc0e2-f7f4-4464-bb7e-b3f70bf534c0.png)
 
 ```xml
 <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="0dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="0dp">
 ```
 
 `android:elevation="0dp"`를 넣어도 그림자가 보인다.
@@ -25,9 +25,9 @@ tags: [tip, toolbar]
 
 ```xml
 <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="0dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:elevation="0dp">
 ```
 
 `android` -> `app` 으로 바꾸면 그림자가 사라진다.
