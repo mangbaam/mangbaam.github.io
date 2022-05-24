@@ -3,7 +3,7 @@ layout: post
 title: Android. How to always display Suffix Text on EditText
 subtitle: Using TextInputLayout & TextInputEditText
 categories: Android
-tags: [tip, toolbar]
+tags: [tip, xml]
 ---
 
 ## 🔥해결하고자 하는 문제
