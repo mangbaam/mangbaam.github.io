@@ -20,7 +20,7 @@ tags: [tip, xml]
 
 `TextInputLayout`에 `android:hint` 속성에 힌트로 보여줄 텍스트를 지정하고 `app:hintEnabled` 속성에 true를 주면 다음과 같이 힌트가 보여진다.
 
-![default_video](https://user-images.githubusercontent.com/44221447/170059824-83d19b34-baeb-4a20-b8dc-c9cbcb53c51e.mp4)
+![origin](https://user-images.githubusercontent.com/44221447/170208594-810878f2-4b19-4e2c-97bc-ee617bbd1aac.gif)
 
 그런데 차이점이 있다면 `TextInputLayout`은 포커즈를 받지 않은 상태에서는 **Suffix Text**가 보이지 않고, 포커즈를 받으면 hint가 위로 올라가면서 **Suffix Text**가 보이게 된다.
 
@@ -53,7 +53,7 @@ layout inspector로 확인을 해보니 힌트 부분이 처음에 전체 공간
 
 이 부분은 간단하다. 힌트를 `TextInputLayout`가 아니라 `TextInputEditText`에서 표시하면 된다. `android:hint` 속성을 `TextInputEditText`로 옮기고, `TextInputLayout`에서 `app:hintEnabled` 속성을 제거하면 된다. (기본 값이 false이다)
 
-![solve_1_video](https://user-images.githubusercontent.com/44221447/170065210-f3663154-9538-4cf9-8956-cc2359a97206.mp4)
+![before](https://user-images.githubusercontent.com/44221447/170207633-b0d86662-409f-4c19-9f87-6c1454621171.gif)
 
 입력 창을 클릭하면 힌트가 위로 올라가지 않고, 글자를 입력하면 힌트가 보이지 않는다.
 
@@ -79,7 +79,7 @@ layout inspector로 확인을 해보니 힌트 부분이 처음에 전체 공간
 
 ---
 
-![complete_video](https://user-images.githubusercontent.com/44221447/170086239-452324cb-a1ad-4572-b3fa-7cd3b2d3b278.mp4)
+![after](https://user-images.githubusercontent.com/44221447/170207931-611b789a-3f73-4c20-ace8-7ca61da26bb4.gif)
 
 ![complete_xml](https://user-images.githubusercontent.com/44221447/170086485-2277cab1-c41a-4900-9770-e90d6c3fe53f.png)
 
