@@ -16,6 +16,14 @@ tags: [tip, xml]
 
 저렇게 지정하는 것은 Material 디자인의 `TextInputLayout`과 `TextInputEditText`로 가능하다.
 
+> Material 컴포넌트를 사용하기 위해서는 다음을 설정해야 한다.
+>
+> 밑의 사진을 누르면 이동할 수 있다. 최신 버전을 확인하자.
+>
+> 현재(2022.05.25) 최신 버전은 `1.6.0`
+
+[![implements](https://user-images.githubusercontent.com/44221447/170211886-6716ae09-f3ca-4943-b895-56c08bbc3755.png)](https://github.com/material-components/material-components-android/blob/master/docs/getting-started.md#2-maven-library-dependency)
+
 ![default_xml](https://user-images.githubusercontent.com/44221447/170088134-dd8e4497-b492-4951-90cd-ffdb02a356a5.png)
 
 `TextInputLayout`에 `android:hint` 속성에 힌트로 보여줄 텍스트를 지정하고 `app:hintEnabled` 속성에 true를 주면 다음과 같이 힌트가 보여진다.
