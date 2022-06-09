@@ -6,6 +6,8 @@ categories: Android
 tags: [version]
 ---
 
+## ⭐
+
 안드로이드를 개발하다 보면 현재 최신 안드로이드 버전이 무엇이고, 어떤 라이브러리는 타겟 SDK가 몇이고 킷캣이 어쩌고 오레오가 어쩌고... 정리가 안 된 상태로 혼란을 겪고 있다가 안드로이드 개발 공부한다고 하면 최소 버전 정보는 알고 있어야겠다는 생각이 들어 이번 기회에 정리하게 되었다.
 
 ## 표 보는 법
@@ -601,10 +603,10 @@ tags: [version]
 
 ### SDK 31
 
-- 현재 새로 만드는 앱은 `targetSdk`를 31 이상으로 해야한다.
-- 기존의 앱들도 2022년 11월까지 `targetSdk`를 30 이상으로 올려야 한다.
+- 현재 새로 만드는 앱은 `targetSdk`를 31 이상으로 해야한다. [링크](https://developer.android.com/google/play/requirements/target-sdk)
+- 기존의 앱들도 2022년 11월까지 `targetSdk`를 30 이상으로 올려야 한다. [링크](https://support.google.com/googleplay/android-developer/answer/11926878)
 
 ### SDK 32
 
-- 2022년 8월 부터는 새로 만드는 앱은 `targetSdk`를 31 이상으로 해야한다.
-- 기존의 앱들은 2023년 11월까지 `targetSdk`가 31 이상이 되도록 해야한다.
+- 2022년 8월 부터는 새로 만드는 앱은 `targetSdk`를 31 이상으로 해야한다.[링크](https://developer.android.com/google/play/requirements/target-sdk)
+- 기존의 앱들은 2023년 11월까지 `targetSdk`가 31 이상이 되도록 해야한다.[링크](https://support.google.com/googleplay/android-developer/answer/11926878)
