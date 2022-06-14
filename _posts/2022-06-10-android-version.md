@@ -575,38 +575,61 @@ tags: [version]
 
 ## 버전 별 특징
 
-### SDK 14
+### SDK 14 (Ice Cream Sandwich)
 
 - Jetpack과 AndroidX 라이브러리가 지원되는 최소 버전이다. 그렇기 때문에 사실상 이 이하의 버전은 다루지 않을 가능성이 높다.
+- 삼성 갤럭시 S3 초기 OS ~ 4.4(KitKat)
 
-### SDK 19
+### SDK 19 (KitKat)
 
 - Google Play가 지원되는 최소 버전이다.
+- 삼성 갤럭시 S5 초기 OS ~ 6.0(Marshmallow)
 
-### SDK 21
+### SDK 21 (Lollipop)
 
+- Dalvik 런타임에서 ART로 변경되었다.
+- Material 디자인을 지원하기 시작했다.
 - Jetpack Compose를 지원하는 최소 버전이다.
 - [카카오뱅크](https://m.kakaobank.com/Notices/view/12112)가 지원하는 최소 버전이다.
+- 삼성 갤럭시 S6 초기 OS ~ 7.0(Nougat)
 
-### SDK 22
+### SDK 22 (Lollipop)
 
 - SDK 22 이상의 버전을 사용하는 사용자가 전체의 98.7%이다.
 
-### SDK 23
+### SDK 23 (Marshmallow)
 
+- 런타임 퍼미션 방식으로 변경했다. 기존에는 앱에 필요한 모든 권한을 한 번에 받아야 했다.
 - 카카오톡이 지원하는 최소 버전이다.
 - [카카오페이](https://www.kakaopay.com/news/notice_detail?id=1435&page=1)가 지원하는 최소 버전이다.
+- 삼성 갤럭시 S7 초기 OS ~ 8.0(Oreo)
 
-### SDK 28
+### SDK 26 (Oreo)
+
+- 백그라운드 제약이 더 많이 생겼다.
+- 삼성 갤럭시 S9 초기 OS ~ 10(Quince Tart)
+
+### SDK 28 (Pie)
 
 - 새로 만드는 Wear OS나 Wear OS 업데이트를 위해서 `targetSdk`는 28 이상이어야 한다.
+- 삼성 갤럭시 S10 초기 OS ~ 12(Snow Cone)
 
-### SDK 31
+### SDK 30 (Red Velvet Cake)
 
-- 현재 새로 만드는 앱은 `targetSdk`를 31 이상으로 해야한다. [링크](https://developer.android.com/google/play/requirements/target-sdk)
+- 현재 새로 만드는 앱은 `targetSdk`를 30 이상으로 해야한다. [링크](https://developer.android.com/google/play/requirements/target-sdk)
 - 기존의 앱들도 2022년 11월까지 `targetSdk`를 30 이상으로 올려야 한다. [링크](https://support.google.com/googleplay/android-developer/answer/11926878)
+- 삼성 갤럭시 S21 초기 OS
 
-### SDK 32
+### SDK 32 (Snow Cone)
 
 - 2022년 8월 부터는 새로 만드는 앱은 `targetSdk`를 31 이상으로 해야한다.[링크](https://developer.android.com/google/play/requirements/target-sdk)
 - 기존의 앱들은 2023년 11월까지 `targetSdk`가 31 이상이 되도록 해야한다.[링크](https://support.google.com/googleplay/android-developer/answer/11926878)
+- 삼성 갤럭시 S22 초기 OS
+
+## 최소 버전을 몇으로 할까?
+
+정답은 없다.
+
+다음 트위터를 참고해보자. (절대적으로 따라야 하는 것은 아니다)
+
+<blockquote class="twitter-tweet"><p lang="und" dir="ltr">23</p>&mdash; minSdkVersion (@minSdkVersion) <a href="https://twitter.com/minSdkVersion/status/1204145130673975311?ref_src=twsrc%5Etfw">December 9, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
