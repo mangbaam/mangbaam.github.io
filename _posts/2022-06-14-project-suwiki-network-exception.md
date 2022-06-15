@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [SUWIKI] 문제 해결 - 네트워크 에러 핸들링
+title: "[SUWIKI] 문제 해결 - 네트워크 에러 핸들링"
 subtitle: Sandwich를 사용한 네트워킹 핸들링 🥪
 categories: Project
 tags: [suwiki,network,exception,error]
