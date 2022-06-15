@@ -32,8 +32,6 @@ Suwiki 안드로이드 앱은 앱을 켜면 자동 로그인 여부를 확인한
 
 ### 의존성 추가
 
-*build.gradle*
-
 ```gradle
 dependencies {
     implementation "com.github.skydoves:sandwich:1.2.5"
@@ -127,4 +125,10 @@ CoroutineScope(Dispatchers.IO).launch {
 
 sandwich 라이브러리를 사용해서 간단하게 네트워킹 실패를 처리할 수 있었다. 여기서 소개한 내용은 아주 아주 기본적인 내용만 있지만 sandwich는 Flow를 사용하는 환경 등 아주 다양한 상황을 커버할 수 있도록 정교하게 만들어진 라이브러리이다 보니 좀 더 공부하고 최적의 방법을 적용해보려 한다. 물론 편리한 라이브러리 사용에 실제 네트워킹이 어떻게 이루어지고 어떻게 에러를 핸들링해야 할 지 고민해보는 것을 덮어두지 않으리라 다짐하며 글을 마친다.
 
+## 참고
+
+[https://velog.io/@skydoves/retrofit-api-handling-sandwich][블로그]
+[https://github.com/skydoves/sandwich][깃헙]
+
 [블로그]: https://velog.io/@skydoves/retrofit-api-handling-sandwich
+[깃헙]: https://github.com/skydoves/sandwich
