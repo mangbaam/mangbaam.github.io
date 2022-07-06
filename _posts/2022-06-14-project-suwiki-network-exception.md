@@ -128,6 +128,7 @@ sandwich 라이브러리를 사용해서 간단하게 네트워킹 실패를 처
 ## 참고
 
 [https://velog.io/@skydoves/retrofit-api-handling-sandwich][블로그]
+
 [https://github.com/skydoves/sandwich][깃헙]
 
 [블로그]: https://velog.io/@skydoves/retrofit-api-handling-sandwich

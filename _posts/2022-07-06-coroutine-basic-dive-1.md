@@ -3,7 +3,7 @@ layout: post
 title: CoroutineContext and CoroutineScope in Kotlin and Android
 subtitle: 코루틴 컨텍스트와 코루틴 스코프 딥 다이브
 categories: Kotlin
-tags: [android,coroutine]
+tags: [kotlin,android,coroutine]
 ---
 
 ## ⭐

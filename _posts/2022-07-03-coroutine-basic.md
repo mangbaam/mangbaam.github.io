@@ -3,7 +3,7 @@ layout: post
 title: Kotlin Coroutine Basic
 subtitle: 
 categories: Kotlin
-tags: [android,coroutine]
+tags: [kotlin,android,coroutine]
 ---
 
 ## ⭐
