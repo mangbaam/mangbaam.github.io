@@ -99,7 +99,7 @@ public interface Element : CoroutineContext {
 
 ### 예시
 
-![코루틴컨텍스트](https://user-images.githubusercontent.com/44221447/177522788-218646a5-6f77-4f59-895a-b27d92793b80.png)
+![코루틴컨텍스트](https://user-images.githubusercontent.com/44221447/177681983-a6ed6f56-b485-46ef-8ae6-acab19789347.png)
 
 위 그림은 `GlobalScope.launch {}`를 수행할 때 `launch` 함수의 첫 번째 인자인 `CoroutineContext`에 어떤 값을 넘기는 지에 따라 변화하는 코루틴 컨텍스트의 상태를 보여준다.
 
