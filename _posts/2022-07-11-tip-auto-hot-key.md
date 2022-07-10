@@ -10,9 +10,7 @@ tags: [autohotkey,keymapping,tip]
 
 본 게시글에서 공유한 스크립트는 언제든 변경되거나 추가될 수 있습니다!
 
-https://github.com/mangbaam/AutoHotKey
-
-깃허브에서 최신의 내용을 확인할 수 있습니다. 복사해서 자유롭게 사용하세요!
+[깃허브](https://github.com/mangbaam/AutoHotKey)에서 최신의 내용을 확인할 수 있습니다. 복사해서 자유롭게 사용하세요!
 
 더 좋은 방법이나 버그, 추가하면 좋을 키매핑 등 자유롭게 의견 주세요!
 
@@ -40,7 +38,7 @@ https://github.com/mangbaam/AutoHotKey
 
 다른 사람들도 꼭 키보드에서 손이 벗어나지 않아도 되는 **극한의 효율성**을 느끼게 해주고 싶어서 스크립트와 방법을 공유하고자 한다.
 
-> 앤프로 후기 및 키매핑 -> https://latte-is-horse.tistory.com/89
+> 앤프로 후기 및 키매핑 -> [https://latte-is-horse.tistory.com/89](https://latte-is-horse.tistory.com/89)
 
 ## 설치
 
