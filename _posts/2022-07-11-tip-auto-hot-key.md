@@ -38,7 +38,7 @@ tags: [autohotkey,keymapping,tip]
 
 다른 사람들도 꼭 키보드에서 손이 벗어나지 않아도 되는 **극한의 효율성**을 느끼게 해주고 싶어서 스크립트와 방법을 공유하고자 한다.
 
-> 앤프로 후기 및 키매핑 -> [https://latte-is-horse.tistory.com/89](https://latte-is-horse.tistory.com/89)
+*앤프로 후기 및 키매핑 -> [https://latte-is-horse.tistory.com/89](https://latte-is-horse.tistory.com/89)*
 
 ## 설치
 
