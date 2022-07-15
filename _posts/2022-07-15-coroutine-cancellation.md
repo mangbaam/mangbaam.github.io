@@ -3,7 +3,7 @@ layout: post
 title: Kotlin Coroutine Cancellation
 subtitle: 코루틴의 취소
 categories: Kotlin
-tags: [kotlin,,coroutine]
+tags: [kotlin,coroutine]
 ---
 
 ## 모든 중단 함수는 취소 요청에 응답해야 한다
