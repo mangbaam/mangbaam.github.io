@@ -120,8 +120,6 @@ fun main(args: Array<String>) = runBlocking {
 }
 ```
 
-*use()*
-
 ```text
 1
 2
@@ -130,6 +128,8 @@ fun main(args: Array<String>) = runBlocking {
 실행 완료
 종료
 ```
+
+*use()*
 
 ```kotlin
 fun main(args: Array<String>) = runBlocking {
