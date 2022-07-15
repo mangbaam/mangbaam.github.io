@@ -147,3 +147,5 @@ NonCancellable은 AbstractCoroutineContextElement를 상속하는 컨텍스트 �
 정답은 두 번째 경로이다.
 
 코드에서 oldContext는 현재 코루틴의 컨텍스트이고, newContext는 oldContext + NonCancellable 이다. NonCancellable에는 dispatcher 컨텍스트 요소에 대한 정의가 들어있지 않으므로 둘을 plus 하게 되면 oldContext의 dispatcher 요소를 상속하여 사용하게 된다.
+
+> NonCancellable은 withContext 에서만 사용되어야 한다.
