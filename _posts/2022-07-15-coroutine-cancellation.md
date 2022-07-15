@@ -6,6 +6,10 @@ categories: Kotlin
 tags: [kotlin,coroutine]
 ---
 
+## ⭐
+
+> 본 글은 [코루틴 공식 가이드 읽고 분석하기 — Part 2](https://myungpyo.medium.com/%EC%BD%94%EB%A3%A8%ED%8B%B4-%EA%B3%B5%EC%8B%9D-%EA%B0%80%EC%9D%B4%EB%93%9C-%EC%9E%90%EC%84%B8%ED%9E%88-%EC%9D%BD%EA%B8%B0-part-2-ccd47699b520)을 읽고 공부한 내용을 정리하는 글입니다.
+
 ## 모든 중단 함수는 취소 요청에 응답해야 한다
 
 ---
@@ -172,6 +176,8 @@ CancellationTest - close()
 취소된 코루틴의 finally 블록 안에서 중단 함수를 호출하면 **CancellableException**이 발생한다.
 
 보통 리소스를 정리하는 함수들은 Non-Blocking으로 동작하기 때문에 큰 문제가 되지는 않지만 만약 취소된 코루틴 안에서 동기적으로 어떤 중단 함수를 호출해야 하는 경우에는 `withContext { }` 코루틴 빌더에 `NonCancellable` 컨텍스트를 전달해서 처리할 수 있다.
+
+> NonCancellable에 관한 내용은 [이 글](https://mangbaam.github.io/kotlin/2022/07/15/coroutine-withcontext.html)을 참고하세요.
 
 ```kotlin
 fun main(args: Array<String>) = runBlocking {
