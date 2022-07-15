@@ -96,7 +96,7 @@ withContext 함수는 로직이 담긴 코드 블록과 이것이 실행될 코�
 withContext 함수로 전달된 컨텍스트에 따라 3가지 방식으로 처리가 된다.
 
 - Function Caller - Callee 코루틴 컨텍스트가 완전히 동일한 경우 (===)
-  - 현재 컨텍스트에서 그대로 코드 블럭을 실행해도 무방하기 때문에 ScopeCoroutine을 만들어 바로 실행한다. ScopeCoroutine은 코루틴 간 컨텍트스가 동일해서 바로 작업을 수행할 수 있을 경우 사용됨
+  - 현재 컨텍스트에서 그대로 코드 블럭을 실행해도 무방하기 때문에 ScopeCoroutine을 만들어 바로 실행한다. ScopeCoroutine은 코루틴 간 컨텍스트가 동일해서 바로 작업을 수행할 수 있을 경우 사용됨
 - Function Caller - Callee 코루틴 컨텍스트가 서로 다른 부분이 있지만 Dispatcher 컨텍스트 요소는 동일한 경우 (==)
   - UndispatchedCoroutine을 만들고 새로 만들어진 컨텍스트 안에서 실행 (withContext)
 - 그 외의 경우
