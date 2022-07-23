@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[SUWIKI] Networking | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="[SUWIKI] Networking">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="Intro">
+<meta property="og:description" content="Intro">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/project/2022/05/10/project-suwiki-networking.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/project/2022/05/10/project-suwiki-networking.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-05-10T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="[SUWIKI] Networking">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-05-10T00:00:00+00:00","datePublished":"2022-05-10T00:00:00+00:00","description":"Intro","headline":"[SUWIKI] Networking","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/project/2022/05/10/project-suwiki-networking.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/project/2022/05/10/project-suwiki-networking.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">[SUWIKI] Networking</h1>
+  <h2 class="post-subtitle">🎈네트워킹은 이렇게 구현했어요</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-05-10T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> May 10, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 47 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/jekyll-theme-yat/tags.html#suwiki">#suwiki</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="intro">Intro</h2>
+
+<p><code class="language-plaintext highlighter-rouge">SUWIKI</code>에서 서버 통신을 위한 구성을 어떻게 했는지 포스팅합니다.</p>
+
+<p>네트워킹을 위해 사용한 기술은 <code class="language-plaintext highlighter-rouge">Retrofit2</code> 입니다.</p>
+
+<p>API는 <code class="language-plaintext highlighter-rouge">REST API</code>를 따릅니다. (이에 대한 내용은 백엔드와 관련된 내용이므로 자세히 설명하지 않습니다)</p>
+
+<blockquote>
+  <p>이하 내용에서는 <strong>편한 말투</strong>로 진행하겠습니다 😉</p>
+</blockquote>
+
+<hr>
+
+<h2 id="dependencies-추가">Dependencies 추가</h2>
+
+<div class="language-gradle highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Retrofit */</span>
+<span class="kt">def</span> <span class="n">retrofit_version</span> <span class="o">=</span> <span class="s2">"2.9.0"</span>
+<span class="n">implementation</span> <span class="s2">"com.squareup.retrofit2:retrofit:$retrofit_version"</span>
+<span class="n">implementation</span> <span class="s2">"com.squareup.retrofit2:converter-gson:$retrofit_version"</span>
+<span class="n">implementation</span> <span class="s2">"com.squareup.okhttp3:logging-interceptor:4.9.3"</span>
+<span class="n">implementation</span> <span class="s2">"com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"</span>
+<span class="n">implementation</span> <span class="s2">"com.squareup.retrofit2:converter-scalars:2.9.0"</span>
+</code></pre></div></div>
+
+<p><em>build.gradle (app)</em></p>
+
+<p>네트워크 통신을 위한 <code class="language-plaintext highlighter-rouge">Retrofit2</code>와 JSON 데이터 응답 값을 객체로 변환하기 위한 <code class="language-plaintext highlighter-rouge">Gson Converter</code>, 통신 중간에 가로채는 <code class="language-plaintext highlighter-rouge">Loggin Intercepter</code>, 네트워크 통신을 Coroutine을 사용해 비동기 처리하기 위한 <code class="language-plaintext highlighter-rouge">Coroutine adatper</code> 등을 추가했다.</p>
+
+<h2 id="retrofit-인터페이스">Retrofit 인터페이스</h2>
+
+<p><em>IRtrofit.kt</em>
+<img src="https://user-images.githubusercontent.com/44221447/167475994-935e1ee7-4638-4cda-836d-79bc222901c6.png" alt="IRetrofit"></p>
+
+<p>위 사진을 보면 <code class="language-plaintext highlighter-rouge">@POST</code>와 <code class="language-plaintext highlighter-rouge">@GET</code>을 확인할 수 있다. API 명세에 따라 POST 방식을 사용할 것인지, GET 방식을 사용할 것인지 구분한다. 주로 서버로부터 데이터를 내려 받을 때는 <code class="language-plaintext highlighter-rouge">GET</code>을 사용하고, 데이터를 확인하거나 요청 내용을 숨기기 위해 <code class="language-plaintext highlighter-rouge">POST</code>를 사용했다. <code class="language-plaintext highlighter-rouge">GET</code> 방식을 사용하면 요청 쿼리가 주소창에 노출되기 때문이다.</p>
+
+<p>사진에서도 알 수 있듯이 <code class="language-plaintext highlighter-rouge">POST</code> 방식은 <code class="language-plaintext highlighter-rouge">Body</code>에 필요한 파라미터를 넣는다.</p>
+
+<p>다음으로는 각 함수 앞에 붙은 <code class="language-plaintext highlighter-rouge">suspend</code> 키워드를 볼 수 있다. <code class="language-plaintext highlighter-rouge">suspend</code> 키워드는 <code class="language-plaintext highlighter-rouge">Coroutine</code>을 사용하기 위해 붙은 키워드이다. 네트워크 통신은 상당히 비용이 큰 작업이다. 만약 안드로이드의 메인 스레드인 <code class="language-plaintext highlighter-rouge">UI 스레드</code>에서 IO 작업을 하게 되면 작업이 진행되는 동안 사용자가 앱을 사용할 수 없어서 불편할 뿐만 아니라 5초가 지나게 되면 <code class="language-plaintext highlighter-rouge">ANR(Application Not Responding)</code>이 발생하면서 앱이 죽게 된다. 이러한 이유로 네트워킹과 같은 IO 작업은 비동기로 이루어지며 주로 <code class="language-plaintext highlighter-rouge">RxJava</code>나 <code class="language-plaintext highlighter-rouge">Coroutine</code>을 사용해서 비동기 작업을 하게 된다.</p>
+
+<p><em>Constants.kt</em>
+<img src="https://user-images.githubusercontent.com/44221447/167480543-a5981510-6c00-4bc9-b6e8-3b28e39d2f54.png" alt="constant">
+다음으로 알 수 있는 것은 요청 파라미터를 <code class="language-plaintext highlighter-rouge">SIGN_UP</code>과 같은 방식으로 상수로 관리했다. 이렇게 하면 API 요청 파라미터가 변경되었을 때 빠르게 찾아서 변경할 수 있고, 의존성을 낮출 수 있다. 또한 캡슐화를 통해 어떠한 기능인지 더 명확히 알기 쉽고 세부 내용을 감출 수 있다.</p>
+
+<p>응답은 <code class="language-plaintext highlighter-rouge">Response</code>로 감싸서 받는다. <code class="language-plaintext highlighter-rouge">Response</code>로 감싸면 <strong>응답 코드와 메시지, 통신 성공 여부</strong>를 알 수 있다. 통신에 실패했을 때 사용자에게 적절히 알리고 예외 처리하기 위해 <code class="language-plaintext highlighter-rouge">Response</code>를 사용했다.</p>
+
+<h2 id="인스턴스-만들기">인스턴스 만들기</h2>
+
+<p>이 부분은 별도로 분리해서 만들 수도 있지만 이 프로젝트에서는 <code class="language-plaintext highlighter-rouge">IRetrofit.kt</code>에 인터페이스와 같이 작성했다. <code class="language-plaintext highlighter-rouge">companion object</code>에 작성되었다.</p>
+
+<p>API 요청을 할 때마다 <code class="language-plaintext highlighter-rouge">Retrofit</code>의 인스턴스를 새로 만드는 것은 굉장히 큰 비용이 소모되기 때문에 주로 한 번 만든 인스턴스를 재활용하는 싱글톤 방식으로 사용한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">SUWIKI</code>에서는 2개의 인스턴스를 만들었다. 하나는 JWT 토큰이 필요 없는 API 작업에 사용하는 인스턴스이고, 다른 하나는 API 요청 시 헤더에 JWT 토큰을 요구할 때 사용하는 인스턴스이다.</p>
+
+<p>예를 들어 공지사항 확인과 같이 로그인이 필요 없는 요청을 할 때와 시험 정보를 포인트로 구매 하는 등 인증 및 인가가 필요한 작업이 서로 다른 인스턴스를 사용하게 된다.</p>
+
+<p>물론 하나의 인스턴스를 만들어서 JWT 토큰이 필요한 경우에 위에서 작성한 인터페이스에 직접 넣어줘도 되지만 대부분의 API 요청이 토큰을 요구하므로 별도의 인스턴스를 만들게 되었다.</p>
+
+<h3 id="인스턴스-생성">인스턴스 생성</h3>
+
+<p><em>IRetrofit.kt</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">companion</span> <span class="k">object</span><span class="p">{</span>
+    <span class="k">private</span> <span class="kd">var</span> <span class="py">retrofitService</span><span class="p">:</span> <span class="nc">IRetrofit</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>
+        <span class="k">private</span> <span class="kd">var</span> <span class="py">retrofitServiceWithNoToken</span><span class="p">:</span> <span class="nc">IRetrofit</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>
+
+        <span class="k">fun</span> <span class="nf">getInstance</span><span class="p">():</span> <span class="nc">IRetrofit</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">retrofitService</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">val</span> <span class="py">client</span> <span class="p">=</span> <span class="nf">getClient</span><span class="p">()</span>
+                <span class="n">retrofitService</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="nc">IRetrofit</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">retrofitService</span><span class="o">!!</span>
+        <span class="p">}</span>
+
+        <span class="k">fun</span> <span class="nf">getInstanceWithNoToken</span><span class="p">():</span> <span class="nc">IRetrofit</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">retrofitServiceWithNoToken</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">val</span> <span class="py">client</span> <span class="p">=</span> <span class="nf">getClientWithNoToken</span><span class="p">()</span>
+                <span class="n">retrofitServiceWithNoToken</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="nc">IRetrofit</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">retrofitServiceWithNoToken</span><span class="o">!!</span>
+        <span class="p">}</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>토큰을 필요로 하지 않는 <code class="language-plaintext highlighter-rouge">retrofitServiceWithNoToken</code>와 토큰을 헤더에 넣어주는 <code class="language-plaintext highlighter-rouge">retrofitService</code>에 인스턴스를 생성하는 코드이다. 두 부분의 차이라고 한다면 <code class="language-plaintext highlighter-rouge">client</code> 부분이다.</p>
+
+<h3 id="retrofit-객체-생성">Retrofit 객체 생성</h3>
+
+<p><em>IRetrofit.kt</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">getClient</span><span class="p">():</span> <span class="nc">Retrofit</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nc">Retrofit</span><span class="p">.</span><span class="nc">Builder</span><span class="p">()</span>
+            <span class="p">.</span><span class="nf">baseUrl</span><span class="p">(</span><span class="nc">BASE_URL</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">client</span><span class="p">(</span><span class="nf">getOkHttpClient</span><span class="p">(</span><span class="nc">TokenAuthenticator</span><span class="p">()))</span>
+            <span class="p">.</span><span class="nf">addConverterFactory</span><span class="p">(</span><span class="nf">gsonConverterFactory</span><span class="p">())</span>
+            <span class="p">.</span><span class="nf">build</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">getClientWithNoToken</span><span class="p">():</span> <span class="nc">Retrofit</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nc">Retrofit</span><span class="p">.</span><span class="nc">Builder</span><span class="p">()</span>
+            <span class="p">.</span><span class="nf">baseUrl</span><span class="p">(</span><span class="nc">BASE_URL</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">client</span><span class="p">(</span><span class="nf">getOkHttpClient</span><span class="p">(</span><span class="k">null</span><span class="p">))</span>
+            <span class="p">.</span><span class="nf">addConverterFactory</span><span class="p">(</span><span class="nf">gsonConverterFactory</span><span class="p">())</span>
+            <span class="p">.</span><span class="nf">build</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>이 부분에서는 API의 베이스 URL을 넣어서 <code class="language-plaintext highlighter-rouge">Retrofit</code> 객체를 생성한다. <code class="language-plaintext highlighter-rouge">client</code>에는 <code class="language-plaintext highlighter-rouge">OkHttpClient</code> 객체를 넣어줬고, <code class="language-plaintext highlighter-rouge">ConverterFactory</code>는 <code class="language-plaintext highlighter-rouge">Gson Converter</code>를 사용했다. 서버에서 내려준 <code class="language-plaintext highlighter-rouge">JSON</code> 타입의 데이터를 자바 객체로 변환해주는 컨버터이다.
+(서버에서 내려주는 타입이 <code class="language-plaintext highlighter-rouge">JSON</code> 타입이 아닌 경우 <code class="language-plaintext highlighter-rouge">ScalarsConverter</code>를 사용했는데 내가 작성한 부분이 아니라 제외했다)</p>
+
+<p><code class="language-plaintext highlighter-rouge">getClient()</code>와 <code class="language-plaintext highlighter-rouge">getClientWithNoToken()</code>의 차이는 <code class="language-plaintext highlighter-rouge">client</code>를 추가하는 부분에서 <code class="language-plaintext highlighter-rouge">getOkHttpClient()</code> 파라미터가 <code class="language-plaintext highlighter-rouge">null</code>인지 아닌지 차이가 있다.</p>
+
+<p>하나씩 살펴보도록 하자.</p>
+
+<h3 id="okhttpclient">OkHttpClient</h3>
+
+<p>서버와의 통신에서 발생하는 request, response 로그를 가로채서 확인할 수 있도록 <code class="language-plaintext highlighter-rouge">OkHttpClient</code>의 <code class="language-plaintext highlighter-rouge">HttpLoggingInterceptor</code>를 사용했다.</p>
+
+<p><em>IRetrofit.kt</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">getOkHttpClient</span><span class="p">(</span>
+            <span class="n">authenticator</span><span class="p">:</span> <span class="nc">TokenAuthenticator</span><span class="p">?</span>
+    <span class="p">):</span> <span class="nc">OkHttpClient</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">loggingInterceptor</span> <span class="p">=</span> <span class="nc">HttpLoggingInterceptor</span> <span class="p">{</span> <span class="n">message</span> <span class="p">-&gt;</span>
+            <span class="k">when</span> <span class="p">{</span>
+                <span class="n">message</span><span class="p">.</span><span class="nf">isJsonObject</span><span class="p">()</span> <span class="p">-&gt;</span>
+                    <span class="nc">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="nc">TAG</span><span class="p">,</span> <span class="nc">JSONObject</span><span class="p">(</span><span class="n">message</span><span class="p">).</span><span class="nf">toString</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+                <span class="n">message</span><span class="p">.</span><span class="nf">isJsonArray</span><span class="p">()</span> <span class="p">-&gt;</span>
+                    <span class="nc">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="nc">TAG</span><span class="p">,</span> <span class="nc">JSONArray</span><span class="p">(</span><span class="n">message</span><span class="p">).</span><span class="nf">toString</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+                <span class="k">else</span> <span class="p">-&gt;</span>
+                    <span class="nc">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="nc">TAG</span><span class="p">,</span> <span class="s">"CONNECTION INFO -&gt; $message"</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">loggingInterceptor</span><span class="p">.</span><span class="n">level</span> <span class="p">=</span> <span class="nc">HttpLoggingInterceptor</span><span class="p">.</span><span class="nc">Level</span><span class="p">.</span><span class="nc">BODY</span>
+
+        <span class="kd">val</span> <span class="py">client</span> <span class="p">=</span> <span class="nc">OkHttpClient</span><span class="p">.</span><span class="nc">Builder</span><span class="p">().</span><span class="nf">addInterceptor</span><span class="p">(</span><span class="n">loggingInterceptor</span><span class="p">)</span>
+        <span class="n">authenticator</span><span class="o">?.</span><span class="nf">apply</span> <span class="p">{</span>
+            <span class="n">client</span>
+                <span class="p">.</span><span class="nf">addInterceptor</span><span class="p">(</span><span class="nc">AuthenticationInterceptor</span><span class="p">())</span>
+                <span class="p">.</span><span class="nf">authenticator</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">client</span><span class="p">.</span><span class="nf">build</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="c1">//..</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>로그 메시지가 <code class="language-plaintext highlighter-rouge">JSON 객체</code> 형태일 때와 <code class="language-plaintext highlighter-rouge">JSON 배열</code> 형태일 때 각자의 타입에 맞게 출력하고, 그 외의 정보는 그냥 출력한다.</p>
+
+<p>가로챈 로그는 문자열 타입인데 이를 어떤 형태인지 구분하기 위해 Kotlin의 확장 함수 기능을 사용해서 판별했다. 확장 함수를 사용한 부분은 다음과 같다.</p>
+
+<p><em>Extention.kt</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 문자열 -&gt; json 형태인지 json 배열 형태인지</span>
+<span class="k">fun</span> <span class="nf">String</span><span class="o">?.</span><span class="nf">isJsonObject</span><span class="p">():</span> <span class="nc">Boolean</span> <span class="p">=</span> <span class="k">this</span><span class="o">?.</span><span class="nf">startsWith</span><span class="p">(</span><span class="s">"{"</span><span class="p">)</span> <span class="p">==</span> <span class="k">true</span> <span class="p">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nf">endsWith</span><span class="p">(</span><span class="s">"}"</span><span class="p">)</span>
+<span class="k">fun</span> <span class="nf">String</span><span class="o">?.</span><span class="nf">isJsonArray</span><span class="p">():</span> <span class="nc">Boolean</span> <span class="p">=</span> <span class="k">this</span><span class="o">?.</span><span class="nf">startsWith</span><span class="p">(</span><span class="s">"["</span><span class="p">)</span> <span class="p">==</span> <span class="k">true</span> <span class="p">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nf">endsWith</span><span class="p">(</span><span class="s">"]"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><em>로그</em>
+<img src="https://user-images.githubusercontent.com/44221447/167576646-4d15d079-1f27-4374-8ef1-4ae02614f82a.png" alt="log"></p>
+
+<p>위와 같은 로그를 받아볼 수 있다. 위 로그는 현재 로그인 한 유저의 정보를 받아오는 API 요청에 대한 응답이다. 응답 코드로 200번을 받았고, 중간에 <em>intercept() called</em> 라는 부분이 확인할 수 있다. 그리고 <code class="language-plaintext highlighter-rouge">JSON 객체 타입</code>은 탭(4개의 Space) 되어서 찍히고, 그 외의 데이터는 평문으로 찍힌다.</p>
+
+<p>이렇게 로그를 자세히 확인할 수 있는 것은 <code class="language-plaintext highlighter-rouge">LoggingInterceptor</code> 레벨을 <code class="language-plaintext highlighter-rouge">BODY</code>로 설정했기 때문이다.</p>
+
+<p>여기까지 <code class="language-plaintext highlighter-rouge">LoggingInterceptor</code>를 만드는 과정이었고, <code class="language-plaintext highlighter-rouge">OkHttpClient.Builder()</code>를 사용해 <code class="language-plaintext highlighter-rouge">OkHttpClient</code>객체를 만들고 앞서 만든 <code class="language-plaintext highlighter-rouge">LoggingInterceptor</code>를 추가한다.</p>
+
+<p>그리고 <a href="#retrofit-%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1">위에서</a> <code class="language-plaintext highlighter-rouge">getClient()</code>와 <code class="language-plaintext highlighter-rouge">getClientWithNoToken()</code>의 차이가 <code class="language-plaintext highlighter-rouge">getOkHttpClient()</code> 메소드의 매개 변수(<code class="language-plaintext highlighter-rouge">authenticator</code>)로 <code class="language-plaintext highlighter-rouge">null</code>의 유무였다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">authenticator</code>를 매개 변수로 받았다면 매개 변수로 받은 <code class="language-plaintext highlighter-rouge">authenticator</code>와 <code class="language-plaintext highlighter-rouge">AuthenticationInterceptor</code>의 값을 추가로 <code class="language-plaintext highlighter-rouge">OkHttpClient.Builder()</code>에 추가한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">TokenAuthenticator</code>(authenticator)와 <code class="language-plaintext highlighter-rouge">AuthenticationInterceptor</code>는 바로 밑에서 살펴보도록 하자.</p>
+
+<h3 id="헤더에-access-토큰-삽입">헤더에 Access 토큰 삽입</h3>
+
+<p><code class="language-plaintext highlighter-rouge">AuthenticationInterceptor</code> 클래스는 <code class="language-plaintext highlighter-rouge">OkHttp3</code>의 <a href="https://square.github.io/okhttp/features/interceptors/">Interceptor</a> 클래스를 상속한다.</p>
+
+<p>이 클래스는 API 요청을 가로채서 JWT의 액세스 토큰을 헤더에 삽입해서 요청을 보내주는 역할을 한다. 앞서 <code class="language-plaintext highlighter-rouge">getInstance()</code>와 <code class="language-plaintext highlighter-rouge">getInstanceWithNoToken()</code>의 차이가 바로 여기서 발생하는 것이다.</p>
+
+<p><em>IRetrofit.kt</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">AuthenticationInterceptor</span> <span class="p">:</span> <span class="nc">Interceptor</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">intercept</span><span class="p">(</span><span class="n">chain</span><span class="p">:</span> <span class="nc">Interceptor</span><span class="p">.</span><span class="nc">Chain</span><span class="p">):</span> <span class="n">okhttp3</span><span class="p">.</span><span class="nc">Response</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">accessToken</span> <span class="p">=</span> <span class="nc">TimeTableSelPref</span><span class="p">.</span><span class="n">encryptedPrefs</span><span class="p">.</span><span class="nf">getAccessToken</span><span class="p">()</span> <span class="o">?:</span> <span class="s">""</span>
+        <span class="kd">val</span> <span class="py">request</span> <span class="p">=</span> <span class="n">chain</span><span class="p">.</span><span class="nf">request</span><span class="p">().</span><span class="nf">newBuilder</span><span class="p">()</span>
+            <span class="p">.</span><span class="nf">addHeader</span><span class="p">(</span><span class="nc">AUTH_HEADER</span><span class="p">,</span> <span class="n">accessToken</span><span class="p">).</span><span class="nf">build</span><span class="p">()</span>
+        <span class="nc">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span>
+            <span class="nc">TAG</span><span class="p">,</span>
+            <span class="s">"AuthenticationInterceptor - intercept() called / request header: ${request.headers}"</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">chain</span><span class="p">.</span><span class="nf">proceed</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>이 프로젝트에서 JWT는 <code class="language-plaintext highlighter-rouge">EncyptedSharedPreference</code>를 사용해 저장되어 있다. 여기에 필요한 <code class="language-plaintext highlighter-rouge">Context</code>는 <code class="language-plaintext highlighter-rouge">ApplicationContext</code>를 사용했기 때문에 이 클래스에 <code class="language-plaintext highlighter-rouge">Context</code>를 별도로 주입하지 않고 사용할 수 있었다.</p>
+
+<h3 id="access-토큰-갱신">Access 토큰 갱신</h3>
+
+<p><code class="language-plaintext highlighter-rouge">TokenAuthenticator</code> 클래스는 <code class="language-plaintext highlighter-rouge">OkHttp3</code>의 <a href="https://square.github.io/okhttp/4.x/okhttp/okhttp3/-authenticator/">Authenticator</a> 클래스를 상속한다.</p>
+
+<p>이 클래스는 <a href="#authenticationinterceptor">헤더에 토큰을 싣고 요청</a>했을 때 해당 토큰이 만료된 상태라면 Refresh 토큰을 사용해 서버로부터 Access 토큰을 재발급 받고, 재발급 된 토큰을 가지고 기존에 중단됐던 요청을 이어나갈 수 있는 역할을 한다.</p>
+
+<p><em>IRetrofit.kt</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">TokenAuthenticator</span> <span class="p">:</span> <span class="nc">Authenticator</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">authenticate</span><span class="p">(</span><span class="n">route</span><span class="p">:</span> <span class="nc">Route</span><span class="p">?,</span> <span class="n">response</span><span class="p">:</span> <span class="n">okhttp3</span><span class="p">.</span><span class="nc">Response</span><span class="p">):</span> <span class="nc">Request</span><span class="p">?</span> <span class="p">{</span>
+
+        <span class="kd">val</span> <span class="py">refresh</span> <span class="p">=</span> <span class="nc">TimeTableSelPref</span><span class="p">.</span><span class="n">encryptedPrefs</span><span class="p">.</span><span class="nf">getRefreshToken</span><span class="p">()</span> <span class="o">?:</span> <span class="s">""</span>
+        <span class="nc">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="nc">TAG</span><span class="p">,</span> <span class="s">"TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청: $refresh"</span><span class="p">)</span>
+        <span class="kd">val</span> <span class="py">tokenResponse</span> <span class="p">=</span>
+            <span class="nc">IRetrofit</span><span class="p">.</span><span class="nf">getInstanceWithNoToken</span><span class="p">().</span><span class="nf">requestRefresh</span><span class="p">(</span><span class="n">refresh</span><span class="p">).</span><span class="nf">execute</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="k">if</span> <span class="p">(</span><span class="nf">handleResponse</span><span class="p">(</span><span class="n">tokenResponse</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nc">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="nc">TAG</span><span class="p">,</span> <span class="s">"TokenAuthenticator - authenticate() called / 중단된 API 재요청"</span><span class="p">)</span>
+            <span class="n">response</span><span class="p">.</span><span class="n">request</span>
+                <span class="p">.</span><span class="nf">newBuilder</span><span class="p">()</span>
+                <span class="p">.</span><span class="nf">removeHeader</span><span class="p">(</span><span class="nc">AUTH_HEADER</span><span class="p">)</span>
+                <span class="p">.</span><span class="nf">header</span><span class="p">(</span><span class="nc">AUTH_HEADER</span><span class="p">,</span> <span class="nc">TimeTableSelPref</span><span class="p">.</span><span class="n">encryptedPrefs</span><span class="p">.</span><span class="nf">getAccessToken</span><span class="p">()</span> <span class="o">?:</span> <span class="s">""</span><span class="p">)</span>
+                <span class="p">.</span><span class="nf">build</span><span class="p">()</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">null</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">handleResponse</span><span class="p">(</span><span class="n">tokenResponse</span><span class="p">:</span> <span class="nc">Response</span><span class="p">&lt;</span><span class="nc">Token</span><span class="p">&gt;)</span> <span class="p">=</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tokenResponse</span><span class="p">.</span><span class="n">isSuccessful</span> <span class="p">&amp;&amp;</span> <span class="n">tokenResponse</span><span class="p">.</span><span class="nf">body</span><span class="p">()</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nc">TimeTableSelPref</span><span class="p">.</span><span class="n">encryptedPrefs</span><span class="p">.</span><span class="nf">saveAccessToken</span><span class="p">(</span><span class="n">tokenResponse</span><span class="p">.</span><span class="nf">body</span><span class="p">()</span><span class="o">!!</span><span class="p">.</span><span class="n">accessToken</span><span class="p">)</span>
+            <span class="nc">TimeTableSelPref</span><span class="p">.</span><span class="n">encryptedPrefs</span><span class="p">.</span><span class="nf">saveRefreshToken</span><span class="p">(</span><span class="n">tokenResponse</span><span class="p">.</span><span class="nf">body</span><span class="p">()</span><span class="o">!!</span><span class="p">.</span><span class="n">refreshToken</span><span class="p">)</span>
+            <span class="k">true</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nc">User</span><span class="p">.</span><span class="nf">logout</span><span class="p">()</span>
+            <span class="nc">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="nc">TAG</span><span class="p">,</span> <span class="s">"TokenAuthenticator - handleResponse() called / 리프레시 토큰이 만료되어 로그 아웃 되었습니다."</span><span class="p">)</span>
+            <span class="k">false</span>
+        <span class="p">}</span>
+
+    <span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+        <span class="k">const</span> <span class="kd">val</span> <span class="py">AUTH_HEADER</span> <span class="p">=</span> <span class="s">"Authorization"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>액세스 토큰이 만료된 경우 REST API에 따라 <code class="language-plaintext highlighter-rouge">401</code> 응답 코드를 내려준다. 응답 코드로 <code class="language-plaintext highlighter-rouge">401</code>을 받으면 <code class="language-plaintext highlighter-rouge">TokenAuthenticator</code>가 동작한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">EncryptedSharedPreference</code>에 저장된 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>을 가져와서 <code class="language-plaintext highlighter-rouge">Access 토큰</code>을 갱신하는 작업을 한 후에 중단되었던 API 요청을 재개한다.</p>
+
+<p>만약 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>마저 만료되었다면 로그인 된 사용자를 <strong>로그 아웃</strong> 시키고, 중단된 작업을 재개하지 않는다.</p>
+
+<p><em>토큰 만료</em>
+<img src="https://user-images.githubusercontent.com/44221447/167582290-fc7eb335-c3db-46e7-af62-6c403d765baf.png" alt="token expired"></p>
+
+<p><em>중단된 요청 재수행</em>
+<img src="https://user-images.githubusercontent.com/44221447/167582766-0b72fe98-13e5-406d-82cb-446caa4055b6.png" alt="resume api request"></p>
+
+<h3 id="localdatetime-다루기">LocalDateTime 다루기</h3>
+<p><a href="#retrofit-%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1">Retrofit 객체 생성 부분</a>의 <code class="language-plaintext highlighter-rouge">ConverterFactory</code>를 추가하는 부분에서 <code class="language-plaintext highlighter-rouge">gsonConverterFactory()</code> 라는 메소드를 사용했다.</p>
+
+<p>이 부분은 원래 다음과 같이 작성되었었다.</p>
+
+<p><em>IRetrofit</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+    <span class="c1">//...</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">getClient</span><span class="p">():</span> <span class="nc">Retrofit</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nc">Retrofit</span><span class="p">.</span><span class="nc">Builder</span><span class="p">()</span>
+            <span class="p">.</span><span class="nf">baseUrl</span><span class="p">(</span> <span class="cm">/* ... */</span> <span class="p">)</span>
+            <span class="p">.</span><span class="nf">client</span><span class="p">(</span> <span class="cm">/* ... */</span> <span class="p">)</span>
+            <span class="p">.</span><span class="nf">addConverterFactory</span><span class="p">(</span><span class="nc">GsonConverterFactory</span><span class="p">.</span><span class="nf">create</span><span class="p">())</span>
+            <span class="p">.</span><span class="nf">build</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>만약 서버의 응답 값으로 <code class="language-plaintext highlighter-rouge">LocalDateTime</code>을 받게 된다면 위의 방법으로는 <code class="language-plaintext highlighter-rouge">Gson</code>이 <code class="language-plaintext highlighter-rouge">String</code> 타입으로 변환해버려서 <code class="language-plaintext highlighter-rouge">LocalDateTime</code>으로 사용할 수 없게 된다.</p>
+
+<p><em>Error</em>
+<img src="https://user-images.githubusercontent.com/44221447/167625596-5a76daa2-7473-4b3e-b863-7fe0aa79e33f.png" alt="LocalDateTime_Type_Error"></p>
+
+<p>이를 해결하기 위해 별도의 메소드로 추출하게 되었다.</p>
+
+<p><em>IRetrofit</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">getClient</span><span class="p">():</span> <span class="nc">Retrofit</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nc">Retrofit</span><span class="p">.</span><span class="nc">Builder</span><span class="p">()</span>
+            <span class="p">.</span><span class="nf">baseUrl</span><span class="p">(</span> <span class="cm">/* ... */</span> <span class="p">)</span>
+            <span class="p">.</span><span class="nf">client</span><span class="p">(</span> <span class="cm">/* ... */</span> <span class="p">)</span>
+            <span class="p">.</span><span class="nf">addConverterFactory</span><span class="p">(</span><span class="nc">GsonConverterFactory</span><span class="p">.</span><span class="nf">create</span><span class="p">())</span>
+            <span class="p">.</span><span class="nf">build</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">gsonConverterFactory</span><span class="p">():</span> <span class="nc">GsonConverterFactory</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">gson</span> <span class="p">=</span> <span class="nc">GsonBuilder</span><span class="p">()</span>
+            <span class="p">.</span><span class="nf">registerTypeAdapter</span><span class="p">(</span><span class="nc">LocalDateTime</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">,</span> <span class="k">object</span><span class="p">:</span> <span class="nc">JsonDeserializer</span><span class="p">&lt;</span><span class="nc">LocalDateTime</span><span class="p">&gt;</span> <span class="p">{</span>
+                <span class="k">override</span> <span class="k">fun</span> <span class="nf">deserialize</span><span class="p">(</span>
+                    <span class="n">json</span><span class="p">:</span> <span class="nc">JsonElement</span><span class="p">?,</span>
+                    <span class="n">typeOfT</span><span class="p">:</span> <span class="nc">Type</span><span class="p">?,</span>
+                    <span class="n">context</span><span class="p">:</span> <span class="nc">JsonDeserializationContext</span><span class="p">?</span>
+                <span class="p">):</span> <span class="nc">LocalDateTime</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="nc">LocalDateTime</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">json</span><span class="o">?.</span><span class="n">asString</span><span class="p">,</span> <span class="nc">DateTimeFormatter</span><span class="p">.</span><span class="nf">ofPattern</span><span class="p">(</span><span class="s">"yyyy-MM-dd'T'HH:mm:ss"</span><span class="p">))</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+            <span class="p">.</span><span class="nf">create</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nc">GsonConverterFactory</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="n">gson</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>위 과정을 통해 <code class="language-plaintext highlighter-rouge">LocalDateTime</code>이 <code class="language-plaintext highlighter-rouge">String</code> 타입으로 변한 것을 <code class="language-plaintext highlighter-rouge">역 직렬화(Deserialize)</code>하여 다시 <code class="language-plaintext highlighter-rouge">LocalDateTime</code> 타입으로 사용할 수 있다.</p>
+
+<blockquote>
+  <p>직렬화: 자바 객체를 <strong>JSON 타입으로 변환</strong></p>
+
+  <p>역 직렬화: JSON 타입 데이터를 <strong>자바 객체로 변환</strong>. 어떤 타입으로 변환할 지 명시해야 한다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="api-호출-예제-시험-정보-구매-이력-확인">API 호출 예제 (시험 정보 구매 이력 확인)</h2>
+
+<h3 id="retrofit-인터페이스-선언">Retrofit 인터페이스 선언</h3>
+
+<p><em>IRetrofit.kt</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">IRetrofit</span> <span class="p">{</span>
+    <span class="nd">@GET</span><span class="p">(</span><span class="nc">PURCHASE_HISTORY</span><span class="p">)</span> <span class="c1">// PURCHASE_HISTORY에는 Base Url 이후의 주소가 들어감</span>
+    <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">getPurchaseHistory</span><span class="p">():</span> <span class="nc">Response</span><span class="p">&lt;</span><span class="nc">PurchaseHistoryDto</span><span class="p">&gt;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="dto">DTO</h3>
+
+<p><em>PurchaseHistoryDto.kt</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">java.io.Serializable</span>
+<span class="k">import</span> <span class="nn">java.time.LocalDateTime</span>
+
+<span class="kd">data class</span> <span class="nc">PurchaseHistoryDto</span><span class="p">(</span>
+    <span class="kd">val</span> <span class="py">data</span><span class="p">:</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">PurchaseHistory</span><span class="p">&gt;</span>
+<span class="p">)</span> <span class="p">:</span> <span class="nc">Serializable</span>
+
+<span class="kd">data class</span> <span class="nc">PurchaseHistory</span><span class="p">(</span>
+    <span class="kd">val</span> <span class="py">id</span><span class="p">:</span> <span class="nc">Long</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">lectureName</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">professor</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">majorType</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">createDate</span><span class="p">:</span> <span class="nc">LocalDateTime</span>
+<span class="p">)</span> <span class="p">:</span> <span class="nc">Serializable</span>
+</code></pre></div></div>
+
+<p><em>API 명세서</em>
+<img src="https://user-images.githubusercontent.com/44221447/167621638-e42c954d-e57e-4da2-8787-4fab960c4632.png" alt="api spec"></p>
+
+<p>API 명세서에 맞게 Data Class를 작성해야 한다. 위 명세서에서는 <code class="language-plaintext highlighter-rouge">data</code>라는 key 값으로 <code class="language-plaintext highlighter-rouge">JSON 배열</code> 형태의 value를 내려주는데 배열의 각 아이템을 이루는 <strong>id, lectureName, professor, majorType, createDate</strong> 에 맞춰서 <code class="language-plaintext highlighter-rouge">PurchaseHistory</code>라는 Data Class를 작성했다.</p>
+
+<p>그리고 <code class="language-plaintext highlighter-rouge">PurchaseHistoryDto</code>라는 이름의 <code class="language-plaintext highlighter-rouge">PurchaseHistory</code> 리스트를 가지는 Data Class를 만들어 <code class="language-plaintext highlighter-rouge">PurchaseHistoryDto</code>로 응답을 받게 된다.</p>
+
+<h3 id="viewmodel">ViewModel</h3>
+
+<p><em>PurchaseHistoryViewModel.kt</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">PurchaseHistoryViewModel</span><span class="p">(</span><span class="k">private</span> <span class="kd">val</span> <span class="py">repository</span><span class="p">:</span> <span class="nc">MyPostRepository</span><span class="p">)</span> <span class="p">:</span> <span class="nc">ViewModel</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// ...</span>
+    <span class="k">private</span> <span class="kd">val</span> <span class="py">_historyList</span> <span class="p">=</span> <span class="nc">MutableLiveData</span><span class="p">&lt;</span><span class="nc">List</span><span class="p">&lt;</span><span class="nc">PurchaseHistory</span><span class="p">&gt;&gt;()</span>
+    <span class="kd">val</span> <span class="py">historyList</span><span class="p">:</span> <span class="nc">LiveData</span><span class="p">&lt;</span><span class="nc">List</span><span class="p">&lt;</span><span class="nc">PurchaseHistory</span><span class="p">&gt;&gt;</span> <span class="k">get</span><span class="p">()</span> <span class="p">=</span> <span class="n">_historyList</span>
+
+    <span class="nf">init</span> <span class="p">{</span>
+        <span class="nf">getHistory</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">getHistory</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">viewModelScope</span><span class="p">.</span><span class="nf">launch</span> <span class="p">{</span>
+            <span class="kd">val</span> <span class="py">response</span> <span class="p">=</span> <span class="n">repository</span><span class="p">.</span><span class="nf">getPurchaseHistory</span><span class="p">()</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">isSuccessful</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">()</span><span class="o">?.</span><span class="n">data</span><span class="o">?.</span><span class="nf">isEmpty</span><span class="p">()</span> <span class="p">==</span> <span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="c1">// 데이터가 없을 때 처리</span>
+                <span class="p">}</span>
+                <span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">()</span><span class="o">?.</span><span class="n">data</span><span class="o">?.</span><span class="nf">let</span> <span class="p">{</span> <span class="n">_historyList</span><span class="p">.</span><span class="nf">postValue</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">()</span><span class="o">?.</span><span class="n">data</span><span class="p">)</span> <span class="p">}</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="c1">// 통신 에러 처리</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>IO 작업을 비동기로 처리하기 위해 <code class="language-plaintext highlighter-rouge">Coroutine</code>을 사용했다. ViewModel에서는 ViewModel 생명 주기에 맞춰서 동작하는 <code class="language-plaintext highlighter-rouge">viewModelScope</code>를 사용할 수 있다.</p>
+
+<p>MyPostRepository에 getPurchaseHistory()를 호출하는 부분을 확인할 수 있다. 응답은 Response로 감싼 값을 받으므로 <code class="language-plaintext highlighter-rouge">response.isSuccessful</code>로 통신 성공 여부를 확인할 수 있고, <a href="#dto"><code class="language-plaintext highlighter-rouge">PurchaseHistoryDto</code></a>의 <code class="language-plaintext highlighter-rouge">data</code> 키 값으로 데이터를 확인할 수 있다.</p>
+
+<p>받아온 데이터가 있다면 라이브데이터에 받아온 데이터를 담는다.</p>
+
+<p>액티비티나 프래그먼트에서 <code class="language-plaintext highlighter-rouge">historyList</code>의 값을 관찰하고 있다가 값이 변경되면 RecyclerView Adapter의 <code class="language-plaintext highlighter-rouge">submitList</code>로 데이터를 변경해주는 방식으로 처리한다.</p>
+
+<h3 id="repository">Repository</h3>
+
+<p>데이터는 지금처럼 네트워크 통신을 통해 가져올 수도 있고, SQLite DB에서 가져올 수도 있고, 내부 Asset 파일에서 가져올 수도 있고, 다양한 데이터 소스가 존재할 수 있다.</p>
+
+<p>ViewModel에서는 비즈니스 로직을 수행하지만 데이터가 어디서 왔는지는 몰라도 되도록 Repository 패턴을 사용한다.</p>
+
+<p><a href="https://developer.android.com/jetpack/guide?hl=ko#data-layer"><em>구글 개발자 문서</em></a>
+<img src="https://user-images.githubusercontent.com/44221447/167629187-db1a82f6-4831-458d-8a87-3c24a362dcdf.png" alt="repository_pattern"></p>
+
+<p><em>MyPostRepository</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MyPostRepository</span><span class="p">(</span><span class="k">private</span> <span class="kd">val</span> <span class="py">dataSource</span><span class="p">:</span> <span class="nc">MyPostRemoteDataSource</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">getPurchaseHistory</span><span class="p">()</span> <span class="p">=</span> <span class="nf">withContext</span><span class="p">(</span><span class="nc">Dispatchers</span><span class="p">.</span><span class="nc">IO</span><span class="p">)</span> <span class="p">{</span> <span class="n">dataSource</span><span class="p">.</span><span class="nf">getPurchaseHistory</span><span class="p">()</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">MyPostRepository</code>에서 매개 변수로 dataSource를 주입 받는다. <code class="language-plaintext highlighter-rouge">MyPostRemoteDateSource</code>에서는 실질적으로 네트워크 통신을 통해 데이터를 받아오는 과정이 수행된다.</p>
+
+<h3 id="data-source">Data Source</h3>
+
+<p><em>MyPostRemoteDataSource</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MyPostRemoteDataSource</span><span class="p">(</span><span class="k">private</span> <span class="kd">val</span> <span class="py">apiService</span><span class="p">:</span> <span class="nc">IRetrofit</span><span class="p">):</span> <span class="nc">MyPostDataSource</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">override</span> <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">getPurchaseHistory</span><span class="p">()</span> <span class="p">=</span> <span class="n">apiService</span><span class="p">.</span><span class="nf">getPurchaseHistory</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>DataSource에서 매개 변수로 apiService를 주입 받는다. <a href="#retrofit-%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1"><code class="language-plaintext highlighter-rouge">IRetrofit</code></a>은 위에서 한참 설명했던 바로 그 인스턴스이다.</p>
+
+<p>위 코드를 보면 <code class="language-plaintext highlighter-rouge">MyPostDataSource</code>를 상속하는 것을 볼 수 있다. <code class="language-plaintext highlighter-rouge">MyPostDataSource</code>는 다양한 데이터 소스를 통일화하기 위해 메서드를 강제하는 인터페이스이다.</p>
+
+<p><em>MyPostDataSource</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">MyPostDataSource</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">getPurchaseHistory</span><span class="p">():</span> <span class="nc">Response</span><span class="p">&lt;</span><span class="nc">PurchaseHistoryDto</span><span class="p">&gt;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="의존성-주입">의존성 주입</h3>
+
+<p>A 클래스 내부에서 B 클래스의 객체가 필요할 때 A 클래스 내부에서 직접 B 클래스의 객체를 생성하면 두 클래스 간의 결합도가 올라가게 된다. 객체 지향 설계에서 클래스 간의 결합도를 낮추고 응집도를 높이는 설계는 중요하다.</p>
+
+<p>이렇게 결합도가 높아지는 것을 방지하기 위해 <strong>생성자 주입 방식, 필드 주입 방식, 수정자 주입 방식 등</strong> 다양한 방법이 고안되었다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Dagger Hilt</code>와 같은 라이브러리도 많이 사용하는 걸로 알고 있다. (아직 Hilt에 대해 학습하지 않은 상태라 프로젝트에 적용되지는 않았다. 현재 프로젝트는 생성자 주입 방식을 채택했다)</p>
+
+<p>현재 프로젝트에서 ViewModel을 사용할 때 ViewModel에 생성자로 apiService를 주입하기 위해서 <code class="language-plaintext highlighter-rouge">ViewModelFactory</code>를 사용해서 생성해주는 방식을 사용하고 있다.</p>
+
+<p><em>ViewModelFactory</em></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Suppress</span><span class="p">(</span><span class="s">"UNCHECKED_CAST"</span><span class="p">)</span>
+<span class="kd">class</span> <span class="nc">ViewModelFactory</span> <span class="p">:</span> <span class="nc">ViewModelProvider</span><span class="p">.</span><span class="nc">Factory</span> <span class="p">{</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="p">&lt;</span><span class="nc">T</span> <span class="p">:</span> <span class="nc">ViewModel</span><span class="p">&gt;</span> <span class="nf">create</span><span class="p">(</span><span class="n">modelClass</span><span class="p">:</span> <span class="nc">Class</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;):</span> <span class="nc">T</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">when</span> <span class="p">{</span>
+            <span class="c1">// ...</span>
+            <span class="n">modelClass</span><span class="p">.</span><span class="nf">isAssignableFrom</span><span class="p">(</span><span class="nc">PurchaseHistoryViewModel</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="p">{</span>
+                <span class="kd">val</span> <span class="py">apiService</span> <span class="p">=</span> <span class="nc">IRetrofit</span><span class="p">.</span><span class="nf">getInstance</span><span class="p">()</span>
+                <span class="kd">val</span> <span class="py">repository</span> <span class="p">=</span> <span class="nc">MyPostRepository</span><span class="p">(</span><span class="nc">MyPostRemoteDataSource</span><span class="p">(</span><span class="n">apiService</span><span class="p">))</span>
+                <span class="nc">PurchaseHistoryViewModel</span><span class="p">(</span><span class="n">repository</span><span class="p">)</span> <span class="k">as</span> <span class="nc">T</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="전체-구조">전체 구조</h2>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/167644878-81522ce3-df9e-44aa-b2fc-d8c04cb250fa.png" alt="networking_structure"></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/project/2022/05/09/project-suwiki-prolog.html" title="[SUWIKI] Introduce">[SUWIKI] Introduce</a><a class="next" href="/jekyll-theme-yat/cs/2022/05/11/jwt.html" title="JWT란 무엇인가?">JWT란 무엇인가?</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/android/2022/06/10/android-version.html" title="JWT란 무엇인가?">내가 보려고 만든 안드로이드 버전 + API Level</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/project/2022/05/09/project-suwiki-prolog.html" title="JWT란 무엇인가?">[SUWIKI] Introduce</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/cs/2022/07/01/cs-design-pattern.html" title="JWT란 무엇인가?">CS 쓱 훑어보기 - 1. 디자인 패턴</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/02/23/clean-code-3.html" title="JWT란 무엇인가?">Clean Code_3장. 함수</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/project/2022/05/10/project-suwiki-networking.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/project/2022/05/10/project-suwiki-networking.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2022 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
