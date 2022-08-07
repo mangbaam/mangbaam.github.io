@@ -10,7 +10,7 @@ tags: [kotlin,coroutine,flow]
 
 본 글은 [StateFlow 와 SharedFlow](https://myungpyo.medium.com/stateflow-%EC%99%80-sharedflow-32fdb49f9a32) 를 보고 정리한 글입니다
 
-## 상태
+## 상태를 나타내는 StateFlow
 
 ---
 
@@ -56,7 +56,7 @@ _dataState 와 dataState 를 정의하는 부분을 보면 _dataState는 Mutable
 
 refreshData() 가 호출되면 ViewModel 스코프에서 코루틴이 생성되어 UseCase 의 중단 함수를 호출하고, 결과(성공/실패)에 따라서 적당한 데이터로 변환하여 Flow 를 전달하고 `dataState` 를 구독하고 있는 UI를 갱신할 수 있게 만든다.
 
-## 이벤트
+## 이벤트를 나타내는 SharedFlow
 
 ---
 
