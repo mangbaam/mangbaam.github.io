@@ -743,4 +743,4 @@ fun main() = runBlocking {
 
 `zip` 과는 다르게 출력되었는데, 결과를 보면 `nums` 나 `strs` 가 각각 방출하고 마지막에 병합된 결과가 출력된 것을 볼 수 있다.
 
-(다음 게시글에서 계속...)
+([다음 게시글](https://mangbaam.github.io/kotlin/2022/07/30/kotlin-flow-basic-2.html)에서 계속...)
