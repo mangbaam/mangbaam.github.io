@@ -468,7 +468,7 @@ class OrderAdapter(val orderMenu: (Order) -> Unit) :
 }
 ```
 
-## `setOnClickListener` 호출 비교
+## setOnClickListener 호출 횟수 비교
 
 ### **bind 함수** 내부에서 호출
 
