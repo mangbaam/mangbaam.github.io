@@ -472,7 +472,7 @@ class OrderAdapter(val orderMenu: (Order) -> Unit) :
 
 ### **bind 함수** 내부에서 호출
 
-![normal](https://user-images.githubusercontent.com/44221447/193464209-7a141f3f-e77a-46e5-9c86-1c2a22f5793e.mp4)
+<iframe name="normal" width="100%" height="500px" src="https://user-images.githubusercontent.com/44221447/193464209-7a141f3f-e77a-46e5-9c86-1c2a22f5793e.mp4" allowfullscreen></iframe>
 
 ![image](https://user-images.githubusercontent.com/44221447/193464318-cb56337c-6fa4-4eff-9906-f7b62ad1ff72.png)
 
@@ -480,7 +480,7 @@ class OrderAdapter(val orderMenu: (Order) -> Unit) :
 
 ### **ViewHolder - init 블록** 내부에서 호출
 
-![Better](https://user-images.githubusercontent.com/44221447/193464137-c87cf080-3c35-4d44-b35f-e9592b472c0d.mp4)
+<iframe name="Better" width="100%" height="500px" src="https://user-images.githubusercontent.com/44221447/193464137-c87cf080-3c35-4d44-b35f-e9592b472c0d.mp4" allowfullscreen></iframe>
 
 ![image](https://user-images.githubusercontent.com/44221447/193464357-f566152f-51ea-4fe6-bd1b-d9fa262ff242.png)
 
