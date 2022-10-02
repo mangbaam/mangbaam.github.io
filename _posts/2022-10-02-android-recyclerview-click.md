@@ -478,6 +478,10 @@ class OrderAdapter(val orderMenu: (Order) -> Unit) :
 
 ---
 
+## 전체 코드 (저장소)
+
+[https://github.com/mangbaam/MySampleApps/tree/master/recyclerviewclickbetter](https://github.com/mangbaam/MySampleApps/tree/master/recyclerviewclickbetter)
+
 ## 참고한 글
 
 [https://hamurcuabi.medium.com/recyclerview-item-click-in-a-better-way-c69d9c074ddf](https://hamurcuabi.medium.com/recyclerview-item-click-in-a-better-way-c69d9c074ddf)
