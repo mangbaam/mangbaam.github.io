@@ -88,13 +88,13 @@ fun View.onThrottleClick(
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
-	fun onCreate() {
-		super.onCreate()
+    fun onCreate() {
+        super.onCreate()
 
-		binding.btnLogin.onThrottleClick(lifecycleScope) {  
-		    // Do Something  
-		}
-	}
+        binding.btnLogin.onThrottleClick(lifecycleScope) {  
+            // Do Something  
+        }
+    }
 }
 ```
 
