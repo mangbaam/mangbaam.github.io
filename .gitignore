@@ -5,4 +5,4 @@ _site
 Gemfile.lock
 sample/*
 templates/*
-.jekyll-cache
+.jekyll-cache/*
