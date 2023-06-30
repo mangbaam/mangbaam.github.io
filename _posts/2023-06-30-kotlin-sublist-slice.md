@@ -37,7 +37,16 @@ tags: [kotlin,list,collections]
 
 subList와 slice 모두 리스트의 일부를 가져오기 위해 사용한다.
 
-<iframe id='frame' src='https://pl.kotl.in/VTn6ztyFw?from=2&to=7' frameborder='0' scrolling='no' style='width: 100%;' onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
+```kotlin
+fun main() {
+    val origin = mutableListOf(1, 2, 3, 4)
+    val subList = origin.subList(1, 3)
+    val sliceList = origin.slice(1..2)
+
+    println("subList: $subList") // subList: [2, 3]
+    println("sliceList: $sliceList") // sliceList: [2, 3]
+}
+```
 
 ![](https://i.imgur.com/3hqJMOC.png)
 
@@ -45,7 +54,22 @@ subList와 slice 모두 리스트의 일부를 가져오기 위해 사용한다.
 
 ### case1: 원래 (정수)리스트 수정
 
-<iframe id='frame' src='https://pl.kotl.in/-K-YyShgC?from=2&to=13' frameborder='0' scrolling='no' style='width: 100%;' onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
+```kotlin
+fun main() {
+    val origin = mutableListOf(1, 2, 3, 4)
+    val subList = origin.subList(1, 3)
+    val sliceList = origin.slice(1..2)
+
+    println("subList: $subList") // subList: [2, 3]
+    println("sliceList: $sliceList") // sliceList: [2, 3]
+
+    println("\n----- origin[1] = 200 -----\n")
+    origin[1] = 200
+
+    println("subList: $subList") // subList: [200, 3]
+    println("sliceList: $sliceList") // sliceList: [2, 3]
+}
+```
 
 ![](https://i.imgur.com/5SEEbDp.png)
 
@@ -53,7 +77,26 @@ subList와 slice 모두 리스트의 일부를 가져오기 위해 사용한다.
 
 ### case2: 원래 (객체)리스트 수정
 
-<iframe id='frame' src='https://pl.kotl.in/L-aJxIq3c?from=2&to=17' frameborder='0' scrolling='no' style='width: 100%;' onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
+```kotlin
+fun main(args: Array<String>) {
+    data class Item(
+        var id: Int,
+    )
+
+    val items = mutableListOf(Item(1), Item(2), Item(3))
+    val subItems = items.subList(1, 3)
+    val sliceItems = items.slice(1..2)
+
+    println("subItems: $subItems")
+    println("sliceItems: $sliceItems")
+
+    println("\n----- items[1].id = 200 -----\n")
+    items[1].id = 200
+
+    println("subItems: $subItems")
+    println("sliceItems: $sliceItems")
+}
+```
 
 ![](https://i.imgur.com/JWNCjkG.png)
 
@@ -103,7 +146,27 @@ public fun <T> Collection<T>.toMutableList(): MutableList<T> {
 
 ### case3: 원래 리스트의 구조적 변경
 
-<iframe id='frame' src='https://pl.kotl.in/HXxPnLyYD?from=2&to=18' frameborder='0' scrolling='no' style='width: 100%;' onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
+```kotlin
+fun main(args: Array<String>) {
+    val origin = mutableListOf(1, 2, 3, 4)
+    val subList = origin.subList(1, 3)
+    val sliceList = origin.slice(1..2)
+
+    println("subList: $subList") // subList: [2, 3]
+    println("sliceList: $sliceList") // sliceList: [2, 3]
+
+    println("\n----- origin.removeLast() -----\n")
+    origin.removeLast()
+
+    println("sliceList: $sliceList") // sliceList: [2, 3]
+
+    try {
+        println("subList: $subList") // throw: java.util.ConcurrentModificationException
+    } catch (e: ConcurrentModificationException) {
+        e.printStackTrace()
+    }
+}
+```
 
 ![](https://i.imgur.com/FAngFMi.png)
 
