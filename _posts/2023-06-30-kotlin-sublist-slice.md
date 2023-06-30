@@ -37,7 +37,7 @@ tags: [kotlin,list,collections]
 
 subList와 slice 모두 리스트의 일부를 가져오기 위해 사용한다.
 
-<iframe src="https://pl.kotl.in/VTn6ztyFw?from=2&to=7" width="100%"></iframe>
+<iframe id='frame' src='https://pl.kotl.in/VTn6ztyFw?from=2&to=7' frameborder='0' scrolling='no' style='width: 100%;' onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
 
 ![](https://i.imgur.com/3hqJMOC.png)
 
@@ -45,7 +45,7 @@ subList와 slice 모두 리스트의 일부를 가져오기 위해 사용한다.
 
 ### case1: 원래 (정수)리스트 수정
 
-<iframe src="https://pl.kotl.in/-K-YyShgC?from=2&to=13" width="100%"></iframe>
+<iframe id='frame' src='https://pl.kotl.in/-K-YyShgC?from=2&to=13' frameborder='0' scrolling='no' style='width: 100%;' onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
 
 ![](https://i.imgur.com/5SEEbDp.png)
 
@@ -53,7 +53,7 @@ subList와 slice 모두 리스트의 일부를 가져오기 위해 사용한다.
 
 ### case2: 원래 (객체)리스트 수정
 
-<iframe src="https://pl.kotl.in/L-aJxIq3c?from=2&to=17" width="100%"></iframe>
+<iframe id='frame' src='https://pl.kotl.in/L-aJxIq3c?from=2&to=17' frameborder='0' scrolling='no' style='width: 100%;' onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
 
 ![](https://i.imgur.com/JWNCjkG.png)
 
@@ -103,7 +103,7 @@ public fun <T> Collection<T>.toMutableList(): MutableList<T> {
 
 ### case3: 원래 리스트의 구조적 변경
 
-<iframe src="https://pl.kotl.in/HXxPnLyYD?from=2&to=18" width="100%"></iframe>
+<iframe id='frame' src='https://pl.kotl.in/HXxPnLyYD?from=2&to=18' frameborder='0' scrolling='no' style='width: 100%;' onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
 
 ![](https://i.imgur.com/FAngFMi.png)
 
