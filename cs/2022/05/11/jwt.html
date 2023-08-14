@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>JWT란 무엇인가? | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="JWT란 무엇인가?">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="안드로이드 개발자가 되기 위한 기록들">
+<meta property="og:description" content="안드로이드 개발자가 되기 위한 기록들">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/cs/2022/05/11/jwt.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/cs/2022/05/11/jwt.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-05-11T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="JWT란 무엇인가?">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-05-11T00:00:00+00:00","datePublished":"2022-05-11T00:00:00+00:00","description":"안드로이드 개발자가 되기 위한 기록들","headline":"JWT란 무엇인가?","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/cs/2022/05/11/jwt.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/cs/2022/05/11/jwt.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">JWT란 무엇인가?</h1>
+  <h2 class="post-subtitle">🎈JWT 이모저모</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-05-11T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> May 11, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 17 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#jwt">#jwt</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#session">#session</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><a href="https://jwt.io/"><img src="https://user-images.githubusercontent.com/44221447/167931014-2ed766cf-9624-4913-b1f3-25683a906899.png" alt="jwt_homepage"></a></p>
+
+<h2 id="jwt">🔥JWT</h2>
+
+<hr>
+
+<blockquote>
+  <p>JWT : Json Web Token</p>
+</blockquote>
+
+<p>JWT는 당사자 간에 JSON 객체로 정보를 안전하게 전송할 수 있는 <a href="https://datatracker.ietf.org/doc/html/rfc7519">개방형 표준</a>이다.
+JWT는 API를 사용하는 클라이언트를 <strong>인증</strong> 및 <strong>식별</strong>하는데 사용할 수 있어서 보통 RESTful API에서 사용한다.</p>
+
+<h2 id="인증-vs-인가">🔥인증 vs 인가</h2>
+
+<hr>
+<p>JWT를 설명하면서 <code class="language-plaintext highlighter-rouge">인증</code>과 <code class="language-plaintext highlighter-rouge">인가</code>에 대한 설명을 빼먹을 수가 없다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">인증</code>은 쉽게 말하면 <strong>로그인</strong>이다. 특정 서비스의 회원은 각각 다른 권한이 주어질 수 있다. 아이디와 패스워드를 통해 <code class="language-plaintext highlighter-rouge">인증</code> 받는 것이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">인가</code>는 한 번 인증을 받은 사용자가 로그인 이후에 특정 권한을 사용할 수 있는 것을 뜻한다.</p>
+
+<p>서버에서는 동시 다발적으로 수많은 요청이 들어올텐데 이 요청 중 어떤 것은 로그인이 된 상태, 어떤 것은 로그인이 안 된 상태, 혹은 특수한 권한이 필요한 요청일 수도 있다. 서버는 요청에서 로그인 상태나 권한 등을 확인하고 서비스를 허용해줄지 말지를 결정해서 응답해야 한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>🤔 요청을 할 때마다 로그인을 요구하는 방법은?
+</code></pre></div></div>
+
+<ul>
+  <li>사용자가 어떤 웹 사이트 상에서 링크를 클릭하는 것 하나 하나가 모두 요청이 될 수 있다. 링크를 클릭할 때마다 로그인을 요구한다면 사실상 정상적인 서비스 이용이 힘들 것이다.</li>
+  <li>서버의 입장에서도 로그인을 처리하기 위해 DB에서 저장된 사용자 계정의 해시값 등을 꺼내온 후에 이것들을 사용자의 암호와 함께 복잡한 알고리즘으로 계산한 결과 값과 일치하는지 확인하는 과정을 거쳐야 하는데 이는 아주 무거운 작업이다</li>
+  <li>매 요청마다 아이디와 패스워드가 실려서 날아다니면 보안상 위험하다</li>
+</ul>
+
+<p>이러한 <code class="language-plaintext highlighter-rouge">인증</code>, <code class="language-plaintext highlighter-rouge">인가</code> 문제를 해결하기 위해서 등장한 개념이 <code class="language-plaintext highlighter-rouge">세션</code>이나 <code class="language-plaintext highlighter-rouge">JWT</code> 등이다.</p>
+
+<h2 id="세션">🔥세션</h2>
+
+<hr>
+
+<h3 id="세션이란">세션이란?</h3>
+
+<p>세션은 사용자가 로그인에 성공하면 세션 정보를 사용자의 브라우저와 서버의 메모리(혹은 하드나 DB)에 저장한다.</p>
+
+<p>브라우저에서는 <code class="language-plaintext highlighter-rouge">Session ID</code>라는 이름의 <code class="language-plaintext highlighter-rouge">쿠키</code>로 저장하고, 이후 서버에 요청을 보낼 때 이 정보를 함께 실어 보낸다.</p>
+
+<p>서버에서는 이 정보를 서버의 메모리에 있는 정보와 비교해 맞는 짝이 있으면 인가를 해주는 방식이다.</p>
+
+<p>이처럼 <code class="language-plaintext highlighter-rouge">Session ID</code>를 사용해서 어떤 사용자가 서버에 로그인 된 상태가 지속되는 것을 <code class="language-plaintext highlighter-rouge">세션</code>이라고 한다.</p>
+
+<h3 id="단점">단점</h3>
+
+<p>서버가 수많은 세션을 가지고 있어서 메모리가 부족해지거나 에러로 인해 서버를 재부팅하는 경우 모든 로그인 정보가 날아가게 된다.</p>
+
+<p>만약 서버의 규모가 커져서 서버를 여러 대로 운영하는 경우에 요청이 들어오면 여러 서버 중 맞는 정보를 찾아 여러 서버들 사이에서 분산을 해서 로드 밸런싱을 해줘야 하는데 만약 로그인은 1번 서버에서 하고, 이메일 페이지로 가능 요청은 3번 서버에서 하면 3번 서버에는 로그인 정보가 없기 때문에 세션 유지가 제대로 안 된다.</p>
+
+<p>이런 경우를 대비해 DB에 저장하는 경우 속도가 아주 느려질 수 있다.</p>
+
+<h3 id="jwt-vs-세션">JWT vs 세션</h3>
+
+<p>JWT는 위와 같은 쿠키를 사용한 세션의 단점을 커버할 수 있다.</p>
+
+<p>JWT는 세션과 다르게 로그인에 성공하면 토큰을 발급하는데 이 토큰을 서버에 저장하지 않고 클라이언트에 내려준다. 이렇게 되면 서버의 부담을 덜 수 있다. (뒤에서 설명할 <a href="#access-%ED%86%A0%ED%81%B0%EA%B3%BC-refresh-%ED%86%A0%ED%81%B0"><code class="language-plaintext highlighter-rouge">Refresh 토큰</code></a>에서는 조금 달라질 수 있는 설명이다)</p>
+
+<p>그러나 이 방식의 문제는 이미 발급된 토큰을 회수할 수 없기 때문에 통제하기 힘들다는 특징이 있다.</p>
+
+<h2 id="jwt의-구조">🔥JWT의 구조</h2>
+
+<hr>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+</code></pre></div></div>
+
+<p>위 문자들이 바로 JWT 토큰이다. 자세히 보면 <code class="language-plaintext highlighter-rouge">.</code> 으로 구분되어 3개의 파트로 나눌 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168032357-5c7bd0cc-65f6-4ab9-80f5-1e1f754e501c.png" alt="jwt_encode"></p>
+
+<p>이 정보들은 해시 알고리즘으로 인코딩 된 정보이다. 이렇게 인코딩 된 정보를 디코딩하면 다음과 같은 정보를 얻을 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168033091-2bd79393-3d1b-4ddf-a597-0c87e3574d4c.png" alt="jwt_decode"></p>
+
+<p>디코딩 된 정보의 구조를 보면 왜 <strong>Json</strong> Web Token 인지 알 수 있다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">.</code>으로 구분된 3개의 영역은 각각 <code class="language-plaintext highlighter-rouge">HEADER</code>, <code class="language-plaintext highlighter-rouge">PAYLOAD</code>, <code class="language-plaintext highlighter-rouge">VERIFY SIGNATURE</code>이다.</p>
+
+<h3 id="payload">PAYLOAD</h3>
+
+<p>우선 페이로드에 대해 살펴보겠다.</p>
+
+<p>페이로드에는 실질적으로 토큰에 담겨 있는 정보인 <code class="language-plaintext highlighter-rouge">Claim</code>이 들어가는 부분이다. <code class="language-plaintext highlighter-rouge">Claim</code>은 키-값 형식으로 이루어진 한 쌍의 정보를 뜻한다. <code class="language-plaintext highlighter-rouge">Claim</code>의 키를 <code class="language-plaintext highlighter-rouge">Claim Name</code> 이라고 한다. <code class="language-plaintext highlighter-rouge">Claim Name</code>은 유일해야 한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Claim Name</code> 3개의 종류로 구분된다. <a href="https://datatracker.ietf.org/doc/html/rfc7519#section-4">참고</a></p>
+
+<h4 id="등록-클레임-이름registered-claim-names">등록 클레임 이름(<code class="language-plaintext highlighter-rouge">Registered Claim Names</code>)</h4>
+
+<p>미리 정의된 7개의 클레임 이름이다.</p>
+
+<ul>
+  <li>iss (Issuer) Claim: 발행자</li>
+  <li>sub (Subject) Claim: 제목</li>
+  <li>aud (Audience) Claim: 수신자</li>
+  <li>exp (Expiration Time) Claim: 만료 시간. NumericDate 형식을 가지며 현재보다 미래의 시간으로 설정되어야 한다.</li>
+  <li>nbf (Not Before) Claim: 활성 날짜. nbf로 설정된 시간 이후부터 유효한 토큰이 된다. NumericDate 형식을 따른다.</li>
+  <li>iat (Issued At) Claim: 발행된 시간</li>
+  <li>jti (JWT ID) Claim: 고유한 아이디</li>
+</ul>
+
+<h4 id="공개-클레임-이름public-claim-names">공개 클레임 이름(<code class="language-plaintext highlighter-rouge">Public Claim Names</code>)</h4>
+
+<p>사용자가 정의할 수 있는 사용자 지정 클레임이다. 공개용 정보를 전달하기 위해 사용한다.</p>
+
+<p>충돌을 방지하기 위해 URI 형식으로 짓는다.</p>
+
+<h4 id="비공개-클레임-이름private-claim-names">비공개 클레임 이름(<code class="language-plaintext highlighter-rouge">Private Claim Names</code>)</h4>
+
+<p>당사자들 간에 정보를 공유하기 위해 만들어진 사용자 지정 클레임.</p>
+
+<p>보통 서버와의 통신을 할 때 사용할 수 있다. 하지만 페이로드 자체가 암호화되는 것은 아니기 때문에 사용자의 아이디나 비밀번호 같은 민감한 정보를 담지 않는다.</p>
+
+<p>공개 클레임 이름과 달리 충돌이 될 수도 있다.&lt;/br&gt;</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168083202-5f50ed6e-0561-4ae5-9cd9-71ba1ac495be.png" alt="payload"></p>
+
+<p>위 사진에서 <code class="language-plaintext highlighter-rouge">sub</code>, <code class="language-plaintext highlighter-rouge">iat</code>은 등록 클레임 이름, <code class="language-plaintext highlighter-rouge">name</code>은 비공개 클레임 이름이 된다.</p>
+
+<h3 id="header">HEADER</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168084450-038db4e3-eee7-4e54-b82d-b6aa8df451ef.png" alt="header"></p>
+
+<p>헤더에는 <code class="language-plaintext highlighter-rouge">typ</code>과 <code class="language-plaintext highlighter-rouge">alg</code>를 가진다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">typ</code>: JWT는 이 속성이 항상 <code class="language-plaintext highlighter-rouge">JWT</code>로 고정이다. 정확히 말하면 이 부분이 <code class="language-plaintext highlighter-rouge">JWT</code>로 되어 있어야 <code class="language-plaintext highlighter-rouge">JWT</code>로서 동작할 수 있다.
+<code class="language-plaintext highlighter-rouge">alg</code>: 해싱 알고리즘. 뒤에 설명할 Signature 값을 만드는데 사용될 알고리즘이다. 어떠한 해싱 알고리즘이 사용되었는지 명시되는 부분이다. 주로 <code class="language-plaintext highlighter-rouge">HMAC SHA256</code>이나 <code class="language-plaintext highlighter-rouge">RSA</code>가 사용된다. 위 사진에서는 <code class="language-plaintext highlighter-rouge">HMAC SHA256</code>이 사용된 모습이다.</p>
+
+<h3 id="verify-signature">VERIFY SIGNATURE</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168085127-e402ffed-69ef-464d-a237-1d0094b35d84.png" alt="signature"></p>
+
+<p>서명은 헤더의 인코딩 값과 페이로드의 인코딩 값을 합쳐서 (서버에 저장된) 비밀키로 해시를 생성한다. (이때 해시를 만드는 해시 알고리즘은 <a href="#header">헤더</a>에서 지정한 알고리즘을 사용한다)</p>
+
+<p>이렇게 만든 해시 값을 <code class="language-plaintext highlighter-rouge">base64</code>로 인코딩하면 클라이언트가 받아볼 수 있는 형태가 된다.</p>
+
+<p>아래 홈페이지에서 확인해 볼 수 있다.</p>
+
+<p><a href="https://jwt.io/"><img src="https://user-images.githubusercontent.com/44221447/168086274-d818ba26-ab44-49f3-bf40-928e8924a43c.png" alt="pic_homepage2"></a></p>
+
+<h2 id="jwt-안전한가">🔥JWT 안전한가?</h2>
+
+<hr>
+<p>JWT는 HMAC나 RSA, ECDSA 등으로 디지털 서명되기 때문에 JWT를 암호화하는 키의 안정성이 즉 JWT의 안정성이라고 할 수 있을 것 같다.</p>
+
+<p>JWT를 암호화 하는 과정은 서버에서 이루어지기 때문에 서버에서 비밀키를 잘 관리해야 한다.</p>
+
+<p>그러나 <code class="language-plaintext highlighter-rouge">세션</code>과 마찬가지로 JWT 토큰 자체를 탈취당하면 쉽게 도용당할 수 있다.</p>
+
+<h2 id="access-토큰과-refresh-토큰">🔥Access 토큰과 Refresh 토큰</h2>
+
+<hr>
+<p>JWT 토큰 자체를 탈취당하면 쉽게 도용당할 수 있다는 단점 때문에 <code class="language-plaintext highlighter-rouge">Access 토큰</code>과 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>의 개념이 등장했다.</p>
+
+<p>만약 JWT 토큰이 탈취 당하더라도 토큰의 유효 기간이 남아 있는 동안에만 도용할 수 있으므로 토큰의 유효 기간을 짧게 설정한다면 위협의 기회를 낮출 수 있다.</p>
+
+<p>하지만 토큰의 유효 기간이 짧다는 것은 정상적인 사용자도 불편함을 겪게 될 것이라는 이야기가 된다.</p>
+
+<p>예를 들어 만료 기간이 3분이라고 하면 로그인 후 3분이 지나면 다시 로그인을 해야 하는 등의 불편함이 생긴다.</p>
+
+<p>이를 해결하기 위한 방안이 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>이다. <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>은 <code class="language-plaintext highlighter-rouge">Access 토큰</code>을 재발급 하기 위한 토큰이다.</p>
+
+<ol>
+  <li>사용자가 로그인을 한다</li>
+  <li>인증에 성공하면 서버는 두 개의 토큰을 내려준다
+    <ol>
+      <li>
+<code class="language-plaintext highlighter-rouge">Access 토큰</code>: 수명이 몇 시간/분 이하로 짧다</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">Refresh 토큰</code>: 수명이 2주 정도로 길게 잡혀있다</li>
+    </ol>
+  </li>
+  <li>2번에서 서버가 두 개의 토큰을 내려줄 때 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>에 상응하는 값을 <a href="#jwt-vs-%EC%84%B8%EC%85%98">DB에 저장한다</a>
+</li>
+  <li>사용자가 <code class="language-plaintext highlighter-rouge">Access 토큰</code>을 사용할 때 만료 기간이 종료되었다면 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>으로 새 <code class="language-plaintext highlighter-rouge">Access 토큰</code>을 요청한다</li>
+  <li>서버는 DB에 저장된 값과 비교해 새로운 <code class="language-plaintext highlighter-rouge">Access 토큰</code>을 내려준다</li>
+</ol>
+
+<p>이 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>만 안전하게 관리된다면 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>이 유효한 동안에는 <code class="language-plaintext highlighter-rouge">Access 토큰</code>이 만료될 때마다 다시 로그인을 할 필요 없이 재발급을 받을 수 있다는 것이다.</p>
+
+<p><em>카카오의 토큰 만료 시간</em>
+<a href="https://developers.kakao.com/docs/latest/ko/kakaologin/common#token"><img src="https://user-images.githubusercontent.com/44221447/168025647-1247aecf-5cfd-4fcd-af14-f2489275416f.png" alt="pic_kakao_token"></a></p>
+
+<p>위 사진은 카카오 로그인 API 문서의 일부이다. (사진을 클릭하면 이동해서 확인할 수 있다)</p>
+
+<p>해당 문서에서 카카오 로그인의 경우도 JWT를 사용한다고 명시되어 있다.</p>
+
+<p>사진에서 볼 수 있는 것과 같이 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>의 만료 시간이 어느 정도 이하로 남았다면 갱신하면서 좀 더 사용성을 높일 수 있는 방법을 채택하기도 한다.</p>
+
+<h3 id="기존-방식과-차이점">기존 방식과 차이점</h3>
+
+<ul>
+  <li>앞서 설명했던 JWT 특징에서 서버에 저장하지 않는다고 설명했는데 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>을 사용하게 되면 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>(혹은 상응 값)을 서버에서 가지고 있어야 한다.</li>
+  <li>토큰을 한 번 발급하면 토큰의 만료 기간 내에는 제어할 수 없지만 <code class="language-plaintext highlighter-rouge">Access 토큰</code>의 만료 기간이 짧아지면서 서버의 DB에서 상응하는 <code class="language-plaintext highlighter-rouge">Refresh 토큰</code>을 제거하면 <code class="language-plaintext highlighter-rouge">Access 토큰</code>이 만료된 후에는 재 로그인이 필요하다.</li>
+</ul>
+
+<h3 id="추가로-고려할-점">추가로 고려할 점</h3>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">Refresh 토큰</code>의 안전한 저장</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">SSL/TLS1.3 (HTTPS)</code>를 통한 토큰 전달</li>
+</ul>
+
+<h2 id="마무리">🔥마무리</h2>
+
+<hr>
+<p><a href="2022-05-09-project-suwiki-prolog.md">SUWIKI 프로젝트</a>에서 자체 로그인을 구현하면서 JWT를 도입했다. 사실 트래픽이 많이 발생하는 서비스를 개발하는 것이 아니기 때문에 서버의 부담을 줄이기 위해서 JWT를 택한 것은 아니고 안드로이드와 iOS도 같이 개발하고 있어서 쿠키를 사용한 세션 방식은 까다로울 것으로 생각해서 JWT 방식이 가장 깔끔할 것으로 생각되어서 선택했던 걸로 기억한다.</p>
+
+<p>사실 토큰을 발급하는 것은 서버에서 담당했고, 내가 맡은 안드로이드에서는 로그인 후 서버에게 받은 토큰을 잘 저장하고 API 호출 시에 잘 보내주기만 하면 되는 것이라 사용하는데 큰 어려움은 없었지만 이렇게 글을 작성해보면서 다시 한 번 공부하게 되면서 JWT에 대해서 정확히 모르고 사용하고 있었다는 것을 깨달았다.</p>
+
+<h2 id="참고">참고</h2>
+
+<ul>
+  <li><a href="jwt.io">jwt.io</a></li>
+  <li><a href="https://youtu.be/1QiOXWEbqYQ">youtube : 얄팍한 코딩사전</a></li>
+  <li><a href="https://youtu.be/y0xMXlOAfss">youtube : 우아한Tech</a></li>
+</ul>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/project/2022/05/10/project-suwiki-networking.html" title="[SUWIKI] Networking">[SUWIKI] Networking</a><a class="next" href="/jekyll-theme-yat/android/2022/05/16/fcm-starter.html" title="FCM에 대해 알아보자">FCM에 대해 알아보자</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/07/30/kotlin-flow-basic-2.html" title="FCM에 대해 알아보자">비동기 플로우에 대해서 알아보자 (2)</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/01/clean-code-5.html" title="FCM에 대해 알아보자">Clean Code_5장. 형식 맞추기</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/android/2022/06/10/android-version.html" title="FCM에 대해 알아보자">내가 보려고 만든 안드로이드 버전 + API Level</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/08/17/flow-stateflow-sharedflow.html" title="FCM에 대해 알아보자">StateFlow 와 sharedFlow</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/cs/2022/05/11/jwt.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/cs/2022/05/11/jwt.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Clean Code_9장. 단위 테스트 | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="Clean Code_9장. 단위 테스트">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="#노마드코더 #북클럽 #노개북">
+<meta property="og:description" content="#노마드코더 #북클럽 #노개북">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/06/clean-code-9.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/06/clean-code-9.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-03-06T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Clean Code_9장. 단위 테스트">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-03-06T00:00:00+00:00","datePublished":"2022-03-06T00:00:00+00:00","description":"#노마드코더 #북클럽 #노개북","headline":"Clean Code_9장. 단위 테스트","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/06/clean-code-9.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/06/clean-code-9.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Clean Code_9장. 단위 테스트</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-03-06T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Mar 06, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 9 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#book">#book</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#clean_code">#clean_code</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><img src="/assets/images/CleanCodeCover.png" alt="클린 코드 책 커버">
+#노마드코더 #북클럽 #노개북</p>
+
+<p><a href="https://mangbaam.notion.site/9-516e2d3bfed84733b58bce91b6420eb1">내용 요약(Notion)</a></p>
+
+<h2 id="til-today-i-learned">TIL (Today I Learned)</h2>
+<p>테스트 코드의 중요성과 테스트 코드를 깔끔하게 짜는 방법에 대해서 훑어봤다.</p>
+
+<h2 id="오늘-읽은-범위">오늘 읽은 범위</h2>
+<p>9장. 단위 테스트</p>
+
+<h2 id="책에서-기억하고-싶은-내용">책에서 기억하고 싶은 내용</h2>
+<h3 id="tdd-법칙-세-가지">TDD 법칙 세 가지</h3>
+<hr>
+<ol>
+  <li>실패하는 단위 테스트를 작성할 때까지 실제 코드를 작성하지 않는다</li>
+  <li>컴파일은 실패하지 않으면서 실행이 실패하는 정도로만 단위 테스트를 작성한다</li>
+  <li>현재 실패하는 테스트를 통과할 정도로만 실제 코드를 작성한다</li>
+</ol>
+
+<h3 id="깨끗한-테스트-코드-유지하기">깨끗한 테스트 코드 유지하기</h3>
+<hr>
+<p>지저분한 테스트 코드가 테스트를 안 하는 것보다 못하다.</p>
+
+<p>실제 코드가 진화하면 테스트 코드도 변해야 한다. 그런데 테스트 코드가 지저분할수록 변경하기 어려워진다.</p>
+
+<blockquote>
+  <p>테스트 코드는 실제 코드 못지 않게 중요하다.</p>
+</blockquote>
+
+<h3 id="테스트는-유연성-유지보수성-재사용성을-제공한다">테스트는 유연성, 유지보수성, 재사용성을 제공한다</h3>
+<hr>
+<p>코드에 유연성, 유지보수성, 재사용성을 제공하는 버팀목이 바로 <strong>단위 테스트</strong>다.</p>
+
+<p>→ 테스트 케이스가 있으면 변경이 두렵지 않으니까</p>
+
+<blockquote>
+  <p>테스트 케이스가 없으면 모든 변경이 잠정적인 버그다.</p>
+</blockquote>
+
+<p>테스트 케이스가 있으면 <strong>변경</strong>이 쉬워진다.</p>
+
+<p>테스트 코드가 지저분할수록 실제 코드도 지저분해지고, 결국 테스트 코드를 읽어버리고 실제 코드도 망가진다.</p>
+
+<h3 id="깨끗한-테스트-코드">깨끗한 테스트 코드</h3>
+<hr>
+<p>깨끗한 테스트 코드를 만들려면 <strong><em>가독성</em></strong>이 필요하다.</p>
+
+<p>테스트 코드에서 가독성을 높이려면 명료성, 단순성, 풍부한 표현력이 필요하다. 테스트 코드는 최소의 표현으로 많은 것을 나타내야 한다.</p>
+
+<blockquote>
+  <p>테스트 코드는 본론에 돌입해 진짜 필요한 자료 유형과 함수만 사용한다.</p>
+</blockquote>
+
+<h4 id="도메인에-특화된-테스트-언어dsl">도메인에 특화된 테스트 언어(<a href="#dsl-domain-specific-languages">DSL</a>)</h4>
+<blockquote>
+  <p>테스트를 구현하는 당사자와 나중에 테스트를 읽어볼 독자를 도와주는 테스트 언어다.</p>
+</blockquote>
+
+<h4 id="이중-표준">이중 표준</h4>
+<p>테스트 API 코드에 적용하는 표준은 실제 코드에 적용하는 표준과 확실히 다르다.</p>
+
+<blockquote>
+  <p>단순하고, 간결하고, 표현력이 풍부해야 하지만, <em>실제 코드만큼 효율적일 필요는 없다.</em></p>
+</blockquote>
+
+<p>테스트 환경은 자원이 제한적일 가능성이 낮다.</p>
+
+<p>실제 환경에서는 절대로 안 되지만 테스트 환경에서는 전혀 문제없는 방식이 있다. 대게 메모리나 CPU 효율과 관련 있는 경우다. 코드의 깨끗함과는 철저히 무관하다.</p>
+
+<h3 id="테스트-당-assert-하나">테스트 당 assert 하나</h3>
+<hr>
+<p>JUnit으로 테스트 코드를 짤 때는 함수마다 assert문을 단 하나만 사용해야 한다고 주장하는 학파가 있다.</p>
+
+<p>assert 문이 여러 개 들어가야 하는 테스트 코드에서는 테스트를 여러 개로 쪼개 각자 assert를 수행하면 된다.</p>
+
+<p><a href="#given-when-then-%ED%8C%A8%ED%84%B4">given-when-then</a> 관례를 사용하여 테스트 코드를 읽기 쉽게 한다.</p>
+
+<p>하지만 테스트 코드를 분리하면 중복되는 코드가 많아진다.</p>
+
+<p>➡️ <a href="#template-method-%ED%8C%A8%ED%84%B4">TEMPLATE METHOD 패턴</a> 사용하면 중복을 제거할 수 있다.</p>
+
+<blockquote>
+  <p>반드시 하나의 assert 문만 사용한다기 보다 assert 문 개수를 최대한 줄여야 좋다는 생각이다.</p>
+</blockquote>
+
+<h4 id="테스트-당-개념-하나">테스트 당 개념 하나</h4>
+<p>“테스트 함수마다 한 개념만 테스트하라”는 규칙이 더 낫겠다.</p>
+
+<p>이것저것 잡다한 개념을 연속으로 테스트하는 긴 함수는 피한다.</p>
+
+<blockquote>
+  <p>가장 좋은 규칙은 “개념 당 assert 문 수를 최소로 줄여라”와 “테스트 함수 하나는 개념 하나만 테스트하라”라 하겠다.</p>
+</blockquote>
+
+<h3 id="first">F.I.R.S.T</h3>
+<hr>
+<p>깨끗한 테스트는 다음 다섯 가지 규칙을 따른다. (첫 글자를 따오면 FIRST가 된다)</p>
+
+<h4 id="fast">Fast</h4>
+
+<p>테스트는 <em>빨라야 한다</em>. 테스트가 느리면 자주 돌릴 엄두를 못 낸다.</p>
+
+<h4 id="independent">Independent</h4>
+
+<p>각 테스트는 <em>서로 의존하면 안된다</em>. 한 테스트가 다음 테스트가 실행될 환경을 준비해서는 안 된다.</p>
+
+<p>각 테스트는 독립적으로 그리고 어떤 순서로 실행해도 괜찮아야 한다.</p>
+
+<h4 id="repeatable">Repeatable</h4>
+
+<p>테스트는 <em>어떤 환경에서도</em> 반복 가능해야 한다.</p>
+
+<p>실제 환경, QA 환경, 네트워크에 연결되지 않은 노트북 환경 등</p>
+
+<p>테스트가 돌아가지 않는 환경이 하나라도 있다면 테스트가 실패한 이유를 둘러댈 변명이 생긴다.</p>
+
+<h4 id="self-validating">Self-Validating</h4>
+
+<p>테스트는 <em>bool 값으로 결과를 내야 한다</em>. 성공 아니면 실패다.</p>
+
+<p>테스트가 스스로 성공과 실패를 가늠하지 않는다면 판단은 주관적이 되며 지루한 수작업 평가가 필요하게 된다.</p>
+
+<h4 id="timely">Timely</h4>
+
+<p>테스트는 <em>적시에 작성해야 한다</em>. 단위 테스트는 테스트하려는 실제 코드를 구현하기 직전에 구현한다.</p>
+
+<h2 id="오늘-읽은-소감">오늘 읽은 소감</h2>
+<p>저자가 이 파트의 결론에서 한 말이 있다.</p>
+<blockquote>
+  <p>사실상 <strong>깨끗한 테스트 코드</strong>라는 주제는 책 한 권을 할애해도 모자랄 주제다.</p>
+</blockquote>
+
+<p>나는 아직 TDD 방식으로 코드를 작성한 경험이 없다. 그렇기에 이번 파트는 완전히 이해하기 어려웠다.</p>
+
+<p>하지만 테스트 코드의 중요성은 꾸준히 들어왔기에 추후에 반드시 학습을 하고 적용할 예정이다.</p>
+
+<h2 id="궁금한-내용-잘-이해되지-않는-내용">궁금한 내용, 잘 이해되지 않는 내용</h2>
+<p>안드로이드를 개발할 때 코틀린을 사용하기 때문에 코틀린에서의 테스트 코드 작성하는 방법을 공부하고자 한다.</p>
+
+<h3 id="given-when-then-패턴">Given-When-Then 패턴</h3>
+<p><em>출처: <a href="https://martinfowler.com/bliki/GivenWhenThen.html">marginFlowler</a></em></p>
+
+<p><strong>Given</strong></p>
+
+<p>테스트에서 구체화하고자 하는 행동을 시작하기 전 <strong>테스트 상태를 설명</strong>하는 부분</p>
+
+<p><strong>When</strong></p>
+
+<p>구체화하고자 하는 그 행동</p>
+
+<p><strong>Then</strong></p>
+
+<p>어떤 특정한 행동 때문에 발생할거라고 <strong>예상되는 변화에 대해 설명</strong>하는 부분</p>
+
+<h3 id="template-method-패턴">Template Method 패턴</h3>
+<p><em>출처: <a href="https://gmlwjd9405.github.io/2018/07/13/template-method-pattern.html">Blog</a></em></p>
+
+<p>어떤 작업을 처리하는 일부분을 서브 클래스로 캡슈로하해 전체 일을 수행하는 구조는 바꾸지 않으면서 특정 단계에서 수행하는 내역을 바꾸는 패턴</p>
+
+<p>코드 중복을 최소화 할 수 있다</p>
+
+<h3 id="dsl-domain-specific-languages">DSL (Domain-Specific Languages)</h3>
+<p><em>출처: <a href="https://www.jetbrains.com/ko-kr/mps/concepts/domain-specific-languages/">Jetbrain</a></em></p>
+
+<p>관련 특정 분야에 최적화된 프로그래밍 언어. 해당 분야 또는 도메인의 개념과 규칙을 사용한다.</p>
+
+<p>DSL은 일반적으로 Java, C, Ruby 등 범용 언어보다 덜 복잡하며 소프트웨어 개발의 특정 부분에서 훨씬 더 효율적으로 작업할 수 있다.</p>
+
+<p>대표적으로 gradle, SQL과 같은 언어가 있다.</p>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/book/2022/03/05/clean-code-8.html" title="Clean Code_8장. 경계">Clean Code_8장. 경계</a><a class="next" href="/jekyll-theme-yat/book/2022/03/09/clean-code-10.html" title="Clean Code_10장. 클래스">Clean Code_10장. 클래스</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/git/2022/07/25/git-merge-rebase.html" title="Clean Code_10장. 클래스">Git merge와 rebase. 언제 어떻게 사용해야 할까</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/cs/2022/07/01/cs-oop.html" title="Clean Code_10장. 클래스">CS 쓱 훑어보기 - 2. 객체지향 프로그래밍</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/07/07/coroutine-basic-dive-2.html" title="Clean Code_10장. 클래스">Coroutine suspend function</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/06/clean-code-9.html" title="Clean Code_10장. 클래스">Clean Code_9장. 단위 테스트</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/06/clean-code-9.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/06/clean-code-9.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

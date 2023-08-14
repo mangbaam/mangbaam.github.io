@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Clean Code_4장. 주석 | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="Clean Code_4장. 주석">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="안드로이드 개발자가 되기 위한 기록들">
+<meta property="og:description" content="안드로이드 개발자가 되기 위한 기록들">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/24/clean-code-4.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/24/clean-code-4.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-02-24T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Clean Code_4장. 주석">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-02-24T00:00:00+00:00","datePublished":"2022-02-24T00:00:00+00:00","description":"안드로이드 개발자가 되기 위한 기록들","headline":"Clean Code_4장. 주석","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/24/clean-code-4.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/24/clean-code-4.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Clean Code_4장. 주석</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-02-24T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Feb 24, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 12 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#book">#book</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#clean_code">#clean_code</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><img src="/assets/images/CleanCodeCover.png" alt="클린 코드 책 커버"></p>
+
+<p>#노마드코더 #북클럽 #노개북</p>
+
+<p><a href="https://mangbaam.notion.site/4-7f6776c8a54b4a08a20d50d7b1014dbe">내용 요약(Notion)</a></p>
+
+<h2 id="til-today-i-learned">TIL (Today I Learned)</h2>
+<p>좋은 주석과 나쁜 주석에 대해 알아보았다. 일반적으로 주석은 필요하지 않는 경우가 많다.</p>
+
+<h2 id="오늘-읽은-범위">오늘 읽은 범위</h2>
+<p>4장. 주석</p>
+
+<h2 id="책에서-기억하고-싶은-내용을-써보세요">책에서 기억하고 싶은 내용을 써보세요.</h2>
+<blockquote>
+  <p>나쁜 코드에 주석을 달지 마라. 새로 짜라.</p>
+
+  <p>-<em>브라이언 W. 커니헨, P.j.플라우거</em></p>
+</blockquote>
+
+<p><em>저자</em></p>
+<blockquote>
+  <p>주석은 기껏해야 필요악이다.</p>
+
+  <p>우리는 코드로 의도를 표현하지 못해 주석을 사용한다.</p>
+
+  <p>주석을 달 때마다 자신에게 표현력이 없다는 사실을 푸념해야 마땅하다.</p>
+</blockquote>
+
+<h3 id="주석은-나쁜-코드를-보완하지-못한다">주석은 나쁜 코드를 보완하지 못한다.</h3>
+<hr>
+<p>코드에 주석을 추가하는 일반적인 이유는 코드 품질이 나쁘기 때문이다.</p>
+
+<h3 id="코드로-의도를-표현하라">코드로 의도를 표현하라!</h3>
+<hr>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 직원에게 복지 혜택을 받을 자격이 있는지 검사</span>
+<span class="k">if</span> <span class="o">((</span><span class="n">employee</span><span class="o">.</span><span class="na">flogs</span> <span class="o">&amp;</span> <span class="no">HOURLY_FLAG</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">employee</span><span class="o">.</span><span class="na">age</span> <span class="o">&gt;</span> <span class="mi">65</span><span class="o">))</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">(</span><span class="n">employee</span><span class="o">.</span><span class="na">isEligibleForFullBenefits</span><span class="o">())</span>
+</code></pre></div></div>
+<p>위 예제와 같이 코드로 대다수 의도를 표현할 수 있다. 주석으로 달려는 설명을 함수로 만들어 표현해도 충분하다.</p>
+
+<h3 id="좋은-주석">좋은 주석</h3>
+<hr>
+
+<h4 id="법적인-주석">법적인 주석</h4>
+<p>때로는 회사가 정립한 구현 표준에 맞춰 법적인 이유로 특정 주석을 넣으라고 명시한다.</p>
+
+<ul>
+  <li>저작권 정보</li>
+  <li>소유권 정보</li>
+  <li>계약 조건</li>
+  <li>법적인 정보</li>
+  <li>표준 라이선스</li>
+  <li>외부 문서</li>
+</ul>
+
+<h4 id="정보를-제공하는-주석">정보를 제공하는 주석</h4>
+<p>때로는 기본적인 정ㅂ조를 주석으로 제공하면 편리하다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// kk:mm:ss EEE, MMM dd, yyyy 형식이다.</span>
+<span class="nc">Pattern</span> <span class="n">timeMatcher</span> <span class="o">=</span> <span class="nc">Pattern</span><span class="o">.</span><span class="na">compile</span><span class="o">(</span>
+	<span class="s">"\\d*:\\d*:\\d* \\w*, \\w* \\d*, \\d*"</span>
+<span class="o">);</span>
+</code></pre></div></div>
+<p>위 코드의 주석은 코드에서 사용한 정규표현식이 시각과 날짜를 뜻한다고 설명한다.</p>
+
+<p>이왕이면 시각과 날짜를 변환하는 클래스를 만들어 코드를 옮겨주면 더 좋고 깔끔하겠다. 그러면 주석이 필요 없어진다.</p>
+
+<h4 id="의도를-설명하는-주석">의도를 설명하는 주석</h4>
+<p>때때로 주석은 구현을 이해하게 도와주는 선을 넘어 결정에 깔린 의도까지 설명한다.</p>
+
+<h4 id="의미를-명료하게-밝히는-주석">의미를 명료하게 밝히는 주석</h4>
+<ul>
+  <li>모호한 인수나 반환값은 그 의미를 읽기 좋게 표현하면 이해하기 쉬워진다</li>
+  <li>인수나 반환값이 표준 라이브러리나 변경하지 못하는 코드에 속한다면 의미를 명료하게 밝히는 주석이 유용하다.</li>
+</ul>
+
+<h4 id="결과를-경고하는-주석">결과를 경고하는 주석</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 여유 시간이 충분하지 않다면 실행하지 마십시오.</span>
+<span class="kd">public</span> <span class="nf">void_testWithReeallyBigFile</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">writeLinesToFile</span><span class="o">(</span><span class="mi">100000000</span><span class="o">);</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="todo-주석">TODO 주석</h4>
+<ul>
+  <li>
+<em>앞으로 할 일</em>을 <code class="language-plaintext highlighter-rouge">//TODO</code> 주석으로 남겨두면 편하다.</li>
+  <li>주기적으로 <code class="language-plaintext highlighter-rouge">//TODO</code> 주석을 점검해 없애도 괜찮은 주석은 없애라.</li>
+</ul>
+
+<h4 id="중요성을-강조하는-주석">중요성을 강조하는 주석</h4>
+<p>대수롭지 않다고 여겨질 뭔가의 중요성을 강조하기 위해 주석이 사용된다.</p>
+
+<h4 id="공개-api에서-javadocs">공개 API에서 Javadocs</h4>
+<ul>
+  <li>공개 API를 구현한다면 반드시 훌륭한 Javadocs를 작성한다.</li>
+  <li>하지만 여느 주석과 마찬가지로 Javadocs역시 독자를 오도하거나, 잘못 위치하거나, 그릇된 정보를 전달할 가능성이 존재한다.</li>
+</ul>
+
+<h3 id="나쁜-주석">나쁜 주석</h3>
+<hr>
+<blockquote>
+  <p>대다수 주석이 이 범주에 속한다.</p>
+</blockquote>
+
+<h4 id="주절거리는-주석">주절거리는 주석</h4>
+<ul>
+  <li>특별한 이유 없이 의무감으로 남기는 주석</li>
+  <li>프로세스에서 하라고 하니까 마지못해 남기는 주석</li>
+</ul>
+
+<p>주석을 달기로 결정했다면 충분한 시간을 들여 최고의 주석을 달도록 노력한다.</p>
+
+<h4 id="같은-이야기를-중복하는-주석">같은 이야기를 중복하는 주석</h4>
+<p><img src="https://user-images.githubusercontent.com/44221447/155518466-e2f8a3fb-db29-4969-a7d4-ea93b03cdd95.png" alt="같은 이야기를 중복하는 주석 예제"></p>
+
+<h4 id="오해할-여지가-있는-주석">오해할 여지가 있는 주석</h4>
+<p>때때로 의도는 좋았으나 프로그래머가 딱 맞을 정도로 엄밀하게는 주석을 달지 못하기도 한다.</p>
+
+<h4 id="의무적으로-다는-주석">의무적으로 다는 주석</h4>
+<p><img src="https://user-images.githubusercontent.com/44221447/155518705-1c9d7167-3b5c-48e0-afcb-c846e037b100.png" alt="의무적으로 다는 주석 예제"></p>
+
+<h4 id="이력을-기록하는-주석">이력을 기록하는 주석</h4>
+<p><img src="https://user-images.githubusercontent.com/44221447/155518848-9c46c0b2-527c-4b94-98f7-594faa34e9dd.png" alt="이력을 기록하는 주석 예제"></p>
+
+<ul>
+  <li>때때로 사람들은 모듈을 편집할 때마다 모듈 첫머리에 주석을 추가한다.</li>
+  <li>모듈 첫머리 주석은 지금까지 모듈에 가한 변경을 모두 기록하는 일종의 일지 혹은 로그가 된다.</li>
+  <li>과거에는 이러한 관례가 바람직했다.</li>
+  <li>현재는 <strong>소스 코드 관리 시스템</strong>이 있기 때문에 필요 없다.</li>
+</ul>
+
+<h4 id="있으나-마나-한-주석">있으나 마나 한 주석</h4>
+<p>너무 당연한 사실을 언급하며 새로운 정보를 제공하지 못하는 주석</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/** 월 중 일자 */</span>
+<span class="kd">private</span> <span class="kt">int</span> <span class="n">dayOfMonth</span><span class="o">;</span>
+</code></pre></div></div>
+
+<h4 id="무서운-잡음">무서운 잡음</h4>
+<p><img src="https://user-images.githubusercontent.com/44221447/155519178-ace1dd4a-7db0-4438-8d7f-7bf6c3ba2000.png" alt="무서운 잡음 예제"></p>
+
+<p>위 코드는 잘 알려진 오픈 소스 라이브러리에서 가져온 코드다.
+위 Javadocs는 어떤 목적을 수행할까? -&gt; <strong>없다.</strong></p>
+
+<p>심지어 오류도 존재한다. (마지막 코드의 주석)</p>
+
+<h4 id="함수나-변수로-표현할-수-있다면-주석을-달지-마라">함수나 변수로 표현할 수 있다면 주석을 달지 마라</h4>
+
+<h4 id="위치를-표시하는-주석">위치를 표시하는 주석</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Action /////////////////////////////////////////</span>
+</code></pre></div></div>
+
+<ul>
+  <li>때때로 프로그래머는 소스 파일에서 특정 위치를 표시하려 주석을 사용한다.</li>
+  <li>극히 드물게 위와 같은 배너 아래 특정 기능을 모아놓으면 유용한 경우도 있다.</li>
+  <li>하지만 일반적으로 위와 같은 주석은 가독성만 낮추므로 제거해야 마땅하다.</li>
+</ul>
+
+<h4 id="닫는-괄호에-다는-주석">닫는 괄호에 다는 주석</h4>
+<ul>
+  <li>중첩이 심하고 장황한 함수라면 의미가 있을 수도 있다.</li>
+  <li>하지만  (우리가 선호하는) 작고 캡슐화 된 함수에는 잡음일 뿐이다.</li>
+  <li>닫는 괄호에 주석을 달아야겠다는 생각이 든다면 대신에 <em>함수를 줄이려 시도하자.</em>
+</li>
+</ul>
+
+<h4 id="공로를-돌리거나-저자를-표시하는-주석">공로를 돌리거나 저자를 표시하는 주석</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* 릭이 추가함 */</span>
+</code></pre></div></div>
+
+<ul>
+  <li>소스 코드 관리 시스템은 누가 언제 무엇을 추가했는지 기억한다.</li>
+  <li>저자 이름으로 코드를 오염시킬 필요가 없다.</li>
+  <li>이런 주석이 오랫동안 코드에 방치되면 점차 부정확하고 쓸모없는 정보로 변하기 쉽다.</li>
+  <li>이런 정보는 <strong>소스 코드 관리 시스템</strong>에 저장하자.</li>
+</ul>
+
+<h4 id="주석으로-처리한-코드">주석으로 처리한 코드</h4>
+<ul>
+  <li>주석으로 처리된 코드는 다른 사람들이 지우기를 주저한다.</li>
+  <li>
+<strong>소스 코드 관리 시스템</strong>이 우리를 대신해 코드를 기억해준다.</li>
+  <li>코드를 삭제하라. 잃어버릴 염려는 없다.</li>
+</ul>
+
+<h4 id="html-주석">HTML 주석</h4>
+<p><img src="https://user-images.githubusercontent.com/44221447/155520043-fe1e797d-2ccb-4539-a226-435aa392232b.png" alt="HTML 주석 예제"></p>
+
+<p>소스 코드에서 HTML 주석은 <em>혐오 그 자체</em>다.</p>
+
+<h4 id="전역-정보">전역 정보</h4>
+<ul>
+  <li>주석을 달아야 한다면 근처에 있는 코드만 기술하라.</li>
+  <li>코드 일부에 주석을 다면서 시스템 전반적인 정보를 기술하지 마라.</li>
+</ul>
+
+<h4 id="너무-많은-정보">너무 많은 정보</h4>
+<ul>
+  <li>주석에다 흥미로운 역사나 관련 없는 정보를 장황하게 늘어놓지 마라.</li>
+</ul>
+
+<p>다음은 base64를 인코딩/디코딩 하는 함수를 테스트하는 모듈에서 가져온 주석이다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/155520287-2625a820-007b-4e4c-b94a-bd4d73d05daf.png" alt="너무 많은 정보 예제"></p>
+
+<h4 id="모호한-관계">모호한 관계</h4>
+<ul>
+  <li>주석과 주석이 설명하는 코드는 둘 사이 관계가 명백해야 한다.</li>
+  <li>독자가 주석과 코드를 읽어보고 무슨 소린지 알아야 한다.</li>
+  <li>주석 자체가 다시 설명을 요구하지 말아야 한다.</li>
+</ul>
+
+<h4 id="함수-헤더">함수 헤더</h4>
+<ul>
+  <li>짧은 함수는 긴 설명이 필요 없다.</li>
+  <li>짧고 한 가지만 수행하며 이름을 잘 붙인 함수가 주석으로 헤더를 추가한 함수보다 훨씬 좋다.</li>
+</ul>
+
+<h4 id="비공개-코드에서-javadocs">비공개 코드에서 Javadocs</h4>
+<ul>
+  <li>공개 API는 Javadocs가 유용하지만 공개하지 않을 코드라면 Javadocs는 쓸모가 없다.</li>
+</ul>
+
+<h2 id="오늘-읽은-소감은-떠오르는-생각을-가볍게-적어보세요">오늘 읽은 소감은? 떠오르는 생각을 가볍게 적어보세요</h2>
+<p><img src="https://user-images.githubusercontent.com/44221447/155522794-3fadc2df-f628-4b3d-89e4-a67d18328bf1.jpg" alt="고든램지"></p>
+
+<p>저자가 주석에 대해 엄청난 악담을 퍼붓는 것을 보고 위의 짤이 떠올랐다.</p>
+
+<p>저자의 말대로 Git같은 <strong>소스 관리 프로그램</strong>이 코딩을 하는데 너무나 큰 도움을 주고 있기 때문에 나는 현재 TODO 주석만 유용하고 사용하고, 일반적인 주석은 최소한으로만 사용하고 있다.</p>
+
+<p>책에서도 나와있듯이 주석으로 로그를 남기거나 작성자를 남기는 등의 관습은 이전에는 필요했으나 현재는 불필요한 관습이 되었다.</p>
+
+<p>지금 내가 공부하고 사용하고 있는 관습이나 내용들은 미래에는 필요 없는 내용이 될 수 있으니 꾸준히 공부해야겠다는 생각이 들었다.</p>
+
+<h2 id="궁금한-내용이-있거나-잘-이해되지-않는-내용이-있다면-적어보세요">궁금한 내용이 있거나, 잘 이해되지 않는 내용이 있다면 적어보세요.</h2>
+<p>나쁜 코드를 설명하는 부분에서 HTML 주석에 대해 언급했는데 HTML 주석이 어떤 과정에서 생겨나고, 어디에 필요한지 궁금하다.</p>
+
+<p>검색을 해보았지만 HTML 에서 사용하는 주석 처리 방법에 대해서만 결과가 나와서 원하는 결과를 찾기 어려웠다.</p>
+
+<p>그 외 내용은 어렵지 않은 내용이었다.</p>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/book/2022/02/23/clean-code-3.html" title="Clean Code_3장. 함수">Clean Code_3장. 함수</a><a class="next" href="/jekyll-theme-yat/book/2022/02/28/effective_kotlin-2.html" title="Effective Kotlin_아이템2. 변수의 스코프를 최소화하라">Effective Kotlin_아이템2. 변수의 스코프를 최소화하라</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/09/clean-code-10.html" title="Effective Kotlin_아이템2. 변수의 스코프를 최소화하라">Clean Code_10장. 클래스</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/android/2022/08/31/android-xml-view-manager.html" title="Effective Kotlin_아이템2. 변수의 스코프를 최소화하라">Android TextView 를 중첩(계층)할 수 없는 이유</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/07/30/kotlin-flow-basic-1.html" title="Effective Kotlin_아이템2. 변수의 스코프를 최소화하라">비동기 플로우에 대해서 알아보자 (1)</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/07/18/kotlin-sortwith.html" title="Effective Kotlin_아이템2. 변수의 스코프를 최소화하라">How to sort List&lt;Pair&lt;Int, Int&gt;&gt; in kotlin</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/24/clean-code-4.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/24/clean-code-4.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

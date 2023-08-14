@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Clean Code_2장. 의미 있는 이름 | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="Clean Code_2장. 의미 있는 이름">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="#노마드코더 #북클럽 #노개북">
+<meta property="og:description" content="#노마드코더 #북클럽 #노개북">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/20/clean-code-2.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/20/clean-code-2.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-02-20T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Clean Code_2장. 의미 있는 이름">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-02-20T00:00:00+00:00","datePublished":"2022-02-20T00:00:00+00:00","description":"#노마드코더 #북클럽 #노개북","headline":"Clean Code_2장. 의미 있는 이름","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/20/clean-code-2.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/20/clean-code-2.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Clean Code_2장. 의미 있는 이름</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-02-20T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Feb 20, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 20 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#book">#book</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#clean_code">#clean_code</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><img src="/assets/images/CleanCodeCover.png" alt="클린 코드 책 커버">
+#노마드코더 #북클럽 #노개북</p>
+
+<p><a href="https://mangbaam.notion.site/2-95059346a00e44b3b73fa85345676f4e">요약 내용 (Notion)</a></p>
+
+<h2 id="til-today-i-learned">TIL (Today I Learned)</h2>
+<p>변수, 함수, 인수, 클래스, 패키지, 소스 파일, 디렉터리 등등 소프트웨어의 다양한 부분에 이름이 붙는다. 이러한 이름을 잘 짓는 방법에 대해 공부했다.</p>
+
+<h2 id="오늘-읽은-범위">오늘 읽은 범위</h2>
+<p>2장. 의미 있는 이름</p>
+
+<h2 id="책에서-기억하고-싶은-내용을-써보세요">책에서 기억하고 싶은 내용을 써보세요.</h2>
+<h3 id="의도를-분명히-밝혀라">의도를 분명히 밝혀라</h3>
+<hr>
+
+<p>주석이 필요하다면 의도를 분명히 드러내지 못했다는 말이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span> <span class="nf">getThem</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span> <span class="n">list1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="nl">x:</span> <span class="n">theList</span><span class="o">)</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">==</span> <span class="mi">4</span><span class="o">)</span>
+            <span class="n">list1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">list1</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>이해하기 어려운 코드</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span> <span class="nf">getFlaggedCells</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span> <span class="n">flaggedCells</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="nl">cell:</span> <span class="n">gameBoard</span><span class="o">)</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cell</span><span class="o">[</span><span class="no">STATUS_VALUE</span><span class="o">]</span> <span class="o">==</span> <span class="no">FLAGGED</span><span class="o">)</span>
+            <span class="n">flaggedCells</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cell</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">flaggedCells</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>이해하기 쉬운 코드</em></p>
+
+<p>위 두 코드는 같은 동작을 하는 코드이지만 첫 번째 코드는 너무나 함축되어 있어 코드 맥락이 코드 자체에 명시적으로 드러나지 않는다.</p>
+
+<p>위 코드가 지뢰찾기 게임이라고 할 때 다음과 같이 int 배열을 간단한 클래스로 만들어서 의미를 부여해도 좋다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Cell</span><span class="o">&gt;</span> <span class="nf">getFlaggedCells</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Cell</span><span class="o">&gt;</span> <span class="n">flaggedCells</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Cell</span><span class="o">&gt;();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="nc">Cell</span> <span class="nl">cell:</span> <span class="n">gameBoard</span><span class="o">)</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cell</span><span class="o">.</span><span class="na">isFlagged</span><span class="o">())</span>
+            <span class="n">flaggedCells</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cell</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">flaggedCells</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="그릇된-정보를-피하라">그릇된 정보를 피하라</h3>
+<hr>
+
+<ul>
+  <li>나름 널리 쓰이는 의미 있는 단어라도 다른 의미로 해석될 수 있는 경우 피한다.</li>
+  <li>여러 계정을 그룹으로 묶을 때 실제 List가 아니라면 <code class="language-plaintext highlighter-rouge">accountList</code>와 같이 명명하지 않는다.
+    <ul>
+      <li>실제 컨테이너가 List 형인 경웅라도 컨테이너 유형을 이름에 넣지 않는 것이 바람직하다.</li>
+    </ul>
+  </li>
+  <li>서로 흡사한 이름을 사용하지 않도록 주의한다.</li>
+  <li>유사한 개념은 유사한 표기법을 사용한다. (일관성 유지)</li>
+  <li>헷갈리는 이름을 쓰지 말아라.
+    <ul>
+      <li>l(소문자 L)이나 O(대문자 o) 등을 이름으로 사용하면 1이나 0과 헷갈린다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="의미-있게-구분하라">의미 있게 구분하라</h3>
+<hr>
+
+<ul>
+  <li>컴파일러나 인터프리터만 통과하려고 연속된 숫자를 붙이거나 불용어를 추가하는 등의 방식은 적절치 않다.</li>
+  <li>예를 들어 <code class="language-plaintext highlighter-rouge">zork</code>라는 변수가 있다고 해서 <code class="language-plaintext highlighter-rouge">theZork</code>라고 이름 지으면 안된다.</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">Product</code> 클래스가 있다고 <code class="language-plaintext highlighter-rouge">ProductInfo</code>, <code class="language-plaintext highlighter-rouge">ProductData</code> 등으로 이름 짓는 경우도 마찬가지.</li>
+  <li>읽는 사람이 차이를 알도록 이름을 지어라.</li>
+</ul>
+
+<h3 id="발음하기-쉬운-이름을-사용하라">발음하기 쉬운 이름을 사용하라</h3>
+<hr>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">DtaRcrd102</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">Date</span> <span class="n">genymdhms</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">Date</span> <span class="n">modymdhms</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">pszqint</span> <span class="o">=</span> <span class="s">"102"</span><span class="o">;</span>
+	<span class="c1">// ...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>발음하기 어려운 이름</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Customer</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">Date</span> <span class="n">generationTimestamp</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">Date</span> <span class="n">modificationTimestamp</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">recordId</span> <span class="o">=</span> <span class="s">"102"</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><em>발음하기 쉬운 이름</em></p>
+
+<p>둘째 코드는 지적인 대화가 가능해진다.</p>
+
+<h3 id="검색하기-쉬운-이름을-사용하라">검색하기 쉬운 이름을 사용하라.</h3>
+<hr>
+
+<ul>
+  <li>문자 하나를 사용하는 이름과 상수는 텍스트 코드에서 쉽게 눈에 띄지 않는다.
+    <ul>
+      <li>예를 들어 ‘7’을 검색하면 파일 이름이나 수식이 모두 검색된다.</li>
+      <li>‘e’와 같은 문자도 변수 이름으로 적합하지 못하다. 모든 프로그램, 거의 모든 문장에 등장할 것이다.</li>
+    </ul>
+  </li>
+  <li>한 문자로 나타내는 것은 간단한 메서드에서 로컬 변수 정도?</li>
+  <li><strong>이름 길이는 범위 크기에 비례해야 한다.</strong></li>
+</ul>
+
+<h3 id="인코딩을-피하라">인코딩을 피하라</h3>
+<hr>
+
+<p>유형이나 범위 정보까지 인코딩에 넣으면 그만큼 이름을 해독하기 어려워진다.</p>
+<ul>
+  <li>헝가리식 표기법
+    <ul>
+      <li>변수의 타입을 이름에 포함하는 것</li>
+      <li>과거 윈도 C API에서 주로 사용하던 표기법
+        <ul>
+          <li>당시에는 컴파일러가 타입을 점검하지 않았기에 타입을 기억하기 위한 단서로 사용되었다.</li>
+        </ul>
+      </li>
+      <li>현재는 컴파일러가 타입을 기억하고 강제하기 때문에 자주 사용되지 않는다.</li>
+    </ul>
+  </li>
+  <li>멤버 변수 접두어
+    <ul>
+      <li>멤버 변수에 <code class="language-plaintext highlighter-rouge">m_</code>이라는 접두어를 붙이는 것 -&gt; 이제는 그럴 필요가 없다.</li>
+    </ul>
+  </li>
+  <li>인터페이스 클래스와 구현 클래스
+    <ul>
+      <li>도형을 생성하는 <code class="language-plaintext highlighter-rouge">ABSTRACT FACTORY</code>를 구현한다고 할 때, 이 팩토리는 인터페이스 클래스다.</li>
+      <li>구현은 구체 클래스(concrete class)에서 한다.</li>
+      <li>옛날 코드에서는 인터페이스임을 알리기 위해 접두어 I를 붙였다.</li>
+      <li>저자의 의견으로는 다음과 같은 이름이 IShapeFactory보다 좋다고 한다.
+        <ul>
+          <li>ShapeFactoryImp</li>
+          <li>CShapeFactory</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="자신의-기억력을-자랑하지-마라">자신의 기억력을 자랑하지 마라</h3>
+<hr>
+
+<ul>
+  <li>명료함이 최고다</li>
+</ul>
+
+<h3 id="클래스-이름">클래스 이름</h3>
+<hr>
+
+<ul>
+  <li>클래스 이름과 객체 이름은 <strong>명사</strong>나 <strong>명사구</strong>가 적합하다.
+    <ul>
+      <li>
+<code class="language-plaintext highlighter-rouge">Customer</code>, <code class="language-plaintext highlighter-rouge">WikiPage</code>, <code class="language-plaintext highlighter-rouge">Account</code>, <code class="language-plaintext highlighter-rouge">AddressParser</code> 등 ⭕</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">Manager</code>, <code class="language-plaintext highlighter-rouge">Processor</code>, <code class="language-plaintext highlighter-rouge">Data</code>, <code class="language-plaintext highlighter-rouge">Info</code> 등 ⚠️</li>
+      <li>동사 ❌</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="메서드-이름">메서드 이름</h3>
+<hr>
+
+<ul>
+  <li>메서드 이름은 <strong>동사</strong>나 <strong>동사구</strong>가 적합하다
+    <ul>
+      <li>
+<code class="language-plaintext highlighter-rouge">postPayment</code>, <code class="language-plaintext highlighter-rouge">deletePage</code>, <code class="language-plaintext highlighter-rouge">save</code> 등</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>접근자</strong>, <strong>변경자</strong>, <strong>조건자</strong>는 javabean 표준에 따라 값 앞에 <code class="language-plaintext highlighter-rouge">get</code>, <code class="language-plaintext highlighter-rouge">set</code>, <code class="language-plaintext highlighter-rouge">is</code>를 붙인다.</p>
+
+    <div class="language-java highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="n">string</span> <span class="n">name</span> <span class="o">=</span> <span class="n">employee</span><span class="o">.</span><span class="na">getName</span><span class="o">();</span>
+<span class="n">customer</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"mike"</span><span class="o">);</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">paycheck</span><span class="o">.</span><span class="na">isPosted</span><span class="o">())...</span>
+</code></pre></div>    </div>
+  </li>
+  <li>생성자를 중복 정의(overload) 할 때는 정적 팩토리 메서드를 사용한다.</li>
+  <li>메서드는 인수를 설명하는 이름을 사용한다.
+    <div class="language-java highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="nc">Complex</span> <span class="n">fulcrumPoint</span> <span class="o">=</span> <span class="nc">Complex</span><span class="o">.</span><span class="na">FromRealNumber</span><span class="o">(</span><span class="mf">23.0</span><span class="o">);</span>
+</code></pre></div>    </div>
+    <p>위 코드보다 아래 코드가 좋다.</p>
+    <div class="language-java highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="nc">Complex</span> <span class="n">fulcrumPoint</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Complex</span><span class="o">(</span><span class="mf">23.0</span><span class="o">);</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="기발한-이름은-피하라">기발한 이름은 피하라</h3>
+<hr>
+
+<p>특정 문화에서만 사용하는 농담은 피하고, 의도를 분명하고 솔직하게 표현하라.</p>
+
+<h3 id="한-개념에-한-단어를-사용하라">한 개념에 한 단어를 사용하라</h3>
+<hr>
+
+<ul>
+  <li>추상적인 개념 하나에 단어 하나를 선택해 이를 고수한다
+    <ul>
+      <li>똑같은 메서드를 클래스마다 <code class="language-plaintext highlighter-rouge">fetch</code>, <code class="language-plaintext highlighter-rouge">retrieve</code>, <code class="language-plaintext highlighter-rouge">get</code>으로 제각각 부르면 혼란스럽다</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="말장난을-하지-마라">말장난을 하지 마라</h3>
+<hr>
+
+<ul>
+  <li>한 단어를 두 가지 목적으로 사용하지 마라.
+    <ul>
+      <li>지금까지 구현한 <code class="language-plaintext highlighter-rouge">add</code> 메서드가 기존 값 두 개를 더하거나 이어서 새로운 값을 만든다고 하자</li>
+      <li>새로 작성하는 메서드는 집합에 값 하나를 추가한다고 할 때 이 메서드를 <code class="language-plaintext highlighter-rouge">add</code>라 지어도 괜찮을까?
+        <ul>
+          <li>이 메서드는 기존의 <code class="language-plaintext highlighter-rouge">add</code> 메서드와 맥락이 다르다. 그러므로 <code class="language-plaintext highlighter-rouge">insert</code>나 <code class="language-plaintext highlighter-rouge">append</code>라는 이름이 적당하다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>다른 개념에 같은 단어를 사용한다면 말장난에 불과하다.</li>
+</ul>
+
+<h3 id="해법-영역에서-가져온-이름을-사용하라">해법 영역에서 가져온 이름을 사용하라</h3>
+<hr>
+
+<ul>
+  <li>코드를 읽는 사람도 프로그래머다</li>
+  <li>전산 용어, 알고리즘 이름, 패턴 이름, 수학 용어 등을 사용해도 좋다.</li>
+  <li>모든 이름을 문제 영역(domain)에서 가져오는 정책은 현명하지 못하다.</li>
+</ul>
+
+<h3 id="문제-영역에서-가져온-이름을-사용하라">문제 영역에서 가져온 이름을 사용하라</h3>
+<hr>
+
+<ul>
+  <li>적절한 프로그래머 용어가 없다면 문제 영역에서 이름을 가져온다.</li>
+  <li>그러면 전문가에게 의미를 물어 파악할 수 있다.</li>
+</ul>
+
+<h3 id="의미-있는-맥락을-추가하라">의미 있는 맥락을 추가하라</h3>
+<hr>
+
+<ul>
+  <li>스스로 의미가 분명한 이름이 있지만 대다수 이름은 그렇지 못하다.</li>
+  <li>그래서 클래스, 함수, 이름 공간에 넣어 맥락을 부여한다.</li>
+  <li>
+    <p>모든 방법이 실패하면 마지막 수단으로 접두어를 붙인다.</p>
+  </li>
+  <li>예를 들어 <code class="language-plaintext highlighter-rouge">firstName</code>, <code class="language-plaintext highlighter-rouge">lastName</code>, <code class="language-plaintext highlighter-rouge">street</code>, <code class="language-plaintext highlighter-rouge">houseNumber</code>, <code class="language-plaintext highlighter-rouge">city</code>, <code class="language-plaintext highlighter-rouge">state</code>, <code class="language-plaintext highlighter-rouge">zipcode</code> 라는 변수가 있을 때 변수를 훑어보면 주소라는 사실을 알 수 있다.</li>
+  <li>하지만 <code class="language-plaintext highlighter-rouge">state</code> 변수 하나만 사용된다면 <code class="language-plaintext highlighter-rouge">state</code>가 주소 일부라는 사실을 알기 힘들다</li>
+  <li>이때 <code class="language-plaintext highlighter-rouge">addr</code>라는 접두어를 추가해 <code class="language-plaintext highlighter-rouge">addrFirstName</code>, <code class="language-plaintext highlighter-rouge">addrLastName</code>, <code class="language-plaintext highlighter-rouge">addrState</code>라 쓰면 맥락이 분명해진다.</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">Address</code> 라는 클래스를 생성하면 더 좋다.</li>
+</ul>
+
+<h3 id="불필요한-맥락을-없애라">불필요한 맥락을 없애라</h3>
+<hr>
+
+<ul>
+  <li>IDE는 개발자를 지원하는 도구다. IDE를 방해할 이유가 없다.</li>
+  <li>일반적으로 짧은 이름이 긴 이름보다 좋지만 이는 의미가 분명한 경우에 한해서다.</li>
+</ul>
+
+<h3 id="마무리">마무리</h3>
+<hr>
+
+<ul>
+  <li>좋은 이름을 선택하려면 설명 능력이 뛰어나야 하고 문화적 배경이 같아야 한다.</li>
+  <li>암기는 요즘 나오는 도구에게 맡기고, 우리는 표나 자료 구조처럼 읽히는 코드를 짜는 데만 집중해야 한다.</li>
+  <li>코드를 개선하려는 노력을 중단해서는 안 된다.</li>
+</ul>
+
+<h2 id="오늘-읽은-소감은-떠오르는-생각을-가볍게-적어보세요">오늘 읽은 소감은? 떠오르는 생각을 가볍게 적어보세요</h2>
+
+<p>저자의 말대로 소프트웨어에서 변수, 함수, 인수, 클래스, 패키지, 소스 파일, 디렉터리 등등 다양한 부분에 이름을 붙여야 한다. 프로그래밍 언어를 처음 배울 때 우스갯 소리로 들었던 것이 코딩보다 이름 짓는 것이 더 어렵다는 말이었다.</p>
+
+<p>그만큼 적절한 이름을 짓는 것은 쉬운 일이 아니다.</p>
+
+<p>내가 평소에 코드를 짜며 이름을 지을 때는 보통 내가 학습한 자료나 강의 등에서 이름 붙이는 방식을 따라 갔던 것 같다. 클래스와 객체 이름은 명사로 짓고, 메서드 이름은 동사로 짓는 등의 널리 알려진 방식에서는 잘 따르고 있었지만 인터페이스에 ‘I’ 접두사를 붙인다거나 <code class="language-plaintext highlighter-rouge">nameTextView</code>와 같이 타입을 붙이는 등의 작명 법은 나도 그렇고 아직 다른 사람들도 많이 사용하는 방법이라서 무조건 적으로 이 책의 내용을 따를 것이 아니라 함께 개발하는 사람들과 맞춰 바꿔 나가는 방향으로 하면 좋을 것 같다.</p>
+
+<h2 id="궁금한-내용이-있거나-잘-이해되지-않는-내용이-있다면-적어보세요">궁금한 내용이 있거나, 잘 이해되지 않는 내용이 있다면 적어보세요.</h2>
+<p>정적 팩토리 메서드: 객체 생성 역할을 하는 클래스 메서드</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// LocalTime.class</span>
+<span class="o">...</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="nc">LocalTime</span> <span class="nf">of</span><span class="o">(</span><span class="kt">int</span> <span class="n">hour</span><span class="o">,</span> <span class="kt">int</span> <span class="n">minute</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">ChronoField</span><span class="o">.</span><span class="na">HOUR_OF_DAY</span><span class="o">.</span><span class="na">checkValidValue</span><span class="o">((</span><span class="kt">long</span><span class="o">)</span><span class="n">hour</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">minute</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="no">HOURS</span><span class="o">[</span><span class="n">hour</span><span class="o">];</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="nc">ChronoField</span><span class="o">.</span><span class="na">MINUTE_OF_HOUR</span><span class="o">.</span><span class="na">checkValidValue</span><span class="o">((</span><span class="kt">long</span><span class="o">)</span><span class="n">minute</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">LocalTime</span><span class="o">(</span><span class="n">hour</span><span class="o">,</span> <span class="n">minute</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="o">...</span>
+
+<span class="c1">// hour, minutes을 인자로 받아서 9시 30분을 의미하는 LocalTime 객체를 반환한다.</span>
+<span class="nc">LocalTime</span> <span class="n">openTime</span> <span class="o">=</span> <span class="nc">LocalTime</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="mi">30</span><span class="o">);</span> 
+</code></pre></div></div>
+
+<p>위 코드에서 LocalTime 클래스의 <code class="language-plaintext highlighter-rouge">of</code> 메서드처럼 직접적으로 생성자를 통해 객체를 생성하는 것이 아닌 메서드를 통해서 객체를 생성하는 것을 <strong>정적 팩토리 메서드</strong>라고 한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Color</span> <span class="o">{</span>
+    <span class="no">RED</span><span class="o">,</span>
+    <span class="no">BLUE</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="o">...</span>
+<span class="nc">Color</span> <span class="n">redColor</span> <span class="o">=</span> <span class="nc">Color</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="s">"RED"</span><span class="o">);</span>
+<span class="nc">Color</span> <span class="n">blueColor</span> <span class="o">=</span> <span class="nc">Color</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="s">"BLUE"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>위 코드처럼 enum 요소를 조회할 때 사용하는 <code class="language-plaintext highlighter-rouge">valueOf</code>도 정적 팩토리 메서드의 일종이라고 할 수 있다.</p>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/book/2022/02/19/effective-kotlin-1.html" title="Effective Kotlin_아이템1. 가변성을 제한하라">Effective Kotlin_아이템1. 가변성을 제한하라</a><a class="next" href="/jekyll-theme-yat/book/2022/02/23/clean-code-3.html" title="Clean Code_3장. 함수">Clean Code_3장. 함수</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/06/clean-code-9.html" title="Clean Code_3장. 함수">Clean Code_9장. 단위 테스트</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/02/23/clean-code-3.html" title="Clean Code_3장. 함수">Clean Code_3장. 함수</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/07/03/coroutine-basic.html" title="Clean Code_3장. 함수">Kotlin Coroutine Basic</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/09/clean-code-10.html" title="Clean Code_3장. 함수">Clean Code_10장. 클래스</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/20/clean-code-2.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/book/2022/02/20/clean-code-2.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Clean Code_10장. 클래스 | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="Clean Code_10장. 클래스">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="#노마드코더 #북클럽 #노개북">
+<meta property="og:description" content="#노마드코더 #북클럽 #노개북">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/09/clean-code-10.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/09/clean-code-10.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-03-09T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Clean Code_10장. 클래스">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-03-09T00:00:00+00:00","datePublished":"2022-03-09T00:00:00+00:00","description":"#노마드코더 #북클럽 #노개북","headline":"Clean Code_10장. 클래스","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/09/clean-code-10.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/09/clean-code-10.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Clean Code_10장. 클래스</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-03-09T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Mar 09, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 14 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#book">#book</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#clean_code">#clean_code</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><img src="/assets/images/CleanCodeCover.png" alt="클린 코드 책 커버">
+#노마드코더 #북클럽 #노개북</p>
+
+<p><a href="https://mangbaam.notion.site/10-c7c8d475faf143068c8d4c062ed3d319">내용 요약(Notion)</a></p>
+
+<h2 id="til-today-i-learned">TIL (Today I Learned)</h2>
+<p>클래스는 단일 책임만 가져야 한다는 사실을 배웠다.</p>
+
+<h2 id="오늘-읽은-범위">오늘 읽은 범위</h2>
+<p>10장. 클래스</p>
+
+<h2 id="책에서-기억하고-싶은-내용">책에서 기억하고 싶은 내용</h2>
+<h3 id="클래스-체계">클래스 체계</h3>
+<hr>
+<p>표준 자바 관례에 따르면</p>
+<ul>
+  <li>변수 등장
+    <ul>
+      <li>public static 상수가 있으면 맨 처음에 등장</li>
+      <li>private static 변수</li>
+      <li>private 인스턴스 변수</li>
+      <li>공개 변수가 필요한 경우는 거의 없다</li>
+    </ul>
+  </li>
+  <li>public 함수</li>
+  <li>자신을 호출하는 public 함수</li>
+  <li>private 함수</li>
+</ul>
+
+<p>→ 추상화 단계가 순차적으로 내려간다.</p>
+
+<h4 id="캡슐화">캡슐화</h4>
+<p>변수와 유틸리티 함수는 가능한 공개하지 않는 것이 좋지만 반드시 숨겨야 하는 것 아니다.</p>
+
+<p>때로는 변수나 유틸리티 함수를 <code class="language-plaintext highlighter-rouge">protected</code>로 선언해 테스트 코드에 접근을 허용하기도 한다.</p>
+
+<p>캡슐화를 풀어주는 결정은 언제나 최후의 수단이다.</p>
+
+<h3 id="클래스는-작아야-한다">클래스는 작아야 한다!</h3>
+<hr>
+<p>클래스를 설계할 때도 함수와 마찬가지로 ‘<strong>작게</strong>‘가 기본 규칙이다.</p>
+
+<p>얼마나 작아야 할까?</p>
+
+<p>함수는 물리적인 행 수로 크기를 측정했다.</p>
+
+<p>클래스는 <strong>맡은 책임</strong>을 센다.</p>
+
+<h4 id="단일-책임-원칙">단일 책임 원칙</h4>
+<p>단일 책임 원칙(Single Responsibility Principle, SRP)은 클래스나 모듈을 <strong>변경할 이유가 단 하나</strong>뿐이어야 하는 원칙.</p>
+
+<p>큰 클래스 몇 개가 아니라 작은 클래스 여럿으로 이뤄진 시스템이 더 바람직하다.</p>
+
+<p>작은 클래스는 각자 맡은 책임이 하나며, 변경할 이유가 하나며, 다른 작은 클래스와 협력해 시스템에 필요한 동작을 수행한다.</p>
+
+<h4 id="응집도cohension">응집도(Cohension)</h4>
+<p>클래스는 인스턴스 변수 수가 작아야 한다. 일반적으로 메서드가 변수를 더 많이 사용할수록 메서드와 클래스는 응집도가 더 높다. 모든 인스턴스 변수를 메서드마다 사용하는 클래스는 응집도가 가장 높다.</p>
+
+<p>응집도가 높다는 말은 클래스에 속한 메서드와 변수가 <strong>서로 의존하며 논리적인 단위로 묶인다</strong>는 의미다.</p>
+
+<p>‘<em>함수를 작게, 매개변수 목록을 짧게</em>’라는 전략을 따르다 보면 때때로 몇몇 메서드만이 사용하는 인스턴스 변수가 아주 많아진다. 이는 십중팔구 새로운 클래스로 쪼개야 한다는 신호다.</p>
+
+<h4 id="응집도를-유지하면-작은-클래스-여럿이-나온다">응집도를 유지하면 작은 클래스 여럿이 나온다</h4>
+<p>큰 함수를 작은 함수 여럿으로 나누기만 해도 클래스 수가 많아진다.</p>
+
+<h3 id="변경하기-쉬운-클래스">변경하기 쉬운 클래스</h3>
+<hr>
+<p>깨끗한 시스템은 클래스를 체계적으로 정리해 변경에 수반하는 위험을 낮춘다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sql</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">Sql</span><span class="o">(</span><span class="nc">String</span> <span class="n">table</span><span class="o">,</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">create</span><span class="o">()</span>
+    <span class="kd">public</span> <span class="n">string</span> <span class="nf">insert</span><span class="o">(</span><span class="nc">Object</span><span class="o">[]</span> <span class="n">fields</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">selectAll</span><span class="o">()</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">findByKey</span><span class="o">(</span><span class="nc">String</span> <span class="n">keyColumn</span><span class="o">,</span> <span class="nc">String</span> <span class="n">keyValue</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">select</span><span class="o">(</span><span class="nc">Column</span> <span class="n">column</span><span class="o">,</span> <span class="nc">String</span> <span class="n">pattern</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">select</span><span class="o">(</span><span class="nc">Criteria</span> <span class="n">criteria</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">preparedInsert</span><span class="o">()</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="nf">columnList</span><span class="o">(</span><span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="nf">valuesList</span><span class="o">(</span><span class="nc">Object</span><span class="o">[]</span> <span class="n">fields</span><span class="o">,</span> <span class="kd">final</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="nf">selectWithCriteria</span><span class="o">(</span><span class="nc">String</span> <span class="n">criteria</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="nf">placeholderList</span><span class="o">(</span><span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>위의 클래스는 수정하기 어렵다. 수정하면 테스트도 다시 해야한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">abstract</span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sql</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">Sql</span><span class="o">(</span><span class="nc">String</span> <span class="n">table</span><span class="o">,</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+    <span class="kd">abstract</span> <span class="kd">public</span> <span class="nc">String</span> <span class="nf">generate</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CreateSql</span> <span class="kd">extends</span> <span class="nc">Sql</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">CreateSql</span><span class="o">(</span><span class="nc">String</span> <span class="n">table</span><span class="o">,</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+    <span class="nd">@Override</span> <span class="kd">public</span> <span class="nc">String</span> <span class="nf">generate</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SelectSql</span> <span class="kd">extends</span> <span class="nc">Sql</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">SelectSql</span><span class="o">(</span><span class="nc">String</span> <span class="n">table</span><span class="o">,</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+    <span class="nd">@Override</span> <span class="kd">public</span> <span class="nc">String</span> <span class="nf">generate</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InsertSql</span> <span class="n">extneds</span> <span class="nc">Sql</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">InsertSql</span><span class="o">(</span><span class="nc">String</span> <span class="n">table</span><span class="o">,</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">,</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">fileds</span><span class="o">)</span>
+    <span class="nd">@Override</span> <span class="kd">public</span> <span class="nc">String</span> <span class="nf">generate</span><span class="o">()</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="nf">valuesList</span><span class="o">(</span><span class="nc">Object</span><span class="o">[]</span> <span class="n">fields</span><span class="o">,</span> <span class="kd">final</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SelectWithCriteriaSql</span> <span class="kd">extends</span> <span class="nc">Sql</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">SelectWithCriteriaSql</span><span class="o">(</span><span class="nc">String</span> <span class="n">table</span><span class="o">,</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">,</span> <span class="nc">Criteria</span> <span class="n">criteria</span><span class="o">)</span>
+    <span class="nd">@Override</span> <span class="kd">public</span> <span class="nc">String</span> <span class="nf">generate</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SelectWithMatchSql</span> <span class="kd">extends</span> <span class="nc">Sql</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">SelectWithMatchSql</span><span class="o">(</span><span class="nc">String</span> <span class="n">table</span><span class="o">,</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">,</span> <span class="nc">Column</span> <span class="n">column</span><span class="o">,</span> <span class="nc">String</span> <span class="n">pattern</span><span class="o">)</span>
+    <span class="nd">@Override</span> <span class="kd">public</span> <span class="nc">String</span> <span class="nf">generate</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FindByKeySql</span> <span class="kd">extends</span> <span class="nc">Sql</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">FindByKeySql</span><span class="o">(</span><span class="nc">String</span> <span class="n">table</span><span class="o">,</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">,</span> <span class="nc">String</span> <span class="n">keyColumn</span><span class="o">,</span> <span class="nc">String</span> <span class="n">keyValue</span><span class="o">)</span>
+    <span class="nd">@Override</span> <span class="kd">public</span> <span class="nc">String</span> <span class="nf">generate</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PreparedInsertSql</span> <span class="kd">extends</span> <span class="nc">Sql</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">PreparedInsertSql</span><span class="o">(</span><span class="nc">String</span> <span class="n">table</span><span class="o">,</span> <span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+    <span class="nd">@Override</span> <span class="kd">public</span> <span class="nc">String</span> <span class="nf">generate</span><span class="o">()</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="nf">placeholderList</span><span class="o">(</span><span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Where</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">Where</span><span class="o">(</span><span class="nc">STring</span> <span class="n">criteria</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">generate</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">columnList</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">columnList</span><span class="o">(</span><span class="nc">Column</span><span class="o">[]</span> <span class="n">columns</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">generate</span><span class="o">()</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이런식으로 추상 클래스 Sql을 만들고, 이를 상속하는 다양한 클래스들을 만든다.</p>
+
+<p>모든 파생 클래스가 공통으로 사용하는 <code class="language-plaintext highlighter-rouge">private</code> 메서드는 Where과 ColumnList라는 두 유틸리티 클래스로 쪼갠다.</p>
+
+<p>이렇게 바꾸면</p>
+
+<ul>
+  <li>SRP를 지원한다</li>
+  <li>OCP도 지원한다
+    <ul>
+      <li>확장에 개방적이고, 수정에 폐쇄적</li>
+    </ul>
+  </li>
+  <li>새 기능을 수정하거나 기존 기능을 변경할 때 건드릴 코드가 최소다</li>
+</ul>
+
+<h4 id="변경으로부터-격리">변경으로부터 격리</h4>
+<p>객체 지향 프로그래밍 입문에서 우리는 구체적인(concrete) 클래스와 추상(abstract)클래스가 있다고 배웠다.</p>
+
+<p>구체적인 클래스는 상세한 구현(코드)을 포함하며 추상 클래스는 개념만 포함한다.</p>
+
+<p>상세한 구현에 의존하는 클라이언트 클래스는 구현이 바뀌면 위험에 빠진다. 그래서 우리는 <strong>인터페이스</strong>와 <strong>추상 클래스</strong>를 사용해 구현이 미치는 영향을 격리한다.</p>
+
+<p>결합도를 낮추면 유연성과 재사용성이 높아지고 자연스럽게 DIP(Dependency Inversion Principle)를 따르는 클래스가 나온다.</p>
+
+<p><em>본질적으로 DIP는 클래스가 상세한 구현이 아닌 추상화에 의존해야 한다는 원칙이다.</em></p>
+
+<h2 id="오늘-읽은-소감">오늘 읽은 소감</h2>
+<p>함수와 마찬가지로 클래스도 크기가 작은 것이 좋다고 하지만 역시나 잘 쪼개는 방법은 쉽지 않은 것 같다.
+어느 정도로 분리해야 하며 결합도가 높은 코드를 어떻게 풀어낼 것인지는 여러 번의 설계 고민과 리팩토링 연습을 통해 익혀야 할 것 같다.</p>
+
+<h2 id="궁금한-내용-잘-이해되지-않는-내용">궁금한 내용, 잘 이해되지 않는 내용</h2>
+<p>요구사항이 바뀌어 추상 클래스도 작성한 클래스도 바뀌어야 할 때는 그 클래스를 상속하는 많은 클래스들에 변화가 필요할텐데 이처럼 추상 클래스에 변화가 생겨야 하는 불가피한 경우 어떻게 리팩토링 하는 것이 효율적일지 궁금하다.</p>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/book/2022/03/06/clean-code-9.html" title="Clean Code_9장. 단위 테스트">Clean Code_9장. 단위 테스트</a><a class="next" href="/jekyll-theme-yat/book/2022/03/11/effective-kotlin-3.html" title="Effective Kotlin_아이템3. 최대한 플랫폼 타입을 사용하지 말라">Effective Kotlin_아이템3. 최대한 플랫폼 타입을 사용하지...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/09/clean-code-10.html" title="Effective Kotlin_아이템3. 최대한 플랫폼 타입을 사용하지 말라">Clean Code_10장. 클래스</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/02/28/effective_kotlin-2.html" title="Effective Kotlin_아이템3. 최대한 플랫폼 타입을 사용하지 말라">Effective Kotlin_아이템2. 변수의 스코프를 최소화하라</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/11/effective-kotlin-3.html" title="Effective Kotlin_아이템3. 최대한 플랫폼 타입을 사용하지 말라">Effective Kotlin_아이템3. 최대한 플랫폼 타입을 사용하지 말라</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/cs/2022/07/01/cs-oop.html" title="Effective Kotlin_아이템3. 최대한 플랫폼 타입을 사용하지 말라">CS 쓱 훑어보기 - 2. 객체지향 프로그래밍</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/09/clean-code-10.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/09/clean-code-10.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>안드로이드에서 FCM 사용해보기-1 | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="안드로이드에서 FCM 사용해보기-1">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="안드로이드 개발자가 되기 위한 기록들">
+<meta property="og:description" content="안드로이드 개발자가 되기 위한 기록들">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/android/2022/05/17/fcm-setting.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/android/2022/05/17/fcm-setting.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-05-17T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="안드로이드에서 FCM 사용해보기-1">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-05-17T00:00:00+00:00","datePublished":"2022-05-17T00:00:00+00:00","description":"안드로이드 개발자가 되기 위한 기록들","headline":"안드로이드에서 FCM 사용해보기-1","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/android/2022/05/17/fcm-setting.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/android/2022/05/17/fcm-setting.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">안드로이드에서 FCM 사용해보기-1</h1>
+  <h2 class="post-subtitle">파이어베이스 프로젝트 추가 및 설정</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-05-17T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> May 17, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#android">#android</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#firebase">#firebase</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#fcm">#fcm</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      
+<h2>⭐</h2>
+
+<blockquote>
+  <p>이번 게시글에서는 파이어베이스를 사용해 본 적 없거나 FCM을 사용해 본 적 없는 분들을 위해 파이어베이스 프로젝트를 생성하고 설정한 후에 Android 프로젝트를 등록하는 방법에 대해 단계별로 자세히 설명하려고 합니다.</p>
+</blockquote>
+
+<blockquote>
+  <p>FCM에 대해서 궁금하다면 <a href="https://mangbaam.github.io/android/2022/05/16/fcm-starter.html">이전 게시글</a>을 참고해보세요!</p>
+</blockquote>
+
+<h2 id="새-안드로이드-프로젝트-생성">🔥새 안드로이드 프로젝트 생성</h2>
+
+<hr>
+<p><img src="https://user-images.githubusercontent.com/44221447/168643722-86740084-6d2c-4db9-a4c0-af32c1fe9bbb.png" alt="new_android_project1"></p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168644073-d5123e34-ac06-4449-be47-f61a44bd5689.png" alt="new_android_project2"></p>
+
+<h3 id="앱-id-확인">앱 ID 확인</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168645836-a2d44009-618f-4508-9d22-ada12bd31c4e.png" alt="android_id"></p>
+
+<p><code class="language-plaintext highlighter-rouge">build.gradle(App)</code>에서 <code class="language-plaintext highlighter-rouge">applicationId</code>를 확인한다. 이 값은 뒤에서 파이어베이스를 설정할 때 사용된다.</p>
+
+<h2 id="firebase-콘솔">🔥Firebase 콘솔</h2>
+
+<hr>
+<p><a href="https://console.firebase.google.com/"><img src="https://user-images.githubusercontent.com/44221447/168642858-d66f068e-338c-417d-b96f-886bbbbbc1c1.png" alt="firebase_console"></a></p>
+
+<h3 id="1-프로젝트-추가">1. 프로젝트 추가</h3>
+
+<p><a href="https://console.firebase.google.com/">Firebase 콘솔</a>에서 <code class="language-plaintext highlighter-rouge">프로젝트 추가</code>를 눌러 프로젝트를 추가한다.</p>
+
+<h4 id="1-프로젝트-이름-설정">1. 프로젝트 이름 설정</h4>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168646051-9a6a1ccc-a725-4a02-89ea-81c467b907c6.png" alt="new_project1"></p>
+
+<p>파이어베이스 프로젝트 이름을 지정한다.</p>
+
+<h4 id="2-선택-옵션">2. 선택 옵션</h4>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168646175-be22e19c-a463-444a-af66-021f082e551c.png" alt="new_project2"></p>
+
+<p>파이어베이스는 <code class="language-plaintext highlighter-rouge">구글 애널리틱스</code>를 활용한 <code class="language-plaintext highlighter-rouge">A/B 테스팅</code> 등의 기능을 제공한다. 당장 안 쓰더라도 굳이 옵션을 끌 필요는 없으니 체크된 상태로 넘어간다.</p>
+
+<h4 id="3-계정-선택">3. 계정 선택</h4>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168646241-801dbb3c-1797-433f-8654-db8d1461c344.png" alt="new_project3"></p>
+
+<p>계정을 선택한다.</p>
+
+<h4 id="4-프로젝트-생성-완료">4. 프로젝트 생성 완료</h4>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168646418-01b9941b-7bfb-42e5-94e7-2931c83d8c40.png" alt="new_project4"></p>
+
+<p>파이어베이스 프로젝트가 성공적으로 생성되었다.</p>
+
+<h3 id="2-앱-추가">2. 앱 추가</h3>
+
+<p>하나의 파이어베이스 프로젝트에는 하나의 앱만 등록하는 것을 권장한다. 예를 들어 <strong>A 쇼핑몰</strong>이 <code class="language-plaintext highlighter-rouge">안드로이드</code>, <code class="language-plaintext highlighter-rouge">iOS</code>, <code class="language-plaintext highlighter-rouge">웹</code> 등의 플랫폼을 지원할 때는 하나의 파이어베이스 프로젝트에 각각의 플랫폼을 추가해도 되지만 <strong>A 쇼핑몰</strong>과 <em>관련 없는</em> <strong>B 쇼핑몰</strong>을 추가하는 것은 <strong>지양하는 것이 좋다</strong>.</p>
+
+<h4 id="1-안드로이드-추가">1. 안드로이드 추가</h4>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168646664-faea0e12-2c0f-43e8-97c1-6a1c0732d2fa.png" alt="fcm_console"></p>
+
+<p>하나의 프로젝트에서 다양한 플랫폼을 추가할 수 있다. 안드로이드를 선택한다.</p>
+
+<h4 id="2-패키지-이름-지정">2. 패키지 이름 지정</h4>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168646834-3a54912e-c14d-44f2-be4c-8b2e023c8763.png" alt="regist_app1"></p>
+
+<p><a href="#%EC%95%B1-id-%ED%99%95%EC%9D%B8">앞서 확인했던</a> 안드로이드 패키지 이름을 지정한다.</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">build.gradle(App)</code>의 <code class="language-plaintext highlighter-rouge">applicationId</code></p>
+</blockquote>
+
+<h4 id="3-google-servicesjson">3. google-services.json</h4>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168646930-fe16cd68-59cb-4129-b327-0b3119952082.png" alt="regist_app2"></p>
+
+<p><code class="language-plaintext highlighter-rouge">google-services.json</code>파일을 다운로드 한다. 이 파일의 내용은 민감한 정보를 포함하고 있으니 주의해서 다뤄야 한다.</p>
+
+<h4 id="4-google-servicesjson-붙여넣기">4. google-services.json 붙여넣기</h4>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168647292-fa41a0bb-de3d-4a4d-ae81-293c1e2ecbfe.png" alt="change_to_project"></p>
+
+<p>안드로이드 스튜디오 프로젝트 탭에서 <code class="language-plaintext highlighter-rouge">Android</code>로 되어있는 것을 <code class="language-plaintext highlighter-rouge">Project</code>로 변경한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168647487-983c791c-983c-4479-a836-cf953809d09c.png" alt="paste_google-services.json"></p>
+
+<p><code class="language-plaintext highlighter-rouge">app</code>에서 <kbd>Ctrl</kbd> + <kbd>v</kbd>로 붙여넣기 한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168647619-4b6d4eb4-a53b-47a8-8360-b770b4f43929.png" alt="paste_google-services.json2"></p>
+
+<p><code class="language-plaintext highlighter-rouge">OK</code>를 눌러 완료한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168647693-e76f48ff-abde-49e5-be87-b68eaeca5ca8.png" alt="add_to_git"></p>
+
+<p>만약 <code class="language-plaintext highlighter-rouge">Git</code>을 사용하고 있다면 이 파일은 커밋에서 제외한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168647946-85958119-6daa-4431-a384-a3889ea8e06b.png" alt="add_to_gitignore"></p>
+
+<p><code class="language-plaintext highlighter-rouge">.gitignore</code>파일에 <code class="language-plaintext highlighter-rouge">google-services.json</code>을 추가해 실수로 커밋하지 않도록 하자.</p>
+
+<h3 id="3-firebase-sdk-추가">3. Firebase SDK 추가</h3>
+
+<p>다음은 Firebase SDK를 추가하는 과정이다. Firebase에서는 다음과 같이 안내하고 있지만 안드로이드 스튜디오 버전에 따라 설정 위치가 달라질 수 있다. 아래 2개의 사진은 참고만 하고 그 <strong>밑에서 다른 방법을 소개하려고 한다.</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168648976-fc0f4aa7-5367-44af-90a7-446a9c8bd390.png" alt="add_sdk1"></p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168649044-420d17a9-9eca-4ac8-b1d2-f9d5b2e92106.png" alt="add_sdk2"></p>
+
+<p>우리는 다음 과정을 따라해보자.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168649662-d3f0da9c-6436-4ccc-93f1-228068dfd70d.png" alt="firebase_menu"></p>
+
+<p>안드로이드 스튜디오의 상단 메뉴의 <code class="language-plaintext highlighter-rouge">Tools</code>에는 <code class="language-plaintext highlighter-rouge">Firebase</code> 메뉴가 존재한다. 이것을 선택하면 다음 화면이 뜬다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168650031-913c0ca4-8560-40be-b86b-49246257f4f5.png" alt="fcm_menu"></p>
+
+<p>파이어베이스의 여러 기능이 보이는데 그 중 <code class="language-plaintext highlighter-rouge">Cloud Messaging</code>을 선택하고 Kotlin을 사용할 것이므로 <strong>두 번째 옵션</strong>을 선택한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168650432-1aa4c63c-7c7a-42df-9451-39f7dff30995.png" alt="fcm_config1"></p>
+
+<p>그러면 FCM을 구성하고 사용하기 위한 다양한 도움말이 나오는데 우린 이미 <em>1.앱 연결</em>을 했기 때문에 <em>2.앱에 FCM 추가</em> 버튼을 선택한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168650524-889d31fa-200b-44a7-8400-66a5eb4d5ed4.png" alt="fcm_config2"></p>
+
+<p>버튼을 누르면 위와 같이 변경될 내용이 표시된다. 하단의 <code class="language-plaintext highlighter-rouge">Accept Changes</code> 버튼을 눌러 설정을 완료한다.</p>
+
+<p>만약 수동으로 추가했다면 <code class="language-plaintext highlighter-rouge">Sync now</code> 버튼을 눌러 동기화한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168656164-52a9af63-5eb0-4af1-af99-abce39f46696.png" alt="completed"></p>
+
+<p>여기까지 잘 따라왔다면 설정이 성공적으로 완료된다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168656757-01bb4423-9162-4f14-848f-6ebb720b405e.png" alt="completed_register"></p>
+
+<p>정상적으로 추가되었다면 위 사진처럼 등록된 앱을 확인할 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/168656454-329da649-b397-4f6c-af9e-f7bd228169ff.png" alt="menu_fcm"></p>
+
+<p>좌측의 메뉴에서 아래로 내려보면 <code class="language-plaintext highlighter-rouge">Cloud Messaging</code> 메뉴가 있다. 이 곳에서 FCM을 다룰 수 있다.</p>
+
+<h2 id="마무리">🔥마무리</h2>
+
+<hr>
+<blockquote>
+  <p>여기까지 <strong>파이어베이스 프로젝트를 추가</strong>하고, <strong>안드로이드 프로젝트도 생성</strong>하고, 파이어베이스에서 <strong>안드로이드를 사용하기 위한 설정하는 방법</strong>에 대해 알아봤습니다.</p>
+</blockquote>
+
+<blockquote>
+  <p>안드로이드에서 <code class="language-plaintext highlighter-rouge">FCM</code>를 사용하는 예제를 확인하고 싶다면 다음 게시글(포스팅 예정)을, <code class="language-plaintext highlighter-rouge">FCM</code>에 대해서 알고싶다면 <a href="https://mangbaam.github.io/android/2022/05/16/fcm-starter.html">이전 게시글</a>를 참고하세요!</p>
+</blockquote>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/android/2022/05/16/fcm-starter.html" title="FCM에 대해 알아보자">FCM에 대해 알아보자</a><a class="next" href="/jekyll-theme-yat/android/2022/05/18/fcm-android-1.html" title="안드로이드에서 FCM 사용해보기-2">안드로이드에서 FCM 사용해보기-2</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/book/2022/04/21/effective-kotlin-5.html" title="안드로이드에서 FCM 사용해보기-2">Effective Kotlin_아이템5. 예외를 활용해 코드에 제한을 걸어라</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/07/15/coroutine-withcontext.html" title="안드로이드에서 FCM 사용해보기-2">Coroutine withContext + NonCancellable</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/android/2022/08/31/android-xml-view-manager.html" title="안드로이드에서 FCM 사용해보기-2">Android TextView 를 중첩(계층)할 수 없는 이유</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/tip/2022/07/11/tip-auto-hot-key.html" title="안드로이드에서 FCM 사용해보기-2">AutoHotKey를 사용해 완전 편하게 개발자 키매핑 하기</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/android/2022/05/17/fcm-setting.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/android/2022/05/17/fcm-setting.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

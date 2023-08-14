@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>AutoHotKey를 사용해 완전 편하게 개발자 키매핑 하기 | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="AutoHotKey를 사용해 완전 편하게 개발자 키매핑 하기">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="⭐">
+<meta property="og:description" content="⭐">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/tip/2022/07/11/tip-auto-hot-key.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/tip/2022/07/11/tip-auto-hot-key.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-07-11T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="AutoHotKey를 사용해 완전 편하게 개발자 키매핑 하기">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-07-11T00:00:00+00:00","datePublished":"2022-07-11T00:00:00+00:00","description":"⭐","headline":"AutoHotKey를 사용해 완전 편하게 개발자 키매핑 하기","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/tip/2022/07/11/tip-auto-hot-key.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/tip/2022/07/11/tip-auto-hot-key.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">AutoHotKey를 사용해 완전 편하게 개발자 키매핑 하기</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-07-11T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Jul 11, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 40 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#autohotkey">#autohotkey</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#keymapping">#keymapping</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#tip">#tip</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2>⭐</h2>
+
+<p>본 게시글에서 공유한 스크립트는 언제든 변경되거나 추가될 수 있습니다!</p>
+
+<p><a href="https://github.com/mangbaam/AutoHotKey">깃허브</a>에서 최신의 내용을 확인할 수 있습니다. 복사해서 자유롭게 사용하세요!</p>
+
+<p>더 좋은 방법이나 버그, 추가하면 좋을 키매핑 등 자유롭게 의견 주세요!</p>
+
+<p><a href="#%EC%99%84%EB%A3%8C%EB%90%9C-%EB%AA%A8%EC%8A%B5">완성된 키매핑</a>을 바로 보고싶다면 클릭하세요.</p>
+
+<h2 id="극한의-효율성">극한의 효율성</h2>
+
+<hr>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178151444-dd6314ca-6c10-4d5c-9cfb-f823c5719258.png" alt="annepro2"></p>
+
+<p>나는 <strong>Anne Pro2</strong> 키보드를 2년 간 사용하고 더 좋은 키감을 가진 키보드를 가지고 싶다는 생각으로 <strong>Durgod K320KR</strong> 저소음 적축 모델을 구매하게 되었다.</p>
+
+<p>키감은 정말 만족스러웠다. 하지만 포커 배열(60% 배열)인 앤프로2를 사용할 때 두 손이 키보드를 절대 벗어나지 않도록 (개인적으로) 완벽한 키매핑을 했기에 텐키리스 키보드에서 방향키나 <code class="language-plaintext highlighter-rouge">HOME</code>, <code class="language-plaintext highlighter-rouge">END</code> 등의 키를 누르기 위해 손이 자리에서 벗어나서 오른쪽으로 이동해야 한다는 점이 너무나도 불편하게 느껴졌다.</p>
+
+<p>물론 한 달 정도 현재 키보드로만 타이핑을 하다보니 생각보다 금방 익숙해졌지만 이미 극한의 효율을 맛 본 이후라 만족스럽지는 못했다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178151664-b1aaea74-ae9f-46c3-9e77-3932fcb6e800.png" alt="powertoys"></p>
+
+<p>처음에는 <strong>PowerToys</strong>의 키매핑 기능으로 비교적 덜 사용되는 <code class="language-plaintext highlighter-rouge">Alt</code> 키를 가지고 조합을 시도했다. 참고로 앤프로2는 <code class="language-plaintext highlighter-rouge">CapsLock</code> 버튼을 <code class="language-plaintext highlighter-rouge">Fn키</code>로 사용하기 때문에 엄청난 효율을 챙길 수 있는 것이었는데, 키보드에 있는 <code class="language-plaintext highlighter-rouge">Fn키</code>는 공식 키매핑 프로그램이나 딥 스위치로 제공하지 않으면 옮기기 힘들고, <code class="language-plaintext highlighter-rouge">CapsLock</code>은 <code class="language-plaintext highlighter-rouge">Ctrl</code>, <code class="language-plaintext highlighter-rouge">Alt</code>, <code class="language-plaintext highlighter-rouge">Shift</code>와 같은 조합 키가 아니기 때문에 <strong>PowerToys</strong>의 기능으로는 <code class="language-plaintext highlighter-rouge">CapsLock</code> 위치에 <code class="language-plaintext highlighter-rouge">Alt</code> 키를 매핑한 후 <code class="language-plaintext highlighter-rouge">Alt</code>와 다른 키들의 조합으로 하는 것이 최선이었다.</p>
+
+<p>하지만 나는 단축키를 사용하는 것을 즐기기에 생각보다 Alt 키를 사용하는 경우도 많이 있었고, 이때마다 조합해두었던 키들과 충돌을 일으켜 원하는 기능을 제대로 사용할 수 없는 경우가 허다했다.</p>
+
+<p>그렇게 불편함을 감수하고 있다가 오늘 우연히 <strong>Auto Hot Key</strong> 라는 프로그램을 알게되어 기존의 앤프로2 키매핑과 거의 유사하게 스크립트를 짜서 적용해볼 수 있었다.</p>
+
+<p>다른 사람들도 꼭 키보드에서 손이 벗어나지 않아도 되는 <strong>극한의 효율성</strong>을 느끼게 해주고 싶어서 스크립트와 방법을 공유하고자 한다.</p>
+
+<p><em>앤프로 후기 및 키매핑 -&gt; <a href="https://latte-is-horse.tistory.com/89">https://latte-is-horse.tistory.com/89</a></em></p>
+
+<h2 id="설치">설치</h2>
+
+<hr>
+
+<p>AutoHotKey를 사용하려면 우선 설치를 해야한다.</p>
+
+<p><a href="https://www.autohotkey.com/download/">https://www.autohotkey.com/download/</a></p>
+
+<p>위 공식 링크에서 설치 파일을 다운로드 할 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178151925-5261a38a-cb68-422c-a687-aba429789b62.png" width="50%"></p>
+
+<p>Express Installation 밑에 있는 경로에 그대로 설치하려면 Express Installation을, 다른 경로에 설치하려면 Custom Installation을 선택한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178151968-4994f6a2-fc87-44c3-8b10-e50c0dc97eb3.png" width="50%"></p>
+
+<p>Exit을 누르고 설치를 종료한다.</p>
+
+<h2 id="vs-code-설정">VS Code 설정</h2>
+
+<hr>
+
+<p>AutoHotKey는 일종의 스크립트인데 메모장으로도 편집이 가능하지만 개발자라면 대부분 설치되어 있을 VS Code에 설정하고 작성하는 방법을 공유하고자 한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178152038-802ad79a-b4ba-4779-99c9-4dc3cb43a405.png" alt="vscode"></p>
+
+<p>VS Code의 확장 프로그램에서 검색해보면 AutoHotKey 확장 프로그램이 있다. <code class="language-plaintext highlighter-rouge">설치</code>한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178152095-1d8eb400-b509-46c4-a0e3-a47542d79f16.png" alt="코드러너"></p>
+
+<p>아마 VS Code를 사용한다면 Code Runner는 대부분 설치되어 있을 것 같은데 Code Runner에서도 <code class="language-plaintext highlighter-rouge">.ahk</code> 확장자를 지원한다. 이 확장자가 AutoHotKey 파일의 확장자이다.</p>
+
+<p><em>settings.json</em></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code-runner.executorMap"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+        </span><span class="nl">"ahk"</span><span class="p">:</span><span class="w"> </span><span class="s2">"</span><span class="se">\"</span><span class="s2">C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">AutoHotkey</span><span class="se">\\</span><span class="s2">AutoHotkey.exe</span><span class="se">\"</span><span class="s2">"</span><span class="p">,</span><span class="w">
+        </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"code-runner.executorMapByFileExtension"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+        </span><span class="nl">".ahk"</span><span class="p">:</span><span class="w"> </span><span class="s2">"</span><span class="se">\"</span><span class="s2">C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">AutoHotkey</span><span class="se">\\</span><span class="s2">AutoHotkey.exe</span><span class="se">\"</span><span class="s2">"</span><span class="p">,</span><span class="w">
+        </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+	</span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="nl">"[ahk]"</span><span class="p">:</span><span class="w"> 
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"files.encoding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"utf8"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">F1</code> 이나 <code class="language-plaintext highlighter-rouge">Ctrl + p</code>를 눌러 <code class="language-plaintext highlighter-rouge">settings.json</code>을 열고 위와 같이 추가한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178152298-18440981-ab07-445d-9e47-817879e22643.png" alt="경로"></p>
+
+<p><code class="language-plaintext highlighter-rouge">ahk</code>에 추가되는 경로는 실제 경로를 선택하자.</p>
+
+<p><em>keybindings.json</em></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+	</span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+	</span><span class="p">{</span><span class="w"> </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f5"</span><span class="p">,</span><span class="w"> </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"code-runner.run"</span><span class="p">,</span><span class="nl">"when"</span><span class="p">:</span><span class="w"> </span><span class="s2">"editorTextFocus &amp;&amp; editorLangId == 'ahk'"</span><span class="p">},</span><span class="w">
+	</span><span class="p">{</span><span class="w"> </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f6"</span><span class="p">,</span><span class="w"> </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"code-runner.stop"</span><span class="w"> </span><span class="p">},</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<p>마찬가지로 Open Keyboard Shortcuts (JSON)에서 위 코드를 추가한다. <code class="language-plaintext highlighter-rouge">ahk</code> 파일에서 <code class="language-plaintext highlighter-rouge">F5</code>를 누르면 실행되도록 하는 단축키를 추가하는 부분이다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178152373-c0ea2d30-4998-414a-a88a-2bcee236117a.png" alt="트레이"></p>
+
+<p>저장하고 <code class="language-plaintext highlighter-rouge">ahk</code> 파일에서 <code class="language-plaintext highlighter-rouge">F5</code> 키를 눌러보면 위와 같이 트레이에 추가되어 실행되는 것을 확인할 수 있다.</p>
+
+<h2 id="키매핑">키매핑</h2>
+
+<hr>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178152449-2e64fd3b-4803-4b77-b2e0-04f911a45f35.png" alt="앤프로"></p>
+
+<p>목표는 기존의 앤프로와 유사하게 만드는 것이다.</p>
+
+<h3 id="capslock을-fn키로-사용하기">CapsLock을 Fn키로 사용하기</h3>
+
+<pre><code class="language-ahk">*CapsLock:: fn:=1
+*CapsLock Up:: fn:=0
+LWin &amp; Space:: CapsLock ; 캡스락 대체키
+
+#if fn
+; 키매핑
+</code></pre>
+
+<p><code class="language-plaintext highlighter-rouge">CapsLock</code>에 <code class="language-plaintext highlighter-rouge">fn</code> 이라는 변수를 할당했고, 누르면 1, 떼면 0으로 토글되도록 하였다.</p>
+
+<p>가끔 캡스락을 사용하는 경우가 있기 때문에 <code class="language-plaintext highlighter-rouge">Win + Space</code> 키로 캡스락 기능을 하도록 만들었다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">#if fn</code> 밑으로 키매핑을 하면 캡스락이 눌린 상태에서 동작하는 키를 만들 수 있다.</p>
+
+<h3 id="방향키">방향키</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178152533-4a9b86a8-a3ab-465a-8479-baadb78ed57f.png" alt="방향키"></p>
+
+<pre><code class="language-ahk">;***************************************
+;   캡스락 설정
+;***************************************
+
+*CapsLock:: fn:=1
+*CapsLock Up:: fn:=0
+LWin &amp; Space:: CapsLock ; 캡스락 대체키
+
+;***************************************
+;   방향키 설정
+;***************************************
+; 기본 WASD, IJKL
+#if fn
+j::Send, {Left} ; LEFT
+a::Send, {Left}
+k::Send, {Down} ; DOWN
+s::Send, {Down}
+l::Send, {Right} ; RIGHT
+d::Send, {Right}
+i::Send, {Up} ; UP
+w::Send, {Up}
+
+; Shift 조합
++j::Send, {ShiftDown}{Left} ; LEFT
++a::Send, {ShiftDown}{Left}
++k::Send, {ShiftDown}{Down} ; DOWN
++s::Send, {ShiftDown}{Down}
++l::Send, {ShiftDown}{Right} ; RIGHT
++d::Send, {ShiftDown}{Right}
++w::Send, {ShiftDown}{Up}
++i::Send, {ShiftDown}{Up} ; UP
+
+; Ctrl 조합
+^j::Send, {CtrlDown}{Left} ; LEFT
+^a::Send, {CtrlDown}{Left}
+^k::Send, {CtrlDown}{Down} ; DOWN
+^s::Send, {CtrlDown}{Down}
+^l::Send, {CtrlDown}{Right} ; RIGHT
+^d::Send, {CtrlDown}{Right}
+^i::Send, {CtrlDown}{Up} ; UP
+^w::Send, {CtrlDown}{Up}
+
+; Alt 조합
+!j::Send, {AltDown}{Left} ; LEFT
+!a::Send, {AltDown}{Left}
+!k::Send, {AltDown}{Down} ; DOWN
+!s::Send, {AltDown}{Down}
+!l::Send, {AltDown}{Right} ; RIGHT
+!d::Send, {AltDown}{Right}
+!i::Send, {AltDown}{Up} ; UP
+!w::Send, {AltDown}{Up}
+
+; Ctrl Shift 조합
+^+j::Send, {CtrlDown}{ShiftDown}{Left} ; LEFT
+^+a::Send, {CtrlDown}{ShiftDown}{Left}
+^+k::Send, {CtrlDown}{ShiftDown}{Down} ; DOWN
+^+s::Send, {CtrlDown}{ShiftDown}{Down}
+^+l::Send, {CtrlDown}{ShiftDown}{Right} ; RIGHT
+^+d::Send, {CtrlDown}{ShiftDown}{Right}
+^+i::Send, {CtrlDown}{ShiftDown}{Up} ; UP
+^+w::Send, {CtrlDown}{ShiftDown}{Up}
+</code></pre>
+
+<p>위 사진과 같이 방향키를 설정했다. 방향키는 조합키과 사용하는 경우가 많아서 주로 사용되는 조합을 추가했다.</p>
+
+<blockquote>
+  <p>혹시 이렇게 일일이 지정하지 않아도 되는 방법이 있다면 알려주세요!!</p>
+</blockquote>
+
+<h3 id="f-키">F 키</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178152825-f793b700-4341-49fe-96c1-edec6feb89d8.png" alt="f키"></p>
+
+<pre><code class="language-ahk">;***************************************
+;   캡스락 설정
+;***************************************
+*CapsLock:: fn:=1
+*CapsLock Up:: fn:=0
+LWin &amp; Space:: CapsLock ; 캡스락 대체키
+
+;***************************************
+;   F키 설정
+;***************************************
+#if fn
+1::Send, {F1}
+2::Send, {F2}
+3::Send, {F3}
+4::Send, {F4}
+5::Send, {F5}
+6::Send, {F6}
+7::Send, {F7}
+8::Send, {F8}
+9::Send, {F9}
+0::Send, {F10}
+-::Send, {F11}
+=::Send, {F12}
+
+; Shift 조합
++1::Send, {ShiftDown}{F1}
++2::Send, {ShiftDown}{F2}
++3::Send, {ShiftDown}{F3}
++4::Send, {ShiftDown}{F4}
++5::Send, {ShiftDown}{F5}
++6::Send, {ShiftDown}{F6}
++7::Send, {ShiftDown}{F7}
++8::Send, {ShiftDown}{F8}
++9::Send, {ShiftDown}{F9}
++0::Send, {ShiftDown}{F10}
++-::Send, {ShiftDown}{F11}
++=::Send, {ShiftDown}{F12}
+
+; Ctrl 조합
+^1::Send, {CtrlDown}{F1}
+^2::Send, {CtrlDown}{F2}
+^3::Send, {CtrlDown}{F3}
+^4::Send, {CtrlDown}{F4}
+^5::Send, {CtrlDown}{F5}
+^6::Send, {CtrlDown}{F6}
+^7::Send, {CtrlDown}{F7}
+^8::Send, {CtrlDown}{F8}
+^9::Send, {CtrlDown}{F9}
+^0::Send, {CtrlDown}{F10}
+^-::Send, {CtrlDown}{F11}
+^=::Send, {CtrlDown}{F12}
+
+; Ctrl + Shift 조합
+^+1::Send, {CtrlDown}{ShiftDown}{F1}
+^+2::Send, {CtrlDown}{ShiftDown}{F2}
+^+3::Send, {CtrlDown}{ShiftDown}{F3}
+^+4::Send, {CtrlDown}{ShiftDown}{F4}
+^+5::Send, {CtrlDown}{ShiftDown}{F5}
+^+6::Send, {CtrlDown}{ShiftDown}{F6}
+^+7::Send, {CtrlDown}{ShiftDown}{F7}
+^+8::Send, {CtrlDown}{ShiftDown}{F8}
+^+9::Send, {CtrlDown}{ShiftDown}{F9}
+^+0::Send, {CtrlDown}{ShiftDown}{F10}
+^+-::Send, {CtrlDown}{ShiftDown}{F11}
+^+=::Send, {CtrlDown}{ShiftDown}{F12}
+
+; Alt 조합
+!1::Send, {AltDown}{F1}
+!2::Send, {AltDown}{F2}
+!3::Send, {AltDown}{F3}
+!4::Send, {AltDown}{F4}
+!5::Send, {AltDown}{F5}
+!6::Send, {AltDown}{F6}
+!7::Send, {AltDown}{F7}
+!8::Send, {AltDown}{F8}
+!9::Send, {AltDown}{F9}
+!0::Send, {AltDown}{F10}
+!-::Send, {AltDown}{F11}
+!=::Send, {AltDown}{F12}
+</code></pre>
+
+<h3 id="home-end-pageup-pagedown-insert-delete">Home, End, PageUp, PageDown, Insert, Delete</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178152937-848af9d4-fdab-41ad-b7d8-02d1e6e0037a.png" alt="기능키"></p>
+
+<p>코딩할 때 정말 유용하게 사용되는 키들이다.</p>
+
+<pre><code class="language-ahk">;***************************************
+;   캡스락 설정
+;***************************************
+*CapsLock:: fn:=1
+*CapsLock Up:: fn:=0
+LWin &amp; Space:: CapsLock ; 캡스락 대체키
+
+;***************************************
+;   HOME, END, PGUP, PGDN 설정
+;***************************************
+#if fn
+`;::Send, {Home} ; HOME
+'::Send, {End} ; END
+q::Send, {PgUp} ; PageUp
+e::Send, {PgDn} ; PageDown
+
+; Shift 조합
++`;::Send, {ShiftDown}{Home} ; HOME
++'::Send, {ShiftDown}{End} ; END
++q::Send, {ShiftDown}{PgUp} ; PageUp
++e::Send, {ShiftDown}{PgDn} ; PageDown
+
+; Alt 조합
+!`;::Send, {AltDown}{Home} ; HOME
+!'::Send, {AltDown}{End} ; END
+!q::Send, {AltDown}{PgUp} ; PageUp
+!e::Send, {AltDown}{PgDn} ; PageDown
+
+;***************************************
+;   Insert, Delete 설정
+;***************************************
+.::Send, {Insert} ; INSERT
+/::Send, {Delete} ; DELETE
+
+; Alt 조합
+!.::Send, {AltDown}{Insert} ; INSERT
+!/::Send, {AltDown}{Delete} ; DELETE
+
+; Shift 조합
++.::Send, {ShiftDown}{Insert} ; INSERT
++/::Send, {ShiftDown}{Delete} ; DELETE
+
+; Ctrl 조합
+^.::Send, {CtrlDown}{Insert} ; INSERT
+^/::Send, {CtrlDown}{Delete} ; DELETE
+
+; Ctrl + Alt 조합
+^!.::Send, {CtrlDown}{AltDown}{Insert} ; INSERT
+^!/::Send, {CtrlDown}{AltDown}{Delete} ; DELETE
+</code></pre>
+
+<h3 id="멀티미디어-키">멀티미디어 키</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178153014-815662c1-21f9-4cc0-b637-9f8cf65f96b3.png" alt="멀티미디어"></p>
+
+<p>역시 유용하게 사용되는 키다.</p>
+
+<pre><code class="language-ahk">;***************************************
+;   캡스락 설정
+;***************************************
+*CapsLock:: fn:=1
+*CapsLock Up:: fn:=0
+LWin &amp; Space:: CapsLock ; 캡스락 대체키
+
+;***************************************
+;   멀티미디어 설정
+;***************************************
+#if fn
+[::Volume_Down
+]::Volume_Up
+m::Volume_Mute
+</code></pre>
+
+<h3 id="기타">기타</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178153096-d46a374e-e67d-40bd-be2f-37fe0a22de84.png" alt="기타"></p>
+
+<p>해피해킹 키보드에서는 일반적인 CapsLock 자리에 Ctrl이 존재하고, 실제로 복사, 붙여넣기 단축키인 <code class="language-plaintext highlighter-rouge">Ctrl + c</code>, <code class="language-plaintext highlighter-rouge">Ctrl + v</code>를 할 때 <code class="language-plaintext highlighter-rouge">Ctrl</code> 위치가 <code class="language-plaintext highlighter-rouge">CapsLock</code> 자리에 있으면 훨씬 손목을 덜 꺾으면서 손도 벗어나지 않으면서 할 수 있다.</p>
+
+<p>그래서 <code class="language-plaintext highlighter-rouge">CapsLock + c</code>, <code class="language-plaintext highlighter-rouge">CapsLock + v</code>로 복사, 붙여넣기 할 수 있도록 만들었다.</p>
+
+<p>H 자리에는 <code class="language-plaintext highlighter-rouge">~</code>를 넣었는데, 앤프로2에서 <code class="language-plaintext highlighter-rouge">~</code>를 적으려면 굉장히 불편했기에 저 자리에 매핑했던 것이 손에 익어서 넣어봤다.</p>
+
+<pre><code class="language-ahk">;***************************************
+;   캡스락 설정
+;***************************************
+*CapsLock:: fn:=1
+*CapsLock Up:: fn:=0
+LWin &amp; Space:: CapsLock ; 캡스락 대체키
+
+;***************************************
+;   단축키 설정
+;***************************************
+#if fn
+c::Send, {CtrlDown}{c} ; COPY
+v::Send, {CtrlDown}{v} ; PASTE
+
+;***************************************
+;   기타 설정
+;***************************************
+h::Send, ~ ; WAVE
+</code></pre>
+
+<h2 id="완료된-모습">완료된 모습</h2>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178153504-a99cdf6b-47f8-4cf6-b908-4abc444efd8f.png" alt="total"></p>
+
+<pre><code class="language-ahk">;***************************************
+;   캡스락 설정
+;***************************************
+*CapsLock:: fn:=1
+*CapsLock Up:: fn:=0
+LWin &amp; Space:: CapsLock ; 캡스락 대체키
+
+;***************************************
+;   방향키 설정
+;***************************************
+; 기본 WASD, IJKL
+#if fn
+j::Send, {Left} ; LEFT
+a::Send, {Left}
+k::Send, {Down} ; DOWN
+s::Send, {Down}
+l::Send, {Right} ; RIGHT
+d::Send, {Right}
+i::Send, {Up} ; UP
+w::Send, {Up}
+
+; Shift 조합
++j::Send, {ShiftDown}{Left} ; LEFT
++a::Send, {ShiftDown}{Left}
++k::Send, {ShiftDown}{Down} ; DOWN
++s::Send, {ShiftDown}{Down}
++l::Send, {ShiftDown}{Right} ; RIGHT
++d::Send, {ShiftDown}{Right}
++w::Send, {ShiftDown}{Up}
++i::Send, {ShiftDown}{Up} ; UP
+
+; Ctrl 조합
+^j::Send, {CtrlDown}{Left} ; LEFT
+^a::Send, {CtrlDown}{Left}
+^k::Send, {CtrlDown}{Down} ; DOWN
+^s::Send, {CtrlDown}{Down}
+^l::Send, {CtrlDown}{Right} ; RIGHT
+^d::Send, {CtrlDown}{Right}
+^i::Send, {CtrlDown}{Up} ; UP
+^w::Send, {CtrlDown}{Up}
+
+; Alt 조합
+!j::Send, {AltDown}{Left} ; LEFT
+!a::Send, {AltDown}{Left}
+!k::Send, {AltDown}{Down} ; DOWN
+!s::Send, {AltDown}{Down}
+!l::Send, {AltDown}{Right} ; RIGHT
+!d::Send, {AltDown}{Right}
+!i::Send, {AltDown}{Up} ; UP
+!w::Send, {AltDown}{Up}
+
+; Ctrl Shift 조합
+^+j::Send, {CtrlDown}{ShiftDown}{Left} ; LEFT
+^+a::Send, {CtrlDown}{ShiftDown}{Left}
+^+k::Send, {CtrlDown}{ShiftDown}{Down} ; DOWN
+^+s::Send, {CtrlDown}{ShiftDown}{Down}
+^+l::Send, {CtrlDown}{ShiftDown}{Right} ; RIGHT
+^+d::Send, {CtrlDown}{ShiftDown}{Right}
+^+i::Send, {CtrlDown}{ShiftDown}{Up} ; UP
+^+w::Send, {CtrlDown}{ShiftDown}{Up}
+
+;***************************************
+;   HOME, END, PGUP, PGDN 설정
+;***************************************
+`;::Send, {Home} ; HOME
+'::Send, {End} ; END
+q::Send, {PgUp} ; PageUp
+e::Send, {PgDn} ; PageDown
+
+; Shift 조합
++`;::Send, {ShiftDown}{Home} ; HOME
++'::Send, {ShiftDown}{End} ; END
++q::Send, {ShiftDown}{PgUp} ; PageUp
++e::Send, {ShiftDown}{PgDn} ; PageDown
+
+; Alt 조합
+!`;::Send, {AltDown}{Home} ; HOME
+!'::Send, {AltDown}{End} ; END
+!q::Send, {AltDown}{PgUp} ; PageUp
+!e::Send, {AltDown}{PgDn} ; PageDown
+
+;***************************************
+;   Insert, Delete 설정
+;***************************************
+.::Send, {Insert} ; INSERT
+/::Send, {Delete} ; DELETE
+
+; Alt 조합
+!.::Send, {AltDown}{Insert} ; INSERT
+!/::Send, {AltDown}{Delete} ; DELETE
+
+; Shift 조합
++.::Send, {ShiftDown}{Insert} ; INSERT
++/::Send, {ShiftDown}{Delete} ; DELETE
+
+; Ctrl 조합
+^.::Send, {CtrlDown}{Insert} ; INSERT
+^/::Send, {CtrlDown}{Delete} ; DELETE
+
+; Ctrl + Alt 조합
+^!.::Send, {CtrlDown}{AltDown}{Insert} ; INSERT
+^!/::Send, {CtrlDown}{AltDown}{Delete} ; DELETE
+
+;***************************************
+;   F키 설정
+;***************************************
+1::Send, {F1}
+2::Send, {F2}
+3::Send, {F3}
+4::Send, {F4}
+5::Send, {F5}
+6::Send, {F6}
+7::Send, {F7}
+8::Send, {F8}
+9::Send, {F9}
+0::Send, {F10}
+-::Send, {F11}
+=::Send, {F12}
+
+; Shift 조합
++1::Send, {ShiftDown}{F1}
++2::Send, {ShiftDown}{F2}
++3::Send, {ShiftDown}{F3}
++4::Send, {ShiftDown}{F4}
++5::Send, {ShiftDown}{F5}
++6::Send, {ShiftDown}{F6}
++7::Send, {ShiftDown}{F7}
++8::Send, {ShiftDown}{F8}
++9::Send, {ShiftDown}{F9}
++0::Send, {ShiftDown}{F10}
++-::Send, {ShiftDown}{F11}
++=::Send, {ShiftDown}{F12}
+
+; Ctrl 조합
+^1::Send, {CtrlDown}{F1}
+^2::Send, {CtrlDown}{F2}
+^3::Send, {CtrlDown}{F3}
+^4::Send, {CtrlDown}{F4}
+^5::Send, {CtrlDown}{F5}
+^6::Send, {CtrlDown}{F6}
+^7::Send, {CtrlDown}{F7}
+^8::Send, {CtrlDown}{F8}
+^9::Send, {CtrlDown}{F9}
+^0::Send, {CtrlDown}{F10}
+^-::Send, {CtrlDown}{F11}
+^=::Send, {CtrlDown}{F12}
+
+; Ctrl + Shift 조합
+^+1::Send, {CtrlDown}{ShiftDown}{F1}
+^+2::Send, {CtrlDown}{ShiftDown}{F2}
+^+3::Send, {CtrlDown}{ShiftDown}{F3}
+^+4::Send, {CtrlDown}{ShiftDown}{F4}
+^+5::Send, {CtrlDown}{ShiftDown}{F5}
+^+6::Send, {CtrlDown}{ShiftDown}{F6}
+^+7::Send, {CtrlDown}{ShiftDown}{F7}
+^+8::Send, {CtrlDown}{ShiftDown}{F8}
+^+9::Send, {CtrlDown}{ShiftDown}{F9}
+^+0::Send, {CtrlDown}{ShiftDown}{F10}
+^+-::Send, {CtrlDown}{ShiftDown}{F11}
+^+=::Send, {CtrlDown}{ShiftDown}{F12}
+
+; Alt 조합
+!1::Send, {AltDown}{F1}
+!2::Send, {AltDown}{F2}
+!3::Send, {AltDown}{F3}
+!4::Send, {AltDown}{F4}
+!5::Send, {AltDown}{F5}
+!6::Send, {AltDown}{F6}
+!7::Send, {AltDown}{F7}
+!8::Send, {AltDown}{F8}
+!9::Send, {AltDown}{F9}
+!0::Send, {AltDown}{F10}
+!-::Send, {AltDown}{F11}
+!=::Send, {AltDown}{F12}
+
+;***************************************
+;   멀티미디어 설정
+;***************************************
+[::Volume_Down
+]::Volume_Up
+m::Volume_Mute
+
+;***************************************
+;   단축키 설정
+;***************************************
+c::Send, {CtrlDown}{c} ; COPY
+v::Send, {CtrlDown}{v} ; PASTE
+
+;***************************************
+;   기타 설정
+;***************************************
+h::Send, ~ ; WAVE
+</code></pre>
+
+<h2 id="시작-프로그램에-등록">시작 프로그램에 등록</h2>
+
+<hr>
+
+<p>스크립트를 만들었다면 <code class="language-plaintext highlighter-rouge">F5</code>를 눌러서 실행할 수 있다. 하지만 컴퓨터를 재부팅하면 다시 파일을 실행시켜야 하는 불편함이 있다.</p>
+
+<p>이건 [시작 프로그램] 폴더에 스크립트를 넣어놓으면 간단히 해결된다.</p>
+
+<h3 id="바로가기-파일-생성">바로가기 파일 생성</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178153645-b398185d-6fca-4be2-bdb6-2dc02b9bb4c5.png" alt="바로가기"></p>
+
+<p>마우스 우클릭으로 바로가기 파일을 만들거나 <code class="language-plaintext highlighter-rouge">Alt</code>를 누른 채로 파일을 드래그하면 바로가기 파일이 만들어진다.</p>
+
+<h3 id="시작-프로그램에-넣기">시작 프로그램에 넣기</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/178153746-c1cda12f-1c45-43db-833a-1d2809f9cadb.png" alt="폴더"></p>
+
+<p><code class="language-plaintext highlighter-rouge">Win + R</code>을 눌러서 실행을 켜고 <code class="language-plaintext highlighter-rouge">Shell:startup</code> 을 타이핑하고 확인 버튼을 누르면 시작 프로그램 폴더가 열린다. 이 곳에 위에서 만든 바로가기 파일을 넣는다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/kotlin/2022/07/07/coroutine-basic-dive-2.html" title="Coroutine suspend function">Coroutine suspend function</a><a class="next" href="/jekyll-theme-yat/kotlin/2022/07/15/coroutine-cancellation.html" title="Kotlin Coroutine Cancellation">Kotlin Coroutine Cancellation</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/project/2022/06/14/project-suwiki-network-exception.html" title="Kotlin Coroutine Cancellation">[SUWIKI] 문제 해결 - 네트워크 에러 핸들링</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/cs/2022/05/11/jwt.html" title="Kotlin Coroutine Cancellation">JWT란 무엇인가?</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/02/24/clean-code-4.html" title="Kotlin Coroutine Cancellation">Clean Code_4장. 주석</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/android/2023/05/28/saved-state-handle.html" title="Kotlin Coroutine Cancellation">SavedStateHandle과 커스텀 SaveableStateFlow</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/tip/2022/07/11/tip-auto-hot-key.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/tip/2022/07/11/tip-auto-hot-key.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

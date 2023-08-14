@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Clean Code_6장. 객체와 자료 구조 | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="Clean Code_6장. 객체와 자료 구조">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="#노마드코더 #북클럽 #노개북">
+<meta property="og:description" content="#노마드코더 #북클럽 #노개북">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/01/clean-code-6.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/01/clean-code-6.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-03-01T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Clean Code_6장. 객체와 자료 구조">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-03-01T00:00:00+00:00","datePublished":"2022-03-01T00:00:00+00:00","description":"#노마드코더 #북클럽 #노개북","headline":"Clean Code_6장. 객체와 자료 구조","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/01/clean-code-6.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/01/clean-code-6.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Clean Code_6장. 객체와 자료 구조</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-03-01T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Mar 01, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 17 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#book">#book</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#clean_code">#clean_code</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><img src="/assets/images/CleanCodeCover.png" alt="클린 코드 책 커버">
+#노마드코더 #북클럽 #노개북</p>
+
+<p><a href="https://mangbaam.notion.site/6-7e5267a16c114427abdbe8ff9f0811e7">내용 요약(Notion)</a></p>
+
+<h2 id="til-today-i-learned">TIL (Today I Learned)</h2>
+<p>객체와 자료 구조의 특징과 차이점에 대해서 학습했다.</p>
+
+<h2 id="오늘-읽은-범위">오늘 읽은 범위</h2>
+<p>6장. 객체와 자료 구조</p>
+
+<h2 id="책에서-기억하고-싶은-내용을-써보세요">책에서 기억하고 싶은 내용을 써보세요.</h2>
+<h3 id="자료-추상화">자료 추상화</h3>
+<hr>
+
+<p>구현을 감추려면 추상화가 필요하다.</p>
+
+<blockquote>
+  <p>getter와 setter로 변수를 다룬다고 클래스가 되는 것이 아니라 <strong>추상 인터페이스</strong>를 제공해 사용자가 구현을 모른 채 자료의 핵심을 조작할 수 있어야 진정한 의미의 클래스다.</p>
+</blockquote>
+
+<blockquote>
+  <p>자료를 세세하게 공개하기보다는 추상적인 개념으로 표현하는 편이 좋다.</p>
+</blockquote>
+
+<h3 id="자료객체-비대칭">자료/객체 비대칭</h3>
+<hr>
+<p><strong>객체</strong>는 추상화 뒤로 자료를 숨긴 채 자료를 다루는 함수만 공개한다.</p>
+
+<p><strong>자료 구조</strong>는 자료를 그대로 공개하며 별다른 함수는 제공하지 않는다.</p>
+
+<p>다음 두 코드는 도형을 정의하는 클래스이다.</p>
+
+<p><br></p>
+
+<h5 id="6-5-절차적인-도형"><em>6-5 절차적인 도형</em></h5>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Square</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Point</span> <span class="n">topLeft</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="n">side</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Rectangle</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Point</span> <span class="n">topLeft</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="n">height</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="n">width</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Circle</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Point</span>  <span class="n">center</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="n">radius</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Geometry</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">double</span> <span class="no">PI</span> <span class="o">=</span> <span class="mf">3.141592653589793</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">area</span><span class="o">(</span><span class="nc">Object</span> <span class="n">shape</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">NoSuchShapeException</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">shape</span> <span class="k">instanceof</span> <span class="nc">Square</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">Square</span> <span class="n">s</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Square</span><span class="o">)</span><span class="n">shape</span><span class="o">;</span>
+            <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="na">side</span> <span class="o">*</span> <span class="n">s</span><span class="o">.</span><span class="na">side</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">shape</span> <span class="k">instanceof</span> <span class="nc">Rectangle</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">Rectangle</span> <span class="n">r</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Rectangle</span><span class="o">)</span><span class="n">shape</span><span class="o">;</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="na">height</span> <span class="o">*</span> <span class="n">r</span><span class="o">.</span><span class="na">width</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">shape</span> <span class="k">instanceof</span> <span class="nc">Circle</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">Circle</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Circle</span><span class="o">)</span><span class="n">shape</span><span class="o">;</span>
+            <span class="k">return</span> <span class="no">PI</span> <span class="o">*</span> <span class="n">c</span><span class="o">.</span><span class="na">radius</span> <span class="o">*</span> <span class="n">c</span><span class="o">.</span><span class="na">radius</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">thrwo</span> <span class="k">new</span> <span class="nf">NoSuchShapeException</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h5 id="6-6-다형적인-도형"><em>6-6 다형적인 도형</em></h5>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Square</span> <span class="kd">implements</span> <span class="nc">Shape</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Point</span> <span class="n">topLeft</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">double</span> <span class="n">side</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">area</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">side</span> <span class="o">*</span> <span class="n">side</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Rectangle</span> <span class="kd">implements</span> <span class="nc">Shape</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Point</span> <span class="n">topLeft</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">double</span> <span class="n">height</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">double</span> <span class="n">width</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">area</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">height</span> <span class="o">*</span> <span class="n">width</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Circle</span> <span class="kd">implements</span> <span class="nc">Shape</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Point</span> <span class="n">center</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">double</span> <span class="n">radius</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">double</span> <span class="no">PI</span> <span class="o">=</span> <span class="mf">3.141592653589793</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">area</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="no">PI</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>6-5의 클래스에서는 각 도형 클래스가 아무 메서드도 제공하지 않는다. 도형이 동작하는 방식은 <code class="language-plaintext highlighter-rouge">Geometry</code> 클래스에서 구현한다.</p>
+
+<p>6-5는 <strong>절차 지향적</strong>인 도형 클래스이다.</p>
+
+<p><br>
+6-6은  <code class="language-plaintext highlighter-rouge">Geometry</code> 클래스가 필요 없다.</p>
+
+<p>6-6은 <strong>객체 지향적</strong>인 도형 클래스이다.</p>
+
+<p><br>
+만약 <code class="language-plaintext highlighter-rouge">Geometry</code> 클래스에 둘레 길이를 구하는 <code class="language-plaintext highlighter-rouge">perimeter()</code> 함수를 추가하고 싶다면</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6-5 도형 클래스는 아무 영향도 받지 않는다. 도형 클래스에 의존하는 다른 클래스도 마찬가지다.
+
+6-6 도형 클래스는 도형 클래스 전부를 고쳐야 한다.
+</code></pre></div></div>
+
+<p>만약 새 도형을 추가하고 싶다면</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6-5 에서는 `Geometry` 클래스에 속한 함수를 모두 고쳐야 한다.
+
+6-6 에서는 그냥 `Shape` 인터페이스를 구현하는 클래스를 추가하면 된다.
+</code></pre></div></div>
+
+<blockquote>
+  <p>객체 지향 코드에서 어려운 변경은 절차적인 코드에서 쉬우며<br>
+절차적인 코드에서 어려운 변경은 객체 지향 코드에서 쉽다</p>
+</blockquote>
+
+<h3 id="디미터-법칙">디미터 법칙</h3>
+<hr>
+<p>디미터 법칙은 잘 알려진 휴리스틱(heuristic)으로, 모듈은 자신이 조작하는 객체의 속사정을 몰라야 한다는 법칙이다.</p>
+
+<p>위의 내용과 같이 객체는 자료를 숨기고 함수를 공개한다. 또한 조회 함수로 내부 구조를 공개하면 안된다.</p>
+
+<p>디미터 법칙은 “클래스 C의 메서드 f는 다음과 같은 객체의 메서드만 호출해야 한다.</p>
+
+<ul>
+  <li>클래스 C</li>
+  <li>f가 생성한 객체</li>
+  <li>f 인수로 넘어온 객체</li>
+  <li>C 인스턴스 변수에 저장된 객체</li>
+</ul>
+
+<p>하지만 위 객체에서 허용된 메서드가 반환하는 객체의 메서드는 호출하면 안된다.</p>
+
+<h5 id="디미터-법칙-위반-예제">디미터 법칙 위반 예제</h5>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">final</span> <span class="nc">String</span> <span class="n">outputDir</span> <span class="o">=</span> <span class="n">ctxt</span><span class="o">.</span><span class="na">getOptions</span><span class="o">().</span><span class="na">getScratchDir</span><span class="o">().</span><span class="na">getAbsolutePath</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>위 코드는 디미터 법칙을 어긴다.</p>
+
+<h4 id="기차-충돌">기차 충돌</h4>
+<p>위와 같은 코드를 <strong>기차 충돌</strong>(train wreck)이라 부른다. 여러 객체가 한 줄로 이어진 기차처럼 보이기 때문이다.</p>
+
+<p>위 코드는 다음과 같이 나누는 편이 좋다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Options</span> <span class="n">opts</span> <span class="o">=</span> <span class="n">ctxt</span><span class="o">.</span><span class="na">getOptions</span><span class="o">();</span>
+<span class="nc">File</span> <span class="n">scratchDir</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="na">getScratchDir</span><span class="o">();</span>
+<span class="kd">final</span> <span class="nc">String</span> <span class="n">outputDir</span> <span class="o">=</span> <span class="n">scratchDir</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>하지만 위 예제는 조회 함수를 사용했기에 혼란을 일으킨다. 코드를 다음과 같이 구현했다면 디미터 법칙을 거론할 필요가 없어진다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">final</span> <span class="nc">String</span> <span class="n">outputDir</span> <span class="o">=</span> <span class="n">ctxt</span><span class="o">.</span><span class="na">options</span><span class="o">.</span><span class="na">scratchDir</span><span class="o">.</span><span class="na">absolutePath</span><span class="o">;</span>
+</code></pre></div></div>
+
+<p>자료 구조는 함수 없이 public 변수만 포함하고, 객체는 비공개 변수와 public 함수를 포함한다면 문제는 간단해진다.</p>
+
+<h4 id="잡종-구조">잡종 구조</h4>
+<p>가끔 절반은 객체, 절반은 자료 구조인 잡종 구조가 나오기도 한다.</p>
+
+<p>잡종 구조는 중요한 기능을 수행하는 함수도 있고, 공개 변수나 공개 getter/setter 함수도 있다.</p>
+
+<p>공개 getter/setter 함수는 비공개 변수를 그대로 노출한다.</p>
+
+<p><br>
+이런 잡종 구조는 새로운 함수는 물론이고, 새로운 자료 구조도 추가하기 어렵다. 양쪽의 단점을 모아놓은 구조다.</p>
+
+<p><br>
+그러므로 잡종 구조는 되도록 피하자.</p>
+
+<h4 id="구조체-감추기">구조체 감추기</h4>
+<p><a href="#%EB%94%94%EB%AF%B8%ED%84%B0-%EB%B2%95%EC%B9%99-%EC%9C%84%EB%B0%98-%EC%98%88%EC%A0%9C">위 예제</a>에서 ctxt가 절대 경로를 찾아야하는 이유를 모듈 내부로 한참 내려가서 찾아보니 임시 파일을 생성하기 위한 목적임을 알았다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">BufferedOutputStream</span> <span class="n">bos</span> <span class="o">=</span> <span class="n">ctxt</span><span class="o">.</span><span class="na">createScratchFileStream</span><span class="o">(</span><span class="n">classFileName</span><span class="o">);</span>
+</code></pre></div></div>
+<p>이때 ctxt 객체에 임시 파일을 생성하라고 시키면 ctxt는 내부 구조를 드러내지 않으면서 모듈에서 해당 함수는 사진이 몰라야 하는 여러 객체를 탐색할 필요가 없어진다.</p>
+
+<h3 id="자료-전달-객체">자료 전달 객체</h3>
+<hr>
+<p><strong>자료 전달 객체</strong>(<strong>DTO</strong>: Data Transfer Object)</p>
+
+<ul>
+  <li>공개 변수만 있고 함수가 없는 클래스</li>
+  <li>DB와 통신하거나 소켓에서 받은 메시지의 구문을 분석할 때 유용</li>
+  <li>데이터베이스에 저장된 가공되지 않은 정보를 애플리케이션 코드에서 사용할 객체로 변환하는 일련의 단계에서 가장 처음으로 사용하는 구조체</li>
+</ul>
+
+<h3 id="활성-레코드">활성 레코드</h3>
+<hr>
+<ul>
+  <li>DTO의 특수한 형태다</li>
+  <li>public 변수가 있거나 private 변수에 조회/설정 함수가 있는 자료 구조</li>
+  <li>대게 save나 find 같은 탐색 함수도 제공함</li>
+  <li>데이터베이스 테이블이나 다른 소스에서 자료를 직접 변환한 결과다</li>
+</ul>
+
+<p>활성 레코드는 자료 구조로 취급한다. 비즈니스 규칙을 담으면서 내부 자료를 숨기는 객체는 따로 생성하자.</p>
+
+<h3 id="결론">결론</h3>
+<hr>
+<ul>
+  <li>
+    <p>객체는 동작을 공개하고 자료를 숨긴다. 그래서 기존 동작을 변경하지 않으면서 새 객체 타입을 추가하기 쉽지만 기존 객체에 새 동작을 추가하기는 어렵다.</p>
+  </li>
+  <li>
+    <p>자료구조는 별다른 동작 없이 자료를 노출한다. 그래서 기존 자료 구조에 새 동작을 추가하기는 쉬우나, 기존 함수에 새 자료 구조를 추가하기는 어렵다.</p>
+  </li>
+  <li>
+    <p>어떤 시스템을 구현할 때, 새로운 자료 타입을 추가하는 유연성이 필요하면 객체를, 새로운 동작을 추가하는 유연성이 필요하면 자료 구조와 절차적인 코드가 더 적합하다.</p>
+  </li>
+</ul>
+
+<h2 id="오늘-읽은-소감은-떠오르는-생각을-가볍게-적어보세요">오늘 읽은 소감은? 떠오르는 생각을 가볍게 적어보세요</h2>
+<p>내가 가장 처음 접한 프로그래밍 언어는 C언어이다. C언어는 절차지향 언어이고 클래스 개념이 없기 때문에 <a href="#6-5-%EC%A0%88%EC%B0%A8%EC%A0%81%EC%9D%B8-%EB%8F%84%ED%98%95">6-5 예제</a>처럼 다른 곳에서 구현을 담당하는 것이 자연스러웠다.</p>
+
+<p>그 이후 처음 배운 객체지향 언어는 JAVA였다. 객체지향 언어를 배우니 <a href="#6-6-%EB%8B%A4%ED%98%95%EC%A0%81%EC%9D%B8-%EB%8F%84%ED%98%95">6-6 예제</a>처럼 클래스를 사용해서 객체를 생성하는 것이 자연스러워졌고 절차지향 언어보다 객체지향 언어가 더 높은 수준이고, 더 좋은 언어라고 생각하게 되었다.</p>
+
+<p>그러나 책의 내용을 읽고 난 후 객체지향이 더 우월하다는 생각을 바로잡게 되었다. 어느 한 쪽이 항상 더 좋은 것이 아니라 어떤 시스템을 구축하는지에 따라 구현 방법이 달라져야 한다는 생각을 하게 되었다.</p>
+
+<p>그러면서도 <a href="#%EC%9E%A1%EC%A2%85-%EA%B5%AC%EC%A1%B0">잡종 구조</a>를 만들어내지 않도록 많은 고민을 해야겠다고 다짐하게 되었다.</p>
+
+<h2 id="궁금한-내용이-있거나-잘-이해되지-않는-내용이-있다면-적어보세요">궁금한 내용이 있거나, 잘 이해되지 않는 내용이 있다면 적어보세요.</h2>
+<p><strong>디미터 법칙</strong>에 대해 조금 더 알아보았다.</p>
+
+<p>어떤 객체가 다른 객체에 대해 지나치게 많이 알다보니 <strong>결합도가 높아지고</strong> 좋지 못한 설계를 야기하는 것을 발견했다. 이를 개선하기 위해 <strong><em>객체에게 자료를 숨기는 대신 함수를 공개</em></strong>하도록 한 것이 바로 <strong>디미터의 법칙</strong>이다.</p>
+
+<p>직관적으로는 여러 개의 .(Dot)을 사용하지 말라는 법칙으로 생각할 수 있다.</p>
+
+<p>디미터 법칙을 준수하면 캡슐화를 높혀 객체의 <strong>자율성</strong>과 <strong>응집도</strong>를 높일 수 있다.</p>
+
+<hr>
+<p><strong>참고 자료</strong></p>
+
+<p>디미터 법칙: https://mangkyu.tistory.com/147</p>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/book/2022/03/01/clean-code-5.html" title="Clean Code_5장. 형식 맞추기">Clean Code_5장. 형식 맞추기</a><a class="next" href="/jekyll-theme-yat/book/2022/03/03/clean-code-7.html" title="Clean Code_7장. 오류 처리">Clean Code_7장. 오류 처리</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/cs/2022/07/01/cs-oop.html" title="Clean Code_7장. 오류 처리">CS 쓱 훑어보기 - 2. 객체지향 프로그래밍</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/07/19/kotlin-contiuous-list.html" title="Clean Code_7장. 오류 처리">How to get longest continuous list in kotlin</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/tip/2022/07/11/tip-auto-hot-key.html" title="Clean Code_7장. 오류 처리">AutoHotKey를 사용해 완전 편하게 개발자 키매핑 하기</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2023/06/30/kotlin-sublist-slice.html" title="Clean Code_7장. 오류 처리">Kotlin subList vs slice</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/01/clean-code-6.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/book/2022/03/01/clean-code-6.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Kotlin Array, List, Data Class destructuring and ComponentN max count | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="Kotlin Array, List, Data Class destructuring and ComponentN max count">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="Destructuring (구조 분해)">
+<meta property="og:description" content="Destructuring (구조 분해)">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/09/24/kotlin-destructuring.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/09/24/kotlin-destructuring.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-09-24T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Kotlin Array, List, Data Class destructuring and ComponentN max count">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-09-24T00:00:00+00:00","datePublished":"2022-09-24T00:00:00+00:00","description":"Destructuring (구조 분해)","headline":"Kotlin Array, List, Data Class destructuring and ComponentN max count","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/09/24/kotlin-destructuring.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/09/24/kotlin-destructuring.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Kotlin Array, List, Data Class destructuring and ComponentN max count</h1>
+  <h2 class="post-subtitle">코틀린 Array, List, Data Class 의 구조분해와 ComponentN 사용</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-09-24T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Sep 24, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 17 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/jekyll-theme-yat/tags.html#kotlin">#kotlin</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="destructuring-구조-분해">Destructuring (구조 분해)</h2>
+
+<p><a href="https://kotlinlang.org/docs/destructuring-declarations.html">공식 문서</a></p>
+
+<p>코틀린에서 <code class="language-plaintext highlighter-rouge">리스트</code>나 <code class="language-plaintext highlighter-rouge">배열</code>, <code class="language-plaintext highlighter-rouge">Data Class</code> 등의 값을 각각 변수에 담고 싶을 때 구조 분해를 사용할 수 있다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">val</span> <span class="py">li</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="p">(</span><span class="py">n1</span><span class="p">,</span> <span class="py">n2</span><span class="p">,</span> <span class="py">n3</span><span class="p">)</span> <span class="p">=</span> <span class="n">li</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"$n1, $n2, $n3"</span><span class="p">)</span> <span class="c1">// 1, 2, 3</span>
+    
+    <span class="kd">val</span> <span class="py">arr</span> <span class="p">=</span> <span class="nf">charArrayOf</span><span class="p">(</span><span class="sc">'a'</span><span class="p">,</span> <span class="sc">'b'</span><span class="p">,</span> <span class="sc">'c'</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="p">(</span><span class="py">c1</span><span class="p">,</span> <span class="py">c2</span><span class="p">,</span> <span class="py">c3</span><span class="p">)</span> <span class="p">=</span> <span class="n">arr</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"$c1, $c2, $c3"</span><span class="p">)</span> <span class="c1">// a, b, c</span>
+    
+    <span class="kd">data class</span> <span class="nc">DoubleClass</span><span class="p">(</span><span class="kd">val</span> <span class="py">d1</span><span class="p">:</span> <span class="nc">Double</span><span class="p">,</span> <span class="kd">val</span> <span class="py">d2</span><span class="p">:</span> <span class="nc">Double</span><span class="p">,</span> <span class="kd">val</span> <span class="py">d3</span><span class="p">:</span> <span class="nc">Double</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="py">dc</span> <span class="p">=</span> <span class="nc">DoubleClass</span><span class="p">(</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">5.43</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="p">(</span><span class="py">d1</span><span class="p">,</span> <span class="py">d2</span><span class="p">,</span> <span class="py">d3</span><span class="p">)</span> <span class="p">=</span> <span class="n">dc</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"$d1, $d2, $d3"</span><span class="p">)</span> <span class="c1">// 3.2, 1.5, 5.43</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>파이썬을 사용해 본 사람이 있다면 <code class="language-plaintext highlighter-rouge">unpack</code> 과 비슷한 개념이라고 생각하면 될 것 같다. (파이썬과 다르게 코틀린에서는 괄호로 감싸야 함)</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">val</span> <span class="py">fruitPrice</span> <span class="p">=</span> <span class="nf">mapOf</span><span class="p">(</span><span class="s">"melon"</span> <span class="n">to</span> <span class="mi">10000</span><span class="p">,</span> <span class="s">"banana"</span> <span class="n">to</span> <span class="mi">3000</span><span class="p">,</span> <span class="s">"tomato"</span> <span class="n">to</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">((</span><span class="n">fruit</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span> <span class="k">in</span> <span class="n">fruitPrice</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"$fruit 가격은 $price 원"</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="cm">/*
+    melon 가격은 10000 원
+    banana 가격은 3000 원
+    tomato 가격은 1000 원
+    */</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>위와 같이 for 문으로 접근할 수도 있다. 코틀린에서 <code class="language-plaintext highlighter-rouge">Map</code> 은 각각의 <strong>Key-Value</strong> 셋을 <code class="language-plaintext highlighter-rouge">Pair</code> 로 관리한다.</p>
+
+<p>이 말은 즉, <code class="language-plaintext highlighter-rouge">Pair</code> 도 구조 분해가 가능하고, 비슷한 타입인 <code class="language-plaintext highlighter-rouge">Triple</code> 역시 구조 분해가 가능하다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">val</span> <span class="py">science</span> <span class="p">=</span> <span class="nc">Pair</span><span class="p">(</span><span class="s">"science"</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="py">pe</span> <span class="p">=</span> <span class="nc">Triple</span><span class="p">(</span><span class="s">"pe"</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+    
+    <span class="kd">val</span> <span class="p">(</span><span class="py">subject1</span><span class="p">,</span> <span class="py">score</span><span class="p">)</span> <span class="p">=</span> <span class="n">science</span>
+    <span class="kd">val</span> <span class="p">(</span><span class="py">subject2</span><span class="p">,</span> <span class="py">testScore</span><span class="p">,</span> <span class="py">activityScore</span><span class="p">)</span> <span class="p">=</span> <span class="n">pe</span>
+    
+    <span class="nf">println</span><span class="p">(</span><span class="s">"$subject1 점수는 $score 점"</span><span class="p">)</span> <span class="c1">// science 점수는 100 점</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"$subject2 시험 점수는 $testScore, 활동 점수는 $activityScore 점"</span><span class="p">)</span> <span class="c1">// pe 시험 점수는 100, 활동 점수는 80 점</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">pe</span> <span class="p">=</span> <span class="nc">Triple</span><span class="p">(</span><span class="s">"pe"</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+    
+    <span class="kd">val</span> <span class="p">(</span><span class="py">subject2</span><span class="p">,</span> <span class="py">_</span><span class="p">,</span> <span class="py">activityScore</span><span class="p">)</span> <span class="p">=</span> <span class="n">pe</span>
+    
+    <span class="nf">println</span><span class="p">(</span><span class="s">"$subject2 활동 점수는 $activityScore 점"</span><span class="p">)</span> <span class="c1">// pe 활동 점수는 80 점</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>사용하지 않을 값은 <code class="language-plaintext highlighter-rouge">_</code> 로 하면 값을 구조분해 하지 않고 넘어간다.</p>
+
+<p>그 외에도 <code class="language-plaintext highlighter-rouge">.map</code> 같은 확장 함수에서도 활용할 수 있다.</p>
+
+<h2 id="구조-분해-최대-개수">구조 분해 최대 개수</h2>
+
+<p>구조 분해도 상황에 따라 무한히 할 수 있는 것은 아니다.</p>
+
+<ul>
+  <li>Pair - 2 개</li>
+  <li>Triple - 3 개</li>
+  <li>List, Array - 5 개</li>
+  <li>Data Class - 제한 없음</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">Pair</code> 나 <code class="language-plaintext highlighter-rouge">Triple</code> 은 당연한 말이고, <code class="language-plaintext highlighter-rouge">List</code>, <code class="language-plaintext highlighter-rouge">Array</code>, <code class="language-plaintext highlighter-rouge">Data Class</code> 는 다른 개수를 가지고 있다.</p>
+
+<p>내부를 확인해보자</p>
+
+<h2 id="data-class---componentn">Data Class - ComponentN</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Data Class</code> 를 만들어서 <a href="#%EC%BD%94%ED%8B%80%EB%A6%B0-%EC%BD%94%EB%93%9C%EB%A5%BC-%EC%9E%90%EB%B0%94-%EC%BD%94%EB%93%9C%EB%A1%9C-decompile-%ED%95%98%EA%B8%B0">자바 코드로 확인</a>해보자.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">data class</span> <span class="nc">Person</span><span class="p">(</span>
+    <span class="kd">val</span> <span class="py">name</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">age</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">married</span><span class="p">:</span> <span class="nc">Boolean</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192093490-1818591e-8123-4d7f-ba66-be5c14cf0a9e.png" alt="image"></p>
+
+<p>디컴파일 결과 다양한 내용이 있지만 표시해 둔 <code class="language-plaintext highlighter-rouge">component1, 2, 3</code> 이 있는 것을 볼 수 있다. 그리고 각각은 멤버 변수가 선언된 순서대로 각각을 반환하는 역할을 한다.</p>
+
+<p>그렇다면 이것을 몇 개 까지 만들 수 있을까?</p>
+
+<p>궁금해서 많은 수의 멤버 변수를 가지는 <code class="language-plaintext highlighter-rouge">Data Class</code> 를 만들어 보았다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192093593-ef687f99-12aa-40e5-a21e-59ad2c66c2bb.png" alt="image"></p>
+
+<p>…</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192093597-3d2955ac-0f65-4473-a4b4-65deec8d61d5.png" alt="image"></p>
+
+<p>총 510 개의 멤버 변수를 가지고 있다. 디컴파일 해보자.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192093738-44604350-4b8a-47a5-b651-5c90a8b70a14.png" alt="image"></p>
+
+<p>…</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192093726-b2916979-4d31-4b82-8428-3190bc482876.png" alt="image"></p>
+
+<p>예상했던대로(?) 선언한 510 개 모두에 대해서 <code class="language-plaintext highlighter-rouge">componentN()</code> 메서드가 생긴다. 그리고 좀 더 알아본 결과 시스템이 허용하는 한 무제한 생길 수 있다.</p>
+
+<p>왜 갑자기 <code class="language-plaintext highlighter-rouge">componentN</code> 이야기를 꺼냈냐면 <code class="language-plaintext highlighter-rouge">componentN 이 바로 구조 분해를 하기 위한 메서드</code>이기 때문이다.</p>
+
+<p>확인해보자.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">data class</span> <span class="nc">Person</span><span class="p">(</span>
+    <span class="kd">val</span> <span class="py">name</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">age</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">married</span><span class="p">:</span> <span class="nc">Boolean</span>
+<span class="p">)</span>
+
+<span class="k">fun</span> <span class="nf">personTest</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">me</span> <span class="p">=</span> <span class="nc">Person</span><span class="p">(</span><span class="s">"mangbaam"</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="k">false</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="p">(</span><span class="py">name</span><span class="p">,</span> <span class="py">age</span><span class="p">,</span> <span class="py">married</span><span class="p">)</span> <span class="p">=</span> <span class="n">me</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>위와 같이 코드를 작성하고 디컴파일 해보면 다음과 같이 나온다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192093888-f08c9d94-511a-4dcf-bb0c-bd86ad216e83.png" alt="image"></p>
+
+<p><code class="language-plaintext highlighter-rouge">name</code> 과 <code class="language-plaintext highlighter-rouge">age</code> 가 <code class="language-plaintext highlighter-rouge">var1</code>, <code class="language-plaintext highlighter-rouge">var2</code> 로 표현되긴 했지만 <code class="language-plaintext highlighter-rouge">me.component1, 2, 3</code> 을 통해서 값을 할당하는 것을 확인할 수 있다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">me</span> <span class="p">=</span> <span class="nc">Person</span><span class="p">(</span><span class="s">"mangbaam"</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="k">false</span><span class="p">)</span>
+<span class="n">me</span><span class="p">.</span><span class="nf">component1</span><span class="p">()</span>
+<span class="n">me</span><span class="p">.</span><span class="nf">component2</span><span class="p">()</span>
+<span class="n">me</span><span class="p">.</span><span class="nf">component3</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">componentN</code> 은 <code class="language-plaintext highlighter-rouge">public</code> 메서드이기 때문에 위와 같이 직접 접근도 가능하다.</p>
+
+<blockquote>
+  <p>구조 분해는 componentN() 을 통해서 이루어진다</p>
+</blockquote>
+
+<h3 id="보너스-pair와-triple-이-구조-분해가-가능한-이유">(보너스) Pair와 Triple 이 구조 분해가 가능한 이유</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192094757-13f65468-f4c7-4939-8f9d-869205bfe78b.png" alt="image"></p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192094786-d4e076f9-e0b4-4f82-b949-b0e0eef12138.png" alt="image"></p>
+
+<p><code class="language-plaintext highlighter-rouge">Pair</code> 와 <code class="language-plaintext highlighter-rouge">Triple</code> 의 구현체는 <code class="language-plaintext highlighter-rouge">Data Class</code> 이다. 그래서 당연하게도 구조 분해가 가능한 것이다.</p>
+
+<h2 id="list-array---componentn">List, Array - ComponentN</h2>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192093157-406e2870-d7a5-45ba-ab2f-ca0689dba71f.png" alt="image"></p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192093192-fc0f3fe0-c8b6-41a9-a578-326f037fa185.png" alt="image"></p>
+
+<p><code class="language-plaintext highlighter-rouge">List</code> 와 <code class="language-plaintext highlighter-rouge">Arr</code> 모두 <code class="language-plaintext highlighter-rouge">Data Class</code> 와 마찬가지로 <code class="language-plaintext highlighter-rouge">componentN()</code> 가 있다.</p>
+
+<p>그런데 이상한 점은 <code class="language-plaintext highlighter-rouge">li</code>, <code class="language-plaintext highlighter-rouge">arr</code> 모두 값을 8개나 가지고 있는데 <code class="language-plaintext highlighter-rouge">component</code>는 5개만 존재한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192094229-38f5f19a-073c-4b0d-bec4-9b8db1fc4c0a.png" alt="image"></p>
+
+<p>그래서 구조 분해를 시도하니 위에서 확인했던 것과는 다르게 에러가 발생하고 있는 것을 볼 수 있다.</p>
+
+<p>에러 내용을 보면 <code class="language-plaintext highlighter-rouge">component6()</code>, <code class="language-plaintext highlighter-rouge">component7()</code>, <code class="language-plaintext highlighter-rouge">component8()</code> 이 없다는 것 같다.</p>
+
+<h3 id="디컴파일-해보자">디컴파일 해보자</h3>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">li</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="kd">val</span> <span class="p">(</span><span class="py">n1</span><span class="p">,</span> <span class="py">n2</span><span class="p">,</span> <span class="py">n3</span><span class="p">,</span> <span class="py">n4</span><span class="p">,</span> <span class="py">n5</span><span class="p">)</span> <span class="p">=</span> <span class="n">li</span>
+</code></pre></div></div>
+
+<p>컴파일 에러가 발생하면 디컴파일을 할 수 없기 때문에 구조 분해 개수를 줄이고 디컴파일을 해보았다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192094372-d21a91ab-764b-488e-84b7-e2044e15e86a.png" alt="image"></p>
+
+<p>이상한 점이 있다. 분명 <code class="language-plaintext highlighter-rouge">Data Class</code> 를 디컴파일 했을 때는 <code class="language-plaintext highlighter-rouge">componentN()</code> 으로 값을 할당하고 있었는데 <code class="language-plaintext highlighter-rouge">List</code> 를 구조 분해 해보니 <code class="language-plaintext highlighter-rouge">get()</code> 을 통해서 값을 할당하고 있다. 하지만 분명 <code class="language-plaintext highlighter-rouge">component1()</code> 과 같이 접근할 수는 있었다.</p>
+
+<h3 id="사실은-확장함수">사실은 확장함수</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192094493-0a7863fd-3e9d-48d8-9efe-11e071ff3177.png" alt="image"></p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192094525-ef35e316-2c8e-4033-ba6f-ba52e1e154da.png" alt="image"></p>
+
+<p>사실 List 나 Array 는 자체적으로 componentN 메서드를 가지고 있는 것이 아니라 확장 함수로써 가지고 있다.</p>
+
+<p>그리고 그 내용은 <code class="language-plaintext highlighter-rouge">get()</code> 을 통해서 가져오고 있기 때문에 디컴파일 해보면 <code class="language-plaintext highlighter-rouge">get()</code> 으로 나타나고 있던 것이다.</p>
+
+<p>확장 함수가 정의된 곳은 <strong>List</strong> 는 <code class="language-plaintext highlighter-rouge">_Collections.kt</code>, <strong>Array</strong> 는 <code class="language-plaintext highlighter-rouge">_Arrays.kt</code> 이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Data Class</code> 와 <code class="language-plaintext highlighter-rouge">List</code>, <code class="language-plaintext highlighter-rouge">Array</code> 가 다르게 작성된 이유는 아마도 <code class="language-plaintext highlighter-rouge">List</code> 와 <code class="language-plaintext highlighter-rouge">Array</code> 는 기존에 자바에서 제공되는 것을 사용하기 때문이고, <code class="language-plaintext highlighter-rouge">Data class</code> 는 코틀린에서 새롭게 설계되었기 때문에 더 유연한 것이 아닌가 생각한다.</p>
+
+<h2 id="componentn-직접-만들기">componentN 직접 만들기</h2>
+
+<p><code class="language-plaintext highlighter-rouge">List</code>와 <code class="language-plaintext highlighter-rouge">Array</code> 에서 기본으로 만들어지는 <code class="language-plaintext highlighter-rouge">componentN</code> 은 1 ~ 5 이지만 더 많은 값을 구조 분해 하고싶은 경우가 있을 것이다.</p>
+
+<p>코틀린 기본 라이브러리에서 1 ~ 5 번을 만든 것처럼 우리도 확장 함수를 사용해서 만들어볼 수 있다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">inline</span> <span class="k">operator</span> <span class="k">fun</span> <span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;</span> <span class="nf">List</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;.</span><span class="nf">component6</span><span class="p">()</span> <span class="p">=</span> <span class="k">this</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="k">operator</span> <span class="k">fun</span> <span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;</span> <span class="nf">List</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;.</span><span class="nf">component7</span><span class="p">()</span> <span class="p">=</span> <span class="k">this</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>두 가지 방식으로 만들어 보았다. (<code class="language-plaintext highlighter-rouge">inline</code> 의 유무)</p>
+
+<p>그리고 구조 분해를 해보자.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192095102-40b65b89-76c4-49ec-ae37-5edb37b9e788.png" alt="image"></p>
+
+<p>에러가 발생하지 않는다. 그럼 구조 분해를 해보자.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192095236-abf072b4-d952-45e8-944d-8a11aefceca9.png" alt="image"></p>
+
+<p>구조 분해 된 코드에서 var6(원래 코드에서 n6) 와 n7 의 차이를 확인해보자.</p>
+
+<p><code class="language-plaintext highlighter-rouge">var6</code>는 앞선 동작과 같이 <code class="language-plaintext highlighter-rouge">get()</code>을 통해서 값을 가져오지만 <code class="language-plaintext highlighter-rouge">var7</code>는 <code class="language-plaintext highlighter-rouge">component7()</code>을 호출하면서 값을 가져온다.</p>
+
+<p>약간 주제에서 벗어난 이야기일 수 있지만 <code class="language-plaintext highlighter-rouge">inline</code> 키워드를 붙이면 함수를 호출하는 것이 아니라 함수에 정의된 기능을 코드에 직접 삽입하는 방식으로 이루어진다. 참조가 줄어들기 때문에 시스템 리소스 낭비를 줄일 수 있는 경우도 생긴다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/192095286-6db73474-0cdb-4aba-8840-75bdc697cef5.png" alt="image"></p>
+
+<p>이번에는 똑같이 만드는데 자연스럽게 붙였던 <code class="language-plaintext highlighter-rouge">operator</code> 키워드를 빼고 만들어 보았다.</p>
+
+<p>보이는 것과 같이 컴파일 에러가 뜨면서 <code class="language-plaintext highlighter-rouge">operator</code> 를 붙이라는 힌트를 보여준다.</p>
+
+<p>구조 분해를 위해서는 <code class="language-plaintext highlighter-rouge">operator</code> 키워드가 필요하기 때문이다.</p>
+
+<p>원하는 만큼 추가해서 사용해보자.</p>
+
+<hr>
+
+<h2 id="코틀린-코드를-자바-코드로-decompile-하기">코틀린 코드를 자바 코드로 Decompile 하기</h2>
+
+<ol>
+  <li>
+    <p>코틀린 코드를 작성하고 [Tools] - [Kotlin] - [Show Kotlin Bytecode] 를 선택한다</p>
+
+    <p><img src="https://user-images.githubusercontent.com/44221447/192093291-176ca852-2d78-4ab0-ae56-fec26ed0429c.png" alt="image"></p>
+  </li>
+  <li>
+    <p>오른쪽 창에 바이트 코드가 나타난다</p>
+
+    <p><img src="https://user-images.githubusercontent.com/44221447/192093318-8b306119-9796-48e8-b3c7-ef8a4af683f7.png" alt="image"></p>
+  </li>
+  <li>
+    <p>바이트 코드 창에서 상단에 있는 [Decompile] 버튼을 누른다. 그러면 새 창으로 디컴파일 된 자바 코드가 보인다.</p>
+
+    <p><img src="https://user-images.githubusercontent.com/44221447/192093356-94eb6d93-dea5-4b53-89c1-fa4d4dc37173.png" alt="image"></p>
+  </li>
+</ol>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/java/2022/09/07/do-not-use-stack-of-java.html" title="DO NOT USE java.util.Stack">DO NOT USE java.util.Stack</a><a class="next" href="/jekyll-theme-yat/android/2022/10/02/android-recyclerview-click.html" title="Android RecyclerView 클릭 이벤트 처리는 어디서 해야할까">Android RecyclerView 클릭 이벤트 처리는 어디서...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/android/2023/05/28/saved-state-handle.html" title="Android RecyclerView 클릭 이벤트 처리는 어디서 해야할까">SavedStateHandle과 커스텀 SaveableStateFlow</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/04/21/effective-kotlin-5.html" title="Android RecyclerView 클릭 이벤트 처리는 어디서 해야할까">Effective Kotlin_아이템5. 예외를 활용해 코드에 제한을 걸어라</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/project/2022/05/09/project-suwiki-prolog.html" title="Android RecyclerView 클릭 이벤트 처리는 어디서 해야할까">[SUWIKI] Introduce</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/07/30/kotlin-flow-basic-1.html" title="Android RecyclerView 클릭 이벤트 처리는 어디서 해야할까">비동기 플로우에 대해서 알아보자 (1)</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/09/24/kotlin-destructuring.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/09/24/kotlin-destructuring.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

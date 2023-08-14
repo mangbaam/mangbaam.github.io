@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Android RecyclerView 클릭 이벤트 처리는 어디서 해야할까 | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="Android RecyclerView 클릭 이벤트 처리는 어디서 해야할까">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="⭐">
+<meta property="og:description" content="⭐">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/android/2022/10/02/android-recyclerview-click.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/android/2022/10/02/android-recyclerview-click.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-10-02T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Android RecyclerView 클릭 이벤트 처리는 어디서 해야할까">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-10-02T00:00:00+00:00","datePublished":"2022-10-02T00:00:00+00:00","description":"⭐","headline":"Android RecyclerView 클릭 이벤트 처리는 어디서 해야할까","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/android/2022/10/02/android-recyclerview-click.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/android/2022/10/02/android-recyclerview-click.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Android RecyclerView 클릭 이벤트 처리는 어디서 해야할까</h1>
+  <h2 class="post-subtitle">Android RecyclerView Click Event better case</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-10-02T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Oct 02, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 44 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#android">#android</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#recyclerview">#recyclerview</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2>⭐</h2>
+
+<hr>
+
+<p>리사이클러뷰를 사용할 때 클릭 이벤트를 어디서 어떻게 처리하는 것이 좋을 지 알아보자</p>
+
+<h2 id="간단한-예제-만들기">간단한 예제 만들기</h2>
+
+<hr>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/193441850-be05e31d-36aa-4ca9-af09-5b44cacb5cce.gif" width="33%"></p>
+
+<p>메뉴를 선택하고 주문하기 버튼을 누르면 토스트 메시지로 주문 내용을 띄워주는 간단한 예제를 만들어보았다.</p>
+
+<p>간단한 예제이기 때문에 다음 내용들은 크게 고려하지 않았다. 실제 프로젝트를 진행할 때에는 분명 신경써야 하는 부분들이다.</p>
+
+<ul>
+  <li>string 리소스 추출</li>
+  <li>체크박스를 체크한 후 목록을 스크롤 한 후 돌아왔을 때 초기화 되는 상황 -&gt; ViewHolder 가 재활용 되는 상황</li>
+  <li>패키지 구분</li>
+  <li>못생긴 UI</li>
+  <li>아래에 작성한 코드들은 <code class="language-plaintext highlighter-rouge">package</code>, <code class="language-plaintext highlighter-rouge">import</code> 등을 제외하고 작성함 - <a href="https://github.com/mangbaam/MySampleApps/tree/master/recyclerviewclickbetter">저장소</a>에서 전체 코드 확인</li>
+  <li>등등</li>
+</ul>
+
+<h3 id="뷰바인딩-활성화--buildgradleapp-">뷰바인딩 활성화 ( build.gradle(:app) )</h3>
+
+<div class="language-gradle highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">android</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="n">buildFeatures</span> <span class="o">{</span>
+        <span class="n">viewBinding</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="noactionbar-로-변경-themexml">NoActionBar 로 변경 (theme.xml)</h3>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;resources</span> <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;style</span> <span class="na">name=</span><span class="s">"Theme.RecyclerViewClickBetter"</span> <span class="na">parent=</span><span class="s">"Theme.MaterialComponents.DayNight.NoActionBar"</span><span class="nt">&gt;</span>
+        // ...
+    <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/resources&gt;</span>
+</code></pre></div></div>
+
+<h3 id="아이템-뷰-item_orderxml">아이템 뷰 (item_order.xml)</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/193442135-90988d8d-0fe3-464c-9d9c-936209c3c9a2.png" alt="image"></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;androidx.cardview.widget.CardView</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+    <span class="na">android:layout_marginVertical=</span><span class="s">"4dp"</span>
+    <span class="na">app:cardElevation=</span><span class="s">"8dp"</span>
+    <span class="na">app:cardCornerRadius=</span><span class="s">"16dp"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:padding=</span><span class="s">"16dp"</span><span class="nt">&gt;</span>
+
+        <span class="nt">&lt;TextView</span>
+            <span class="na">android:id=</span><span class="s">"@+id/tv_table_number"</span>
+            <span class="na">style=</span><span class="s">"@style/TextAppearance.AppCompat.Body1"</span>
+            <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:textStyle=</span><span class="s">"bold"</span>
+            <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
+            <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span>
+            <span class="na">tools:text=</span><span class="s">"1 번 테이블"</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;CheckBox</span>
+            <span class="na">android:id=</span><span class="s">"@+id/cb_gimbob"</span>
+            <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:text=</span><span class="s">"김밥"</span>
+            <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
+            <span class="na">app:layout_constraintTop_toBottomOf=</span><span class="s">"@id/tv_table_number"</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;CheckBox</span>
+            <span class="na">android:id=</span><span class="s">"@+id/cb_ramen"</span>
+            <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:text=</span><span class="s">"라면"</span>
+            <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
+            <span class="na">app:layout_constraintTop_toBottomOf=</span><span class="s">"@id/cb_gimbob"</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;androidx.constraintlayout.widget.Barrier</span>
+            <span class="na">android:id=</span><span class="s">"@+id/barrier"</span>
+            <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+            <span class="na">android:orientation=</span><span class="s">"vertical"</span>
+            <span class="na">app:barrierDirection=</span><span class="s">"end"</span>
+            <span class="na">app:barrierMargin=</span><span class="s">"30dp"</span>
+            <span class="na">app:constraint_referenced_ids=</span><span class="s">"cb_gimbob,cb_ramen"</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;CheckBox</span>
+            <span class="na">android:id=</span><span class="s">"@+id/cb_dduckbokki"</span>
+            <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:text=</span><span class="s">"떡볶이"</span>
+            <span class="na">app:layout_constraintStart_toEndOf=</span><span class="s">"@id/barrier"</span>
+            <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@id/cb_gimbob"</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;CheckBox</span>
+            <span class="na">android:id=</span><span class="s">"@+id/cb_cutlet"</span>
+            <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:text=</span><span class="s">"돈까스"</span>
+            <span class="na">app:layout_constraintStart_toEndOf=</span><span class="s">"@id/barrier"</span>
+            <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@id/cb_ramen"</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;Button</span>
+            <span class="na">android:id=</span><span class="s">"@+id/btn_order"</span>
+            <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+            <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span>
+            <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"parent"</span>
+            <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span>
+            <span class="na">android:text=</span><span class="s">"주문하기"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+<span class="nt">&lt;/androidx.cardview.widget.CardView&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>CardView 사용</li>
+  <li>ConstraintLayout - Barrier 사용</li>
+</ul>
+
+<h3 id="메인-뷰-작성-activity_mainxml">메인 뷰 작성 (activity_main.xml)</h3>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/193442470-623abcbb-4903-4895-8885-23632afb6de4.png" alt="image"></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+    <span class="na">tools:context=</span><span class="s">".MainActivity"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;com.google.android.material.appbar.AppBarLayout</span>
+        <span class="na">android:id=</span><span class="s">"@+id/appbar"</span>
+        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span><span class="nt">&gt;</span>
+
+        <span class="nt">&lt;androidx.appcompat.widget.Toolbar</span>
+            <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+            <span class="na">app:title=</span><span class="s">"맹뱀 분식집"</span>
+            <span class="na">app:titleTextAppearance=</span><span class="s">"@style/TextAppearance.AppCompat.Title"</span>
+            <span class="na">app:titleTextColor=</span><span class="s">"@color/white"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/com.google.android.material.appbar.AppBarLayout&gt;</span>
+
+    <span class="nt">&lt;androidx.recyclerview.widget.RecyclerView</span>
+        <span class="na">android:id=</span><span class="s">"@+id/rv_table"</span>
+        <span class="na">android:layout_width=</span><span class="s">"0dp"</span>
+        <span class="na">android:layout_height=</span><span class="s">"0dp"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintTop_toBottomOf=</span><span class="s">"@id/appbar"</span>
+        <span class="na">tools:listitem=</span><span class="s">"@layout/item_order"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Custom 앱 바 사용</li>
+  <li>RecyclerView 에 <code class="language-plaintext highlighter-rouge">tools:listitem="@layout/item_order"</code> 속성을 주면 위에서 작성한 <code class="language-plaintext highlighter-rouge">item_order.xml</code> 을 미리보기로 볼 수 있다</li>
+</ul>
+
+<h3 id="주문-모델-orderkt">주문 모델 (Order.kt)</h3>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">data class</span> <span class="nc">Order</span><span class="p">(</span>
+    <span class="kd">val</span> <span class="py">tableNumber</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">gimbob</span><span class="p">:</span> <span class="nc">Boolean</span> <span class="p">=</span> <span class="k">false</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">ramen</span><span class="p">:</span> <span class="nc">Boolean</span> <span class="p">=</span> <span class="k">false</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">dduckbokki</span><span class="p">:</span> <span class="nc">Boolean</span> <span class="p">=</span> <span class="k">false</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">cutlet</span><span class="p">:</span> <span class="nc">Boolean</span> <span class="p">=</span> <span class="k">false</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">valid</span> <span class="k">get</span><span class="p">()</span> <span class="p">=</span> <span class="n">gimbob</span> <span class="p">||</span> <span class="n">ramen</span> <span class="p">||</span> <span class="n">dduckbokki</span> <span class="p">||</span> <span class="n">cutlet</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">valid</code> 는 4개의 메뉴가 모두 선택되지 않은 경우 false 값을 가지는 <code class="language-plaintext highlighter-rouge">getter</code> 이다</li>
+</ul>
+
+<h2 id="mainactivitykt-작성">MainActivity.kt 작성</h2>
+
+<hr>
+
+<p>RecyclerView 에서 아이템을 클릭하게 되면 어댑터를 통해서 해당 이벤트를 처리하게 된다.</p>
+
+<p>이전에는 <code class="language-plaintext highlighter-rouge">interface</code> 를 사용해서 콜백 형태로 넘겨주는 방식을 많이 사용했지만 코틀린으로 넘어오면서 고차함수를 통해 넘겨주는 방식으로 변화했다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">orderAdapter</span> <span class="p">=</span> <span class="nc">OrderAdapter</span> <span class="p">{</span> <span class="n">order</span> <span class="p">-&gt;</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">order</span><span class="p">.</span><span class="n">valid</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nc">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s">"${order.tableNumber} 번 테이블 : 주문된 음식이 없습니다"</span><span class="p">,</span> <span class="nc">Toast</span><span class="p">.</span><span class="nc">LENGTH_SHORT</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">orderInfo</span> <span class="p">=</span> <span class="nf">getOrderInfo</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+
+        <span class="nc">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">orderInfo</span><span class="p">,</span> <span class="nc">Toast</span><span class="p">.</span><span class="nc">LENGTH_SHORT</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>(<code class="language-plaintext highlighter-rouge">OrderAdapter</code> 는 밑에 작성했습니다)</p>
+
+<p>고차함수를 통해 넘어온 <code class="language-plaintext highlighter-rouge">order</code> 를 통해 어떤 메뉴가 선택되어 있는지 판별하고 토스트 메시지를 통해 띄우는 로직을 가진다.</p>
+
+<h3 id="전체-코드">전체 코드</h3>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MainActivity</span> <span class="p">:</span> <span class="nc">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">lateinit</span> <span class="kd">var</span> <span class="py">binding</span><span class="p">:</span> <span class="nc">ActivityMainBinding</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span> <span class="nc">Bundle</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+        <span class="n">binding</span> <span class="p">=</span> <span class="nc">ActivityMainBinding</span><span class="p">.</span><span class="nf">inflate</span><span class="p">(</span><span class="nc">LayoutInflater</span><span class="p">.</span><span class="nf">from</span><span class="p">(</span><span class="k">this</span><span class="p">))</span>
+        <span class="nf">setContentView</span><span class="p">(</span><span class="n">binding</span><span class="p">.</span><span class="n">root</span><span class="p">)</span>
+
+        <span class="kd">val</span> <span class="py">tables</span> <span class="p">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="p">{</span> <span class="nc">Order</span><span class="p">(</span><span class="n">it</span> <span class="p">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">}</span>
+
+        <span class="kd">val</span> <span class="py">orderAdapter</span> <span class="p">=</span> <span class="nc">OrderAdapter</span> <span class="p">{</span> <span class="n">order</span> <span class="p">-&gt;</span>
+            <span class="k">if</span> <span class="p">(!</span><span class="n">order</span><span class="p">.</span><span class="n">valid</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nc">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s">"${order.tableNumber} 번 테이블 : 주문된 음식이 없습니다"</span><span class="p">,</span> <span class="nc">Toast</span><span class="p">.</span><span class="nc">LENGTH_SHORT</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="kd">val</span> <span class="py">orderInfo</span> <span class="p">=</span> <span class="nf">getOrderInfo</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+
+                <span class="nc">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">orderInfo</span><span class="p">,</span> <span class="nc">Toast</span><span class="p">.</span><span class="nc">LENGTH_SHORT</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">binding</span><span class="p">.</span><span class="n">rvTable</span><span class="p">.</span><span class="nf">apply</span> <span class="p">{</span>
+            <span class="n">layoutManager</span> <span class="p">=</span> <span class="nc">LinearLayoutManager</span><span class="p">(</span>
+                <span class="k">this</span><span class="nd">@MainActivity</span><span class="p">,</span>
+                <span class="nc">LinearLayoutManager</span><span class="p">.</span><span class="nc">VERTICAL</span><span class="p">,</span>
+                <span class="k">false</span>
+            <span class="p">)</span>
+            <span class="n">adapter</span> <span class="p">=</span> <span class="n">orderAdapter</span><span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="n">items</span> <span class="p">=</span> <span class="n">tables</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">getOrderInfo</span><span class="p">(</span><span class="n">order</span><span class="p">:</span> <span class="nc">Order</span><span class="p">):</span> <span class="nc">String</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">orderInfo</span> <span class="p">=</span> <span class="nc">StringBuilder</span><span class="p">()</span>
+            <span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s">"${order.tableNumber} 번 테이블 : "</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="n">gimbob</span><span class="p">)</span> <span class="n">orderInfo</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s">"김밥 "</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="n">ramen</span><span class="p">)</span> <span class="n">orderInfo</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s">"라면 "</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="n">dduckbokki</span><span class="p">)</span> <span class="n">orderInfo</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s">"떡볶이 "</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="n">cutlet</span><span class="p">)</span> <span class="n">orderInfo</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s">"돈까스 "</span><span class="p">)</span>
+        <span class="n">orderInfo</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s">"주문되었습니다"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">orderInfo</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="orderadapter-작성">OrderAdapter 작성</h2>
+
+<hr>
+
+<h3 id="일반적인-방식">일반적인 방식</h3>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">OrderAdapter</span><span class="p">(</span><span class="kd">val</span> <span class="py">orderMenu</span><span class="p">:</span> <span class="p">(</span><span class="nc">Order</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nc">Unit</span><span class="p">)</span> <span class="p">:</span>
+    <span class="nc">RecyclerView</span><span class="p">.</span><span class="nc">Adapter</span><span class="p">&lt;</span><span class="nc">OrderAdapter</span><span class="p">.</span><span class="nc">OrderViewHolder</span><span class="p">&gt;()</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="py">items</span><span class="p">:</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">Order</span><span class="p">&gt;</span> <span class="p">=</span> <span class="nf">mutableListOf</span><span class="p">()</span>
+        <span class="k">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">field</span> <span class="p">=</span> <span class="n">value</span>
+            <span class="nf">notifyDataSetChanged</span><span class="p">()</span>
+        <span class="p">}</span>
+
+    <span class="k">inner</span> <span class="kd">class</span> <span class="nc">OrderViewHolder</span><span class="p">(</span>
+        <span class="k">private</span> <span class="kd">val</span> <span class="py">view</span><span class="p">:</span> <span class="nc">ItemOrderBinding</span>
+    <span class="p">)</span> <span class="p">:</span> <span class="nc">RecyclerView</span><span class="p">.</span><span class="nc">ViewHolder</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="n">root</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">fun</span> <span class="nf">bind</span><span class="p">(</span><span class="n">order</span><span class="p">:</span> <span class="nc">Order</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="c1">// 뷰에 바인딩 처리 ...</span>
+
+            <span class="n">view</span><span class="p">.</span><span class="n">btnOrder</span><span class="p">.</span><span class="nf">setOnClickListener</span> <span class="p">{</span>
+                <span class="kd">val</span> <span class="py">newOrder</span> <span class="p">=</span> <span class="nc">Order</span><span class="p">(</span> <span class="cm">/* ... */</span> <span class="p">)</span> <span class="c1">// 현재 주문 상태</span>
+                <span class="nf">orderMenu</span><span class="p">(</span><span class="n">newOrder</span><span class="p">)</span> <span class="c1">// 고차함수 사용한 콜백</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ...</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onBindViewHolder</span><span class="p">(</span><span class="n">holder</span><span class="p">:</span> <span class="nc">OrderViewHolder</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nc">Int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">item</span> <span class="p">=</span> <span class="n">items</span><span class="p">[</span><span class="n">position</span><span class="p">]</span>
+        <span class="n">holder</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">OrderAdpater</code> 에서는 <code class="language-plaintext highlighter-rouge">orderMenu</code> 라고 하는 고차함수를 가지고 있다</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">ViewHolder</code> 의 <code class="language-plaintext highlighter-rouge">bind()</code> 메서드에서 <code class="language-plaintext highlighter-rouge">setOnClickListner</code> 를 달아서 클릭 이벤트를 처리한다</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">onBindViewHolder()</code> 에서 <code class="language-plaintext highlighter-rouge">ViewHolder.bind()</code> 메서드를 실행한다</li>
+</ul>
+
+<p>위 방식은 일반적으로 많이 사용되는 패턴이다. <code class="language-plaintext highlighter-rouge">onBindingViewHolder</code> 에서 아이템 위치와 데이터를 얻어서 <code class="language-plaintext highlighter-rouge">ViewHolder</code>로 넘겨주기 쉽기 때문에 다루기 쉽고 직관적이다.</p>
+
+<p>하지만 이런 방식은 성능에 최적화 된 방법은 아닐 수 있다.</p>
+
+<p>RecyclerView 에서 <code class="language-plaintext highlighter-rouge">onBindViewHolder()</code> 는 <code class="language-plaintext highlighter-rouge">ViewHolder</code> 에 아이템이 바인딩 될 때마다 호출되고, <code class="language-plaintext highlighter-rouge">setOnClickListener</code> 역시 매번 트리거 될 것이다.</p>
+
+<h4 id="orderadapterkt-전체-코드">OrderAdapter.kt (전체 코드)</h4>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">OrderAdapter</span><span class="p">(</span><span class="kd">val</span> <span class="py">orderMenu</span><span class="p">:</span> <span class="p">(</span><span class="nc">Order</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nc">Unit</span><span class="p">)</span> <span class="p">:</span>
+    <span class="nc">RecyclerView</span><span class="p">.</span><span class="nc">Adapter</span><span class="p">&lt;</span><span class="nc">OrderAdapter</span><span class="p">.</span><span class="nc">OrderViewHolder</span><span class="p">&gt;()</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="py">items</span><span class="p">:</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">Order</span><span class="p">&gt;</span> <span class="p">=</span> <span class="nf">mutableListOf</span><span class="p">()</span>
+        <span class="k">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">field</span> <span class="p">=</span> <span class="n">value</span>
+            <span class="nf">notifyDataSetChanged</span><span class="p">()</span>
+        <span class="p">}</span>
+
+    <span class="k">inner</span> <span class="kd">class</span> <span class="nc">OrderViewHolder</span><span class="p">(</span>
+        <span class="k">private</span> <span class="kd">val</span> <span class="py">view</span><span class="p">:</span> <span class="nc">ItemOrderBinding</span>
+    <span class="p">)</span> <span class="p">:</span> <span class="nc">RecyclerView</span><span class="p">.</span><span class="nc">ViewHolder</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="n">root</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">fun</span> <span class="nf">bind</span><span class="p">(</span><span class="n">order</span><span class="p">:</span> <span class="nc">Order</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">tvTableNumber</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">"${order.tableNumber} 번 테이블"</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">cbGimbob</span><span class="p">.</span><span class="n">isChecked</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">gimbob</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">cbRamen</span><span class="p">.</span><span class="n">isChecked</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">ramen</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">cbDduckbokki</span><span class="p">.</span><span class="n">isChecked</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">dduckbokki</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">cbCutlet</span><span class="p">.</span><span class="n">isChecked</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">cutlet</span>
+
+            <span class="n">view</span><span class="p">.</span><span class="n">btnOrder</span><span class="p">.</span><span class="nf">setOnClickListener</span> <span class="p">{</span>
+                <span class="kd">val</span> <span class="py">newOrder</span> <span class="p">=</span> <span class="nc">Order</span><span class="p">(</span>
+                    <span class="n">order</span><span class="p">.</span><span class="n">tableNumber</span><span class="p">,</span>
+                    <span class="n">view</span><span class="p">.</span><span class="n">cbGimbob</span><span class="p">.</span><span class="n">isChecked</span><span class="p">,</span>
+                    <span class="n">view</span><span class="p">.</span><span class="n">cbRamen</span><span class="p">.</span><span class="n">isChecked</span><span class="p">,</span>
+                    <span class="n">view</span><span class="p">.</span><span class="n">cbDduckbokki</span><span class="p">.</span><span class="n">isChecked</span><span class="p">,</span>
+                    <span class="n">view</span><span class="p">.</span><span class="n">cbCutlet</span><span class="p">.</span><span class="n">isChecked</span>
+                <span class="p">)</span>
+                <span class="nf">orderMenu</span><span class="p">(</span><span class="n">newOrder</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreateViewHolder</span><span class="p">(</span><span class="n">parent</span><span class="p">:</span> <span class="nc">ViewGroup</span><span class="p">,</span> <span class="n">viewType</span><span class="p">:</span> <span class="nc">Int</span><span class="p">):</span> <span class="nc">OrderViewHolder</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">view</span> <span class="p">=</span> <span class="nc">ItemOrderBinding</span><span class="p">.</span><span class="nf">inflate</span><span class="p">(</span><span class="nc">LayoutInflater</span><span class="p">.</span><span class="nf">from</span><span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="n">context</span><span class="p">),</span> <span class="n">parent</span><span class="p">,</span> <span class="k">false</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nc">OrderViewHolder</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onBindViewHolder</span><span class="p">(</span><span class="n">holder</span><span class="p">:</span> <span class="nc">OrderViewHolder</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nc">Int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">item</span> <span class="p">=</span> <span class="n">items</span><span class="p">[</span><span class="n">position</span><span class="p">]</span>
+        <span class="n">holder</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">getItemCount</span><span class="p">()</span> <span class="p">=</span> <span class="n">items</span><span class="p">.</span><span class="n">size</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="개선된-방식">개선된 방식</h3>
+
+<ul>
+  <li>바인딩 될 때마다 <code class="language-plaintext highlighter-rouge">setOnClickListener</code> 를 동작시키지 않고 <code class="language-plaintext highlighter-rouge">ViewHolder</code> 가 만들어 질 때에 <code class="language-plaintext highlighter-rouge">setOnClickListener</code> 를 부착한다</li>
+  <li>아이템 위치는 어떻게 얻어올까? -&gt; <strong><code class="language-plaintext highlighter-rouge">adapterPosition</code> 을 통해 가능하다</strong>
+</li>
+  <li>아이템이 클릭되면 <code class="language-plaintext highlighter-rouge">onBindViewHolder</code> 에서는 <code class="language-plaintext highlighter-rouge">ViewHolder</code> 의 고차함수로 클릭된 위치를 받아 이벤트 처리</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">MainActivity</code> 의 코드는 변경이 없다 -&gt; Adapter 의 고차함수로 이벤트를 넘겨주는 방식은 동일하다</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/193444288-e11bed23-47c1-4e3d-99ca-fbb91f5ba730.png" alt="image"></p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">OrderAdapter</span><span class="p">(</span><span class="kd">val</span> <span class="py">orderMenu</span><span class="p">:</span> <span class="p">(</span><span class="nc">Order</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nc">Unit</span><span class="p">)</span> <span class="p">:</span>
+    <span class="nc">RecyclerView</span><span class="p">.</span><span class="nc">Adapter</span><span class="p">&lt;</span><span class="nc">OrderAdapter</span><span class="p">.</span><span class="nc">OrderViewHolder</span><span class="p">&gt;()</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="py">items</span><span class="p">:</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">Order</span><span class="p">&gt;</span> <span class="p">=</span> <span class="nf">mutableListOf</span><span class="p">()</span>
+        <span class="k">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">field</span> <span class="p">=</span> <span class="n">value</span>
+            <span class="nf">notifyDataSetChanged</span><span class="p">()</span>
+        <span class="p">}</span>
+
+    <span class="k">inner</span> <span class="kd">class</span> <span class="nc">OrderViewHolder</span><span class="p">(</span>
+        <span class="k">private</span> <span class="kd">val</span> <span class="py">view</span><span class="p">:</span> <span class="nc">ItemOrderBinding</span><span class="p">,</span>
+        <span class="n">onItemClicked</span><span class="p">:</span> <span class="p">(</span><span class="nc">Int</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nc">Unit</span> <span class="c1">// 클릭된 위치를 넘기기 위한 고차함수</span>
+    <span class="p">)</span> <span class="p">:</span> <span class="nc">RecyclerView</span><span class="p">.</span><span class="nc">ViewHolder</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="n">root</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="nf">init</span> <span class="p">{</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">btnOrder</span><span class="p">.</span><span class="nf">setOnClickListener</span> <span class="p">{</span>
+                <span class="nf">onItemClicked</span><span class="p">(</span><span class="n">adapterPosition</span><span class="p">)</span> <span class="c1">// 클릭된 위치 넘겨주기</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">fun</span> <span class="nf">bind</span><span class="p">(</span><span class="n">order</span><span class="p">:</span> <span class="nc">Order</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 뷰에 바인딩 처리 로직만 가짐</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreateViewHolder</span><span class="p">(</span><span class="n">parent</span><span class="p">:</span> <span class="nc">ViewGroup</span><span class="p">,</span> <span class="n">viewType</span><span class="p">:</span> <span class="nc">Int</span><span class="p">):</span> <span class="nc">OrderViewHolder</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">view</span> <span class="p">=</span> <span class="nc">ItemOrderBinding</span><span class="p">.</span><span class="nf">inflate</span><span class="p">(</span><span class="nc">LayoutInflater</span><span class="p">.</span><span class="nf">from</span><span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="n">context</span><span class="p">),</span> <span class="n">parent</span><span class="p">,</span> <span class="k">false</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nc">OrderViewHolder</span><span class="p">(</span><span class="n">view</span><span class="p">)</span> <span class="p">{</span> <span class="n">index</span> <span class="p">-&gt;</span> <span class="c1">// 클릭된 아이템 위치</span>
+            <span class="kd">val</span> <span class="py">order</span> <span class="p">=</span> <span class="n">items</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="kd">val</span> <span class="py">newOrder</span> <span class="p">=</span> <span class="nc">Order</span><span class="p">(</span> <span class="cm">/* ... */</span> <span class="p">)</span> <span class="c1">// 현재 주문 상태</span>
+            <span class="nf">orderMenu</span><span class="p">(</span><span class="n">newOrder</span><span class="p">)</span> <span class="c1">// 고차함수 사용한 콜백</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="개선된-orderadapterkt-전체-코드">개선된 OrderAdapter.kt (전체 코드)</h4>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">OrderAdapter</span><span class="p">(</span><span class="kd">val</span> <span class="py">orderMenu</span><span class="p">:</span> <span class="p">(</span><span class="nc">Order</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nc">Unit</span><span class="p">)</span> <span class="p">:</span>
+    <span class="nc">RecyclerView</span><span class="p">.</span><span class="nc">Adapter</span><span class="p">&lt;</span><span class="nc">OrderAdapter</span><span class="p">.</span><span class="nc">OrderViewHolder</span><span class="p">&gt;()</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="py">items</span><span class="p">:</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">Order</span><span class="p">&gt;</span> <span class="p">=</span> <span class="nf">mutableListOf</span><span class="p">()</span>
+        <span class="k">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">field</span> <span class="p">=</span> <span class="n">value</span>
+            <span class="nf">notifyDataSetChanged</span><span class="p">()</span>
+        <span class="p">}</span>
+
+    <span class="k">inner</span> <span class="kd">class</span> <span class="nc">OrderViewHolder</span><span class="p">(</span>
+        <span class="k">private</span> <span class="kd">val</span> <span class="py">view</span><span class="p">:</span> <span class="nc">ItemOrderBinding</span><span class="p">,</span>
+        <span class="n">onItemClicked</span><span class="p">:</span> <span class="p">(</span><span class="nc">Int</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nc">Unit</span>
+    <span class="p">)</span> <span class="p">:</span> <span class="nc">RecyclerView</span><span class="p">.</span><span class="nc">ViewHolder</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="n">root</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="nf">init</span> <span class="p">{</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">btnOrder</span><span class="p">.</span><span class="nf">setOnClickListener</span> <span class="p">{</span>
+                <span class="nf">onItemClicked</span><span class="p">(</span><span class="n">adapterPosition</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">fun</span> <span class="nf">bind</span><span class="p">(</span><span class="n">order</span><span class="p">:</span> <span class="nc">Order</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">tvTableNumber</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">"${order.tableNumber} 번 테이블"</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">cbGimbob</span><span class="p">.</span><span class="n">isChecked</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">gimbob</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">cbRamen</span><span class="p">.</span><span class="n">isChecked</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">ramen</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">cbDduckbokki</span><span class="p">.</span><span class="n">isChecked</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">dduckbokki</span>
+            <span class="n">view</span><span class="p">.</span><span class="n">cbCutlet</span><span class="p">.</span><span class="n">isChecked</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">cutlet</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreateViewHolder</span><span class="p">(</span><span class="n">parent</span><span class="p">:</span> <span class="nc">ViewGroup</span><span class="p">,</span> <span class="n">viewType</span><span class="p">:</span> <span class="nc">Int</span><span class="p">):</span> <span class="nc">OrderViewHolder</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">view</span> <span class="p">=</span> <span class="nc">ItemOrderBinding</span><span class="p">.</span><span class="nf">inflate</span><span class="p">(</span><span class="nc">LayoutInflater</span><span class="p">.</span><span class="nf">from</span><span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="n">context</span><span class="p">),</span> <span class="n">parent</span><span class="p">,</span> <span class="k">false</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nc">OrderViewHolder</span><span class="p">(</span><span class="n">view</span><span class="p">)</span> <span class="p">{</span> <span class="n">index</span> <span class="p">-&gt;</span>
+            <span class="kd">val</span> <span class="py">order</span> <span class="p">=</span> <span class="n">items</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="kd">val</span> <span class="py">newOrder</span> <span class="p">=</span> <span class="nc">Order</span><span class="p">(</span>
+                <span class="n">order</span><span class="p">.</span><span class="n">tableNumber</span><span class="p">,</span>
+                <span class="n">view</span><span class="p">.</span><span class="n">cbGimbob</span><span class="p">.</span><span class="n">isChecked</span><span class="p">,</span>
+                <span class="n">view</span><span class="p">.</span><span class="n">cbRamen</span><span class="p">.</span><span class="n">isChecked</span><span class="p">,</span>
+                <span class="n">view</span><span class="p">.</span><span class="n">cbDduckbokki</span><span class="p">.</span><span class="n">isChecked</span><span class="p">,</span>
+                <span class="n">view</span><span class="p">.</span><span class="n">cbCutlet</span><span class="p">.</span><span class="n">isChecked</span>
+            <span class="p">)</span>
+            <span class="nf">orderMenu</span><span class="p">(</span><span class="n">newOrder</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onBindViewHolder</span><span class="p">(</span><span class="n">holder</span><span class="p">:</span> <span class="nc">OrderViewHolder</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nc">Int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">item</span> <span class="p">=</span> <span class="n">items</span><span class="p">[</span><span class="n">position</span><span class="p">]</span>
+        <span class="n">holder</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">getItemCount</span><span class="p">()</span> <span class="p">=</span> <span class="n">items</span><span class="p">.</span><span class="n">size</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="setonclicklistener-호출-횟수-비교">setOnClickListener 호출 횟수 비교</h2>
+
+<h3 id="bind-함수-내부에서-호출">
+<strong>bind 함수</strong> 내부에서 호출</h3>
+
+<iframe name="normal" width="100%" height="500px" src="https://user-images.githubusercontent.com/44221447/193464209-7a141f3f-e77a-46e5-9c86-1c2a22f5793e.mp4" allowfullscreen=""></iframe>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/193464318-cb56337c-6fa4-4eff-9906-f7b62ad1ff72.png" alt="image"></p>
+
+<blockquote>
+  <p>총 100 회 호출</p>
+</blockquote>
+
+<h3 id="viewholder---init-블록-내부에서-호출">
+<strong>ViewHolder - init 블록</strong> 내부에서 호출</h3>
+
+<iframe name="Better" width="100%" height="500px" src="https://user-images.githubusercontent.com/44221447/193464137-c87cf080-3c35-4d44-b35f-e9592b472c0d.mp4" allowfullscreen=""></iframe>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/193464357-f566152f-51ea-4fe6-bd1b-d9fa262ff242.png" alt="image"></p>
+
+<blockquote>
+  <p>총 10 회 호출</p>
+</blockquote>
+
+<h2 id="결론">결론</h2>
+
+<hr>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">onBindViewHolder()</code> 에서 호출한 <code class="language-plaintext highlighter-rouge">bind()</code> 내부에서 <code class="language-plaintext highlighter-rouge">setOnClickListener</code> 가 존재한다면 뷰홀더가 재사용 될 때마다 트리거 된다</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">ViewHolder</code> 가 생성될 때 한 번만 <code class="language-plaintext highlighter-rouge">setOnClickListener</code> 를 달면 위의 문제가 해결된다</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">ViewHolder</code>에서 현재 몇 번째 아이템이 선택되고 있는지 알고싶다면 <code class="language-plaintext highlighter-rouge">adapterPosition</code> 을 사용하면 된다</li>
+</ul>
+
+<hr>
+
+<h2 id="전체-코드-저장소">전체 코드 (저장소)</h2>
+
+<p><a href="https://github.com/mangbaam/MySampleApps/tree/master/recyclerviewclickbetter">https://github.com/mangbaam/MySampleApps/tree/master/recyclerviewclickbetter</a></p>
+
+<h2 id="참고한-글">참고한 글</h2>
+
+<p><a href="https://hamurcuabi.medium.com/recyclerview-item-click-in-a-better-way-c69d9c074ddf">https://hamurcuabi.medium.com/recyclerview-item-click-in-a-better-way-c69d9c074ddf</a></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/kotlin/2022/09/24/kotlin-destructuring.html" title="Kotlin Array, List, Data Class destructuring and ComponentN max count">Kotlin Array, List, Data Class destructuring...</a><a class="next" href="/jekyll-theme-yat/android/2023/02/11/android-throttle-click.html" title="Android throttle click with Flow and without Flow">Android throttle click with Flow and...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/06/clean-code-9.html" title="Android throttle click with Flow and without Flow">Clean Code_9장. 단위 테스트</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/08/17/flow-stateflow-sharedflow.html" title="Android throttle click with Flow and without Flow">StateFlow 와 sharedFlow</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/tip/2022/07/11/tip-auto-hot-key.html" title="Android throttle click with Flow and without Flow">AutoHotKey를 사용해 완전 편하게 개발자 키매핑 하기</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/android/2023/08/15/taegeukgi.html" title="Android throttle click with Flow and without Flow">안드로이드 태극기 커스텀 뷰</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/android/2022/10/02/android-recyclerview-click.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/android/2022/10/02/android-recyclerview-click.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

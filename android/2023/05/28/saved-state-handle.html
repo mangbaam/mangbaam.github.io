@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>SavedStateHandle과 커스텀 SaveableStateFlow | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="SavedStateHandle과 커스텀 SaveableStateFlow">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="안드로이드 개발자가 되기 위한 기록들">
+<meta property="og:description" content="안드로이드 개발자가 되기 위한 기록들">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/android/2023/05/28/saved-state-handle.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/android/2023/05/28/saved-state-handle.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-05-28T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="SavedStateHandle과 커스텀 SaveableStateFlow">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2023-05-28T00:00:00+00:00","datePublished":"2023-05-28T00:00:00+00:00","description":"안드로이드 개발자가 되기 위한 기록들","headline":"SavedStateHandle과 커스텀 SaveableStateFlow","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/android/2023/05/28/saved-state-handle.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/android/2023/05/28/saved-state-handle.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">SavedStateHandle과 커스텀 SaveableStateFlow</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2023-05-28T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> May 28, 2023
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 19 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#android">#android</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#custom">#custom</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#state">#state</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#configuration%20change">#configuration change</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#viewmodel">#viewmodel</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#savedinstancestate">#savedinstancestate</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#bundle">#bundle</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#flow">#flow</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#stateflow">#stateflow</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><img src="https://github.com/mangbaam/MySampleApps/assets/44221447/4a984a77-90a5-4caa-bf40-191bce080e17" alt="image"></p>
+
+<p><code class="language-plaintext highlighter-rouge">ViewModel</code>은 화면 회전 같은 Configuration change 상황에서 사용할 수 있지만, 시스템에 의해 프로세스가 종료되는 상황을 대응할 때는 <code class="language-plaintext highlighter-rouge">SavedStateHandle</code>을 사용할 수 있다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">SavedStateHandle</code>은 <code class="language-plaintext highlighter-rouge">ViewModel</code> 객체에서 생성자로 받을 수 있으며, 키-값 맵 형태로 상태를 저장하거나 저장된 상태를 가져올 수 있다.
+<code class="language-plaintext highlighter-rouge">SavedStateHandle</code>에 저장된 상태들은 시스템에 의해 프로세스가 종료된 후에도 유지되지만 사용자에 의한 앱 강제 종료, 최근 메뉴에서 종료, 디바이스 재부팅 등의 상황에서는 유지할 수 없다. (Task Stack 에서 제거되면 함께 사라진다)</p>
+
+<h2 id="어떤-값을-저장해야-할까">어떤 값을 저장해야 할까?</h2>
+
+<p>일반적으로 텍스트 필드의 입력 값, 스크롤 위치, 탐색 중이던 항목의 ID 등의 상태를 저장할 수 있다.
+저장되는 상태들은 단순하고 가벼운 형태여야 하며, 저장할 값이 복잡하거나 큰 경우는 DB와 같은 곳에 저장하는 것이 좋다.</p>
+
+<h3 id="저장할-수-있는--타입">저장할 수 있는  타입</h3>
+
+<p><code class="language-plaintext highlighter-rouge">SavedStateHandle</code>에 저장되는 데이터는 액티비티나 프래그먼트의 <code class="language-plaintext highlighter-rouge">SavedInstanceState</code>처럼 <code class="language-plaintext highlighter-rouge">Bundle</code>로 저장되기 때문에 <code class="language-plaintext highlighter-rouge">Bundle</code>에서 지원하는 값으로 저장할 수 있다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>타입/클래스</th>
+      <th>배열</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>double</td>
+      <td>double[]</td>
+    </tr>
+    <tr>
+      <td>int</td>
+      <td>int[]</td>
+    </tr>
+    <tr>
+      <td>long</td>
+      <td>long[]</td>
+    </tr>
+    <tr>
+      <td>String</td>
+      <td>String[]</td>
+    </tr>
+    <tr>
+      <td>byte</td>
+      <td>byte[]</td>
+    </tr>
+    <tr>
+      <td>char</td>
+      <td>char[]</td>
+    </tr>
+    <tr>
+      <td>CharSequence</td>
+      <td>CharSequence[]</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td>float[]</td>
+    </tr>
+    <tr>
+      <td>Parcelable</td>
+      <td>Parcelable[]</td>
+    </tr>
+    <tr>
+      <td>Serializable</td>
+      <td>Serializable[]</td>
+    </tr>
+    <tr>
+      <td>short</td>
+      <td>short[]</td>
+    </tr>
+    <tr>
+      <td>SparseArray</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Binder</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Bundle</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>ArrayList</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Size (API 21+)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SizeF (API 21+)</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="사용-방법">사용 방법</h2>
+
+<h3 id="뷰모델의-생성자에-savedstatehandle-제공">뷰모델의 생성자에 SavedStateHandle 제공</h3>
+
+<p><strong>Activity 1.1.0</strong>, <strong>Fragment 1.2.0</strong> 버전부터 <code class="language-plaintext highlighter-rouge">ViewModel</code>의 생성자에 <code class="language-plaintext highlighter-rouge">SavedStateHandle</code>을 사용할 수 있다.</p>
+
+<p>뷰모델에서 다음과 같이 생성자를 선언하고</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">SavedStateViewModel</span><span class="p">(</span>
+	<span class="k">private</span> <span class="kd">val</span> <span class="py">state</span><span class="p">:</span> <span class="nc">SavedStateHandle</span>
+<span class="p">)</span> <span class="p">:</span> <span class="nc">ViewModel</span><span class="p">()</span> <span class="p">{</span>
+	<span class="o">..</span><span class="p">.</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>액티비티나 프래그먼트에서는 ViewModel 팩토리로 SavedStateHandle을 제공할 수 있다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MainFragment</span> <span class="p">:</span> <span class="nc">Fragment</span><span class="p">()</span> <span class="p">{</span> 
+	<span class="kd">val</span> <span class="py">vm</span><span class="p">:</span> <span class="nc">SavedStateViewModel</span> <span class="k">by</span> <span class="nf">viewModels</span><span class="p">()</span> 
+	<span class="o">..</span><span class="p">.</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">by viewModels()</code>가 아닌 커스텀으로 제공할 때는 <code class="language-plaintext highlighter-rouge">AbstractSavedStateViewModelFactory</code>를 확장하여 사용할 수도 있다.</p>
+
+<h3 id="savedstatehandle-사용법">SavedStateHandle 사용법</h3>
+
+<p><code class="language-plaintext highlighter-rouge">SavedStateHandle</code> 에서 사용할 수 있는 메서드</p>
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">get(key: String)</code>: key 로 저장된 값을 반환</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">set(key: String, value: T?)</code>: key - value 를 저장</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">keys()</code>: SavedStateHandle에 포함된 모든 키를 반환</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">containts(key: String)</code>: key에 대한 값이 존재하는지 확인</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">remove(key: String)</code>: key에 대한 값을 제거</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">getLiveData(key: String)</code>: key에 대한 값을 LiveData로 반환 <strong>(밑에서 설명)</strong>
+</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">getStateFlow(key: String, initialValue: T)</code>: key에 대한 값을 StateFlow로 반환 <strong>(밑에서 설명)</strong>
+</li>
+</ul>
+
+<h3 id="livedata">LiveData</h3>
+
+<p><code class="language-plaintext highlighter-rouge">getLiveData()</code>를 사용하면 <code class="language-plaintext highlighter-rouge">SavedStateHandle</code>에서 <code class="language-plaintext highlighter-rouge">LiveData</code>에 래핑된 값을 받을 수 있다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">SavedStateViewModel</span><span class="p">(</span>
+	<span class="k">private</span> <span class="kd">val</span> <span class="py">savedStateHandle</span><span class="p">:</span> <span class="nc">SavedStateHandle</span>
+<span class="p">)</span> <span class="p">:</span> <span class="nc">ViewModel</span><span class="p">()</span> <span class="p">{</span> 
+	<span class="kd">val</span> <span class="py">filteredData</span><span class="p">:</span> <span class="nc">LiveData</span><span class="p">&lt;</span><span class="nc">List</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;&gt;</span> <span class="p">=</span> 
+	<span class="n">savedStateHandle</span><span class="p">.</span><span class="n">getLiveData</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;(</span><span class="s">"query"</span><span class="p">).</span><span class="nf">switchMap</span> <span class="p">{</span> <span class="n">query</span> <span class="p">-&gt;</span> 
+		<span class="n">repository</span><span class="p">.</span><span class="nf">getFilteredData</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> 
+	<span class="p">}</span> 
+	
+	<span class="k">fun</span> <span class="nf">setQuery</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nc">String</span><span class="p">)</span> <span class="p">{</span> <span class="n">savedStateHandle</span><span class="p">[</span><span class="s">"query"</span><span class="p">]</span> <span class="p">=</span> <span class="n">query</span> <span class="p">}</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="stateflow">StateFlow</h3>
+
+<blockquote>
+  <p>lifecycle 2.5.0부터 지원</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">getStateFlow()</code>를 사용하여 <code class="language-plaintext highlighter-rouge">SavedStateHandle</code>에서 <code class="language-plaintext highlighter-rouge">StateFlow</code>에 래핑된 값을 받을 수 있다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">SavedStateViewModel</span><span class="p">(</span>
+	<span class="k">private</span> <span class="kd">val</span> <span class="py">savedStateHandle</span><span class="p">:</span> <span class="nc">SavedStateHandle</span>
+<span class="p">)</span> <span class="p">:</span> <span class="nc">ViewModel</span><span class="p">()</span> <span class="p">{</span> 
+	<span class="kd">val</span> <span class="py">filteredData</span><span class="p">:</span> <span class="nc">StateFlow</span><span class="p">&lt;</span><span class="nc">List</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;&gt;</span> <span class="p">=</span> 
+	<span class="n">savedStateHandle</span><span class="p">.</span><span class="n">getStateFlow</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;(</span><span class="s">"query"</span><span class="p">)</span> <span class="p">.</span><span class="nf">flatMapLatest</span> <span class="p">{</span> <span class="n">query</span> <span class="p">-&gt;</span> 
+		<span class="n">repository</span><span class="p">.</span><span class="nf">getFilteredData</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> 
+	<span class="p">}</span> 
+	<span class="k">fun</span> <span class="nf">setQuery</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nc">String</span><span class="p">)</span> <span class="p">{</span> <span class="n">savedStateHandle</span><span class="p">[</span><span class="s">"query"</span><span class="p">]</span> <span class="p">=</span> <span class="n">query</span> <span class="p">}</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="saveablemutablestateflow">SaveableMutableStateFlow</h2>
+
+<blockquote>
+  <p>이 타입은 Android 에서 제공되는 것이 아닌 커스텀 한 타입입니다</p>
+</blockquote>
+
+<p>ViewModel에서 StateFlow 에 상태를 저장해도 메모리가 부족하면 시스템에 의해 프로세스가 정리되고, ViewModel 객체 역시 메모리에 유지되던 것이기 때문에 ViewModel 객체가 정리되면서 상태 역시 잃어버릴 수 있다. 이를 방지하기 위해 SavedStateHandle 와 StateFlow 의 장점을 모두 활용하는 <code class="language-plaintext highlighter-rouge">SaveableMutableStateFlow</code> 타입을 만들어 보았다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">SaveableMutableStateFlow</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;(</span>
+    <span class="k">private</span> <span class="kd">val</span> <span class="py">savedStateHandle</span><span class="p">:</span> <span class="nc">SavedStateHandle</span><span class="p">,</span>
+    <span class="k">private</span> <span class="kd">val</span> <span class="py">key</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="n">initialValue</span><span class="p">:</span> <span class="nc">T</span><span class="p">,</span>
+<span class="p">)</span> <span class="p">:</span> <span class="nc">MutableStateFlow</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>MutableStateFlow 를 상속해서 만들며, <code class="language-plaintext highlighter-rouge">SavedStateHandle</code>과 키, 초기 값을 받는다.</p>
+
+<p>왠만하면 상속을 피하는 것이 좋지만 MutableStateFlow 를 상속한 이유는 SavedStateHandle 로 저장할 수 있는 타입이 한정적이기 때문에 SaveableMutableStateFlow 를 사용할 수 없는 경우 MutableStateFlow 로 사용할 수 있도록 동일한 타입으로 만들어주기 위해 상속을 사용했다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="kd">val</span> <span class="py">_state</span> <span class="p">=</span> <span class="k">try</span> <span class="p">{</span>
+    <span class="nc">MutableStateFlow</span><span class="p">(</span><span class="n">savedStateHandle</span><span class="p">.</span><span class="nf">getStateFlow</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">initialValue</span><span class="p">).</span><span class="n">value</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="nc">IllegalArgumentException</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nc">MutableStateFlow</span><span class="p">(</span><span class="n">initialValue</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>구현의 간소화를 위해 내부적으로 MutableStateFlow 를 사용했다. 이때 SavedStateHandle 에서 <code class="language-plaintext highlighter-rouge">getStateFlow</code>를 통해 StateFlow 를 가져오고, 만약 지원되지 않는 타입의 경우 직접 MutableStateFlow 객체를 생성해서 할당하게 된다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="kd">var</span> <span class="py">value</span><span class="p">:</span> <span class="nc">T</span>
+<span class="k">get</span><span class="p">()</span> <span class="p">=</span> <span class="n">_state</span><span class="p">.</span><span class="n">value</span>
+<span class="k">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="n">savedStateHandle</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="p">=</span> <span class="n">value</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="nc">IllegalArgumentException</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="n">_state</span><span class="p">.</span><span class="n">value</span> <span class="p">=</span> <span class="n">value</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>MutableStateFlow 를 상속하면 구현해야 하는 추상 프로퍼티와 메서드가 여럿 있는데 그 중 value 도 있다.</p>
+
+<p>value 를 설정할 때는 savedStateHandle 에도 저장하는 것이 SaveableMutableStateFlow 의 핵심 동작이다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;</span> <span class="nc">SavedStateHandle</span><span class="p">.</span><span class="nf">getSaveableMutableStateFlow</span><span class="p">(</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="n">initialValue</span><span class="p">:</span> <span class="nc">T</span><span class="p">,</span>
+<span class="p">):</span> <span class="nc">SaveableMutableStateFlow</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;</span> <span class="p">=</span>
+    <span class="nc">SaveableMutableStateFlow</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">initialValue</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>SavedStateHandle 에서 바로 SaveableMutableStateFlow 를 가져오기 편하도록 확장함수로 만들었다.</p>
+
+<blockquote>
+  <p>전체 구현은 <a href="https://github.com/mangbaam/MySampleApps/blob/master/SaveableMutableStateFlow/app/src/main/java/com/example/saveablemutablestateflow/SaveableStateFlow.kt">Github</a>에서 볼 수 있습니다.</p>
+</blockquote>
+
+<p>ViewModel 에서는 다음과 같이 사용할 수 있다</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MainViewModel</span><span class="p">(</span>
+    <span class="n">savedStateHandle</span><span class="p">:</span> <span class="nc">SavedStateHandle</span><span class="p">,</span>
+<span class="p">)</span> <span class="p">:</span> <span class="nc">ViewModel</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">private</span> <span class="kd">val</span> <span class="py">_textSaveableStateFlow</span> <span class="p">=</span>
+        <span class="n">savedStateHandle</span><span class="p">.</span><span class="nf">getSaveableMutableStateFlow</span><span class="p">(</span><span class="s">"userInput"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="py">textSaveableStateFlow</span> <span class="p">=</span> <span class="n">_textSaveableStateFlow</span><span class="p">.</span><span class="nf">asStateFlow</span><span class="p">()</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="샘플-앱">샘플 앱</h2>
+
+<h3 id="화면-회전">화면 회전</h3>
+
+<blockquote>
+  <p>화면을 회전하여 Configuration change 상황을 발생시켰다.</p>
+</blockquote>
+
+<p>회전 전</p>
+
+<p><img width="33%" alt="image" src="https://github.com/mangbaam/MySampleApps/assets/44221447/61c54939-5bdb-44ff-a5da-e4e605d5cb84"></p>
+
+<p>회전 후</p>
+
+<p><img width="33%" alt="image" src="https://github.com/mangbaam/MySampleApps/assets/44221447/bf0abf5c-ab6d-443f-abbb-b7ea11321e1a"></p>
+
+<p>버튼 밑의 숫자들은 각각 액티비티의 전역 변수, MutableStateFlow, SaveableMutableStateFlow 로 저장되고 있다.</p>
+
+<p>예상대로 액티비티의 전역 변수로 관리되는 첫 번째 숫자는 <strong>화면 회전 후 0으로 초기화</strong> 되었고, 나머지 두 개는 상태를 유지했다.</p>
+
+<p>EditText 에 표시되는 글자들도 각각 액티비티의 전역 변수, MutableStateFlow, SaveableMutableStateFlow 로 저장되었는데, TextView 와는 다르게 <strong>모두 상태를 유지했다.</strong></p>
+
+<p>그 이유는 다음과 같다.</p>
+
+<p><img width="901" alt="image" src="https://github.com/mangbaam/MySampleApps/assets/44221447/b2d51c2a-ec46-4fba-9d3a-1f913d017638"></p>
+
+<p>위 사진은 <a href="https://developer.android.com/guide/components/activities/activity-lifecycle?hl=ko#instance-state">공식 문서</a>에서 발췌한 내용이다. 밑에 있는 <strong>참고</strong>와 함께 보면 <code class="language-plaintext highlighter-rouge">android:id</code> 속성이 부여된 경우 액티비티에 있는 View 객체 정보를 <code class="language-plaintext highlighter-rouge">Bundle</code>에 저장했다가 복원한다고 설명되어 있다. 그래서 EditText 내부에서 상태를 별도로 관리하고 있기 때문에 안드로이드 시스템이 이를 저장했다가 복원할 수 있었던 것이다.</p>
+
+<h3 id="시스템에-의한-프로세스-종료">시스템에 의한 프로세스 종료</h3>
+
+<blockquote>
+  <p>터미널에서 ` adb shell am kill “com.example.saveablemutablestateflow”` 명령으로 프로세스를 kill 할 수 있다.</p>
+</blockquote>
+
+<p>프로세스 kill 이전</p>
+
+<p><img width="33%" alt="image" src="https://github.com/mangbaam/MySampleApps/assets/44221447/0d466088-b3ed-44fb-bf13-5074ffbff6d9"></p>
+
+<p>프로세스 kill 이후</p>
+
+<p><img width="33%" alt="image" src="https://github.com/mangbaam/MySampleApps/assets/44221447/ba6353c0-f7a0-4b15-8c97-44a538a694c3"></p>
+
+<p>EditText 에 표시되는 값은 앞서 설명했듯이 <code class="language-plaintext highlighter-rouge">Bundle</code>에 저장되어 복원되기 때문에 이번에도 역시 살아남았다.</p>
+
+<p>TextView 에 표시되는 숫자의 경우는 <code class="language-plaintext highlighter-rouge">SaveableMutableStateFlow</code> 로 저장된 상태를 제외하고는 <strong>모두 0으로 초기화 되었다.</strong></p>
+
+<p>추가적으로 스크롤 상태도 유지하는 것을 확인할 수 있다.</p>
+
+<p>샘플 프로젝트는 <a href="https://github.com/mangbaam/MySampleApps/tree/master/SaveableMutableStateFlow">Github</a>에서 확인할 수 있다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/compose/2023/02/17/android-compose-coin-image-ratio.html" title="Android Compose - Coil 로 불러온 이미지의 비율 알아내기">Android Compose - Coil 로 불러온...</a><a class="next" href="/jekyll-theme-yat/kotlin/2023/06/30/kotlin-sublist-slice.html" title="Kotlin subList vs slice">Kotlin subList vs slice</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/06/clean-code-9.html" title="Kotlin subList vs slice">Clean Code_9장. 단위 테스트</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/09/clean-code-10.html" title="Kotlin subList vs slice">Clean Code_10장. 클래스</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/android/2022/05/18/fcm-android-1.html" title="Kotlin subList vs slice">안드로이드에서 FCM 사용해보기-2</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/07/18/kotlin-sortwith.html" title="Kotlin subList vs slice">How to sort List&lt;Pair&lt;Int, Int&gt;&gt; in kotlin</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/android/2023/05/28/saved-state-handle.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/android/2023/05/28/saved-state-handle.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

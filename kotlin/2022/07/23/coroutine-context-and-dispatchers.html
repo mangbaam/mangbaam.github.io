@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Coroutine Context And Dispatchers | 맹뱀 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="Coroutine Context And Dispatchers">
+<meta name="author" content="mangbaam">
+<meta property="og:locale" content="ko">
+<meta name="description" content="⭐">
+<meta property="og:description" content="⭐">
+<link rel="canonical" href="https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/07/23/coroutine-context-and-dispatchers.html">
+<meta property="og:url" content="https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/07/23/coroutine-context-and-dispatchers.html">
+<meta property="og:site_name" content="맹뱀 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-07-23T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Coroutine Context And Dispatchers">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"mangbaam"},"dateModified":"2022-07-23T00:00:00+00:00","datePublished":"2022-07-23T00:00:00+00:00","description":"⭐","headline":"Coroutine Context And Dispatchers","mainEntityOfPage":{"@type":"WebPage","@id":"https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/07/23/coroutine-context-and-dispatchers.html"},"url":"https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/07/23/coroutine-context-and-dispatchers.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://mangbaam.github.io//jekyll-theme-yat/feed.xml" title="맹뱀 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L746HF6Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L746HF6Y0');
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="맹뱀 블로그" src="" onerror="this.style.display='none'">
+  맹뱀 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ko',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Coroutine Context And Dispatchers</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-07-23T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Jul 23, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 22 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#coroutine">#coroutine</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#dispatcher">#dispatcher</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#context">#context</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2>⭐</h2>
+
+<p>코루틴은 항상 CoroutineContext 내에서 수행된다. 그리고 코루틴 컨텍스트는 다양한 요소(Elements)들로 구성된다.</p>
+
+<h2 id="디스패처와-스레드">디스패처와 스레드</h2>
+
+<hr>
+
+<p>코루틴 컨텍스트는 연관된 코루틴들이 실행될 때 사용할 스레드나 스레드 풀을 결정하는 코루틴 디스패처를 포함한다. 특정 스레드에서 동작하게 하거나, 특정 스레드 풀로 전달하거나, 스레드 제한 없이 실행되도록 할 수도 있다.</p>
+
+<p>모든 코루틴 빌더를 사용할 때 파라미터로 CoroutineContext를 넘겨줄 수 있고, 이를 이용해 새로운 코루틴들을 위한 디스패쳐나 그 외의 컨텍스트 요소를 지정할 수 있다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">launch1</span><span class="p">():</span> <span class="nc">Unit</span> <span class="p">=</span> <span class="nf">runBlocking</span> <span class="p">{</span>
+    <span class="nf">launch</span> <span class="p">{</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"main runBlocking - thread ${Thread.currentThread().name}"</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">launch</span><span class="p">(</span><span class="nc">Dispatchers</span><span class="p">.</span><span class="nc">Unconfined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"Unconfined - thread ${Thread.currentThread().name}"</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">launch</span><span class="p">(</span><span class="nc">Dispatchers</span><span class="p">.</span><span class="nc">Default</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"Default - thread ${Thread.currentThread().name}"</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">launch</span><span class="p">(</span><span class="nf">newSingleThreadContext</span><span class="p">(</span><span class="s">"NewThread"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"newSingleThreadContext - thread ${Thread.currentThread().name}"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180615270-9c196944-84e3-4fd1-b9de-0d2647c2c0cf.png" alt="result1"></p>
+
+<p>첫 번째 launch 에서는 파라미터를 지정하지 않았다. 이처럼 파라미터로 디스패처를 지정하지 않은 경우 실행된 코루틴 스코프로부터 상속 받은 컨텍스트를 사용한다. 여기서는 runBlocking의 컨텍스트를 사용한다.</p>
+
+<p>두 번재 launch 에서는 <code class="language-plaintext highlighter-rouge">Unconfined</code>를 넘겨줬다. 이는 아래서 살펴보고자 한다.</p>
+
+<p>세 번재 launch 에서는 <code class="language-plaintext highlighter-rouge">Default</code>를 넘겨줬다. 이는 GlobalScope에서 실행될 경우 사용되며, 공통으로 사용되는 백그라운드 스레드 풀을 사용한다. 즉 <code class="language-plaintext highlighter-rouge">launch(Dispathcers.Defult) { ... }</code> 와 <code class="language-plaintext highlighter-rouge">GlobalScope.launch { ... }</code>는 동일한 디스패처를 사용한다.</p>
+
+<p>네 번째 launch 에서는 <code class="language-plaintext highlighter-rouge">newSingleThreadContext</code>를 넘겨줬다. 이는 항상 새로운 스레드를 생성한다. 이처럼 전용 스레드를 생성하는 작업은 더 이상 사용되지 않을 때는 close() 함수로 해제하거나 Top-level 변수에 저장해 어플리케이션 전반에서 사용되어야 한다.</p>
+
+<h3 id="unconfined-vs-confined-dispatcher">Unconfined vs confined dispatcher</h3>
+
+<p>위 코드에서 두 번째에 <code class="language-plaintext highlighter-rouge">Unconfined</code>를 넘겨줬다. <code class="language-plaintext highlighter-rouge">Dispathcers.Unconfined</code>는 호출 스레드에서 코루틴을 시작하고, 처음으로 중단 지점을 만난 후 다시 재개될 때는 중단 함수를 재개한 스레드에서 수행된다.</p>
+
+<p>Unconfined 디스패처는 코루틴이 CPU 시간을 소모하지 않거나 UI를 업데이트 하지 않는 등의 상황에서 특정 스레드에 국한된 작업이 아닌 경우에 적절하다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">main</span><span class="p">():</span> <span class="nc">Unit</span> <span class="p">=</span> <span class="nf">runBlocking</span> <span class="p">{</span>
+    <span class="nf">launch</span><span class="p">(</span><span class="nc">Dispatchers</span><span class="p">.</span><span class="nc">Unconfined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"Unconfined - thread ${Thread.currentThread().name}"</span><span class="p">)</span>
+        <span class="nf">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"Unconfined- thread ${Thread.currentThread().name}"</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">launch</span> <span class="p">{</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"main runBlocking - thread ${Thread.currentThread().name}"</span><span class="p">)</span>
+        <span class="nf">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"main runBlocking After delay - thread ${Thread.currentThread().name}"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180615558-ee2a07aa-5d0d-4c6e-b17a-26d2d23e2b5d.png" alt="result2"></p>
+
+<p>runBlocking { … } 컨텍스트를 상속한 코루틴은 메인 스레드에서 수행되지만 unconfined 코루틴은 delay 함수가 사용되는 <code class="language-plaintext highlighter-rouge">DefaultExecutor</code> 스레드에서 실행되는 것을 확인할 수 있다.</p>
+
+<blockquote>
+  <p>여기서 Unconfined에 대해 소개하기는 했지만 잘못 사용하는 경우 예상치 못한 동작을 할 수 있기 때문에 특수한 경우를 제외하고는 사용을 지양해야 한다.</p>
+</blockquote>
+
+<h2 id="코루틴-스레드-디버깅">코루틴, 스레드 디버깅</h2>
+
+<hr>
+
+<p>코루틴이 언제 어디서 수행 중이었는지를 파악하기는 쉽지 않다. 일반적으로 로그를 사용해서 확인하게 되는데 위 예제들처럼 스레드 이름만을 사용하면 구분하기 쉽지 않을 수 있다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">kotlinx.coroutines.async</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.runBlocking</span>
+
+<span class="k">fun</span> <span class="nf">log</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="nc">String</span><span class="p">)</span> <span class="p">=</span> <span class="nf">println</span><span class="p">(</span><span class="s">"[${Thread.currentThread().name}] $msg"</span><span class="p">)</span>
+
+<span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">=</span> <span class="nf">runBlocking</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">a</span> <span class="p">=</span> <span class="nf">async</span> <span class="p">{</span>
+        <span class="nf">log</span><span class="p">(</span><span class="s">"async A return 6"</span><span class="p">)</span>
+        <span class="mi">6</span>
+    <span class="p">}</span>
+    <span class="kd">val</span> <span class="py">b</span> <span class="p">=</span> <span class="nf">async</span> <span class="p">{</span>
+        <span class="nf">log</span><span class="p">(</span><span class="s">"async B return 7"</span><span class="p">)</span>
+        <span class="mi">7</span>
+    <span class="p">}</span>
+    <span class="nf">log</span><span class="p">(</span><span class="s">"The answer is ${a.await() * b.await()}"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180616165-ec810c6e-d722-4042-a5ac-c7d084fb6de9.png" alt="debug result1"></p>
+
+<p>현재는 위와 같이 main 이라는 스레드 이름만이 나오게 된다.</p>
+
+<p>다음 방법으로 로그에서 코루틴의 이름까지 출력할 수 있다. (출처 : <a href="https://stackoverflow.com/questions/52049150/dkotlinx-coroutines-debug-not-working-in-intellij-idea-jvm-options">스택오버플로우</a>)</p>
+
+<p><em>한 번 실행 시켜야 설정할 수 있다.</em></p>
+
+<ol>
+  <li>Run - Edit Configurations</li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180616417-e7815811-7c5f-49d6-8635-83df322d033c.png" alt="setting1"></p>
+
+<ol>
+  <li>VM options</li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180616326-839b8264-a6f5-4f5a-83be-98cb660e50c6.png" alt="configurations"></p>
+
+<blockquote>
+  <p>-Dkotlinx.coroutines.debug=on</p>
+</blockquote>
+
+<ol>
+  <li>Result</li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180616471-b1fd8328-f59f-4b15-9e84-d0888e071515.png" alt="debug result 2"></p>
+
+<p>위와 동일한 코드를 실행해보면 main 만 나오는 것이 아니라 코루틴 정보까지 나와서 동일한 코루틴에서 동작하고 있는지 아닌지를 확인할 수 있다.</p>
+
+<p>좀 더 많은 정보는 <a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/new-coroutine-context.html">여기</a>서 확인할 수 있다.</p>
+
+<h2 id="스레드-전환">스레드 전환</h2>
+
+<hr>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">kotlinx.coroutines.newSingleThreadContext</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.runBlocking</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.withContext</span>
+
+<span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">=</span> <span class="nf">runBlocking</span> <span class="p">{</span>
+    <span class="nf">newSingleThreadContext</span><span class="p">(</span><span class="s">"Ctx1"</span><span class="p">).</span><span class="nf">use</span> <span class="p">{</span> <span class="n">ctx1</span> <span class="p">-&gt;</span>
+        <span class="nf">newSingleThreadContext</span><span class="p">(</span><span class="s">"Ctx2"</span><span class="p">).</span><span class="nf">use</span> <span class="p">{</span> <span class="n">ctx2</span> <span class="p">-&gt;</span>
+            <span class="nf">runBlocking</span><span class="p">(</span><span class="n">ctx1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nf">log</span><span class="p">(</span><span class="s">"Started in ctx1"</span><span class="p">)</span>
+                <span class="nf">withContext</span><span class="p">(</span><span class="n">ctx2</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nf">log</span><span class="p">(</span><span class="s">"Working in ctx2"</span><span class="p">)</span>
+                <span class="p">}</span>
+                <span class="nf">log</span><span class="p">(</span><span class="s">"Back to ctx1"</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180616672-f3ff3638-829a-45ad-b77e-3dee68b00e60.png" alt="trans result1"></p>
+
+<p><code class="language-plaintext highlighter-rouge">newSingleThreadContext</code>는 새로운 스레드를 생성한다고 설명했고, 반드시 해제해주어야 한다고 했다. 코틀린의 <code class="language-plaintext highlighter-rouge">use</code> 문을 사용하면 사용 후 자동으로 해제해주기 때문에 이 상황에서 유용하게 사용된다.</p>
+
+<p>코드와 결과를 보면 “Started in ctx1” 부분은 두 번째 생성된 코루틴이라서 <strong>@coroutine#2</strong> 에서 실행되지만 runBlocking의 인자로 들어온 ctx1 컨텍스트에서 실행된다.</p>
+
+<p>하지만 동일한 코루틴에 있는 “Working in ctx2” 부분은 withContext()로 인해서 ctx2 컨텍스트에서 실행된다. 그리고 코루틴을 보면 기존 코루틴(@coroutine#2)을 유지하고 있다.</p>
+
+<h2 id="context의-job-확인">context의 Job 확인</h2>
+
+<hr>
+
+<p>코루틴의 Job은 그 컨텍스트의 일부이다. <code class="language-plaintext highlighter-rouge">coroutineContext[Job]</code>으로 Job을 확인할 수 있다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">kotlinx.coroutines.Job</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.runBlocking</span>
+
+<span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">=</span> <span class="nf">runBlocking</span> <span class="p">{</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"My job is ${coroutineContext[Job]}"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180616989-ebc5220d-41fe-42d8-8965-b965f14081f1.png" alt="job result"></p>
+
+<h2 id="코루틴의-자식">코루틴의 자식</h2>
+
+<hr>
+
+<p>어떤 코루틴(부모 코루틴) 스코프 안에서 다른 코루틴(자식 코루틴)을 생성하고 실행하면 부모 코루틴의 CoroutineScope.coroutinecontext 를 통해 컨텍스트를 상속하고, 새롭게 생성된 자식 코루틴의 Job은 부모 코루틴 Job의 자식으로 생성된다.</p>
+
+<p>만약 부모 코루틴이 취소되면 모든 자식 코루틴 역시 재귀적으로 취소된다.</p>
+
+<p>예외적으로 GlobalScope에서 실행된 코루틴은 어디서 실행되건 독립적으로 동작한다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">kotlinx.coroutines.GlobalScope</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.delay</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.launch</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.runBlocking</span>
+
+<span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">=</span> <span class="nf">runBlocking</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">request</span> <span class="p">=</span> <span class="nf">launch</span> <span class="p">{</span>
+        <span class="nc">GlobalScope</span><span class="p">.</span><span class="nf">launch</span> <span class="p">{</span>
+            <span class="nf">println</span><span class="p">(</span><span class="s">"job1: I run in GlobalScope and execute independently!"</span><span class="p">)</span>
+            <span class="nf">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+            <span class="nf">println</span><span class="p">(</span><span class="s">"job1: I am not affected by cancellation of the request"</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="nf">launch</span> <span class="p">{</span>
+            <span class="nf">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+            <span class="nf">println</span><span class="p">(</span><span class="s">"job2: I am a child of the request coroutine"</span><span class="p">)</span>
+            <span class="nf">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+            <span class="nf">println</span><span class="p">(</span><span class="s">"job2: I will not execute this line if my parent request is cancelled"</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nf">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">request</span><span class="p">.</span><span class="nf">cancel</span><span class="p">()</span>
+    <span class="nf">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="nf">println</span><span class="p">(</span><span class="s">"main: Who has survived request cancellation?"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180617184-47ae14b8-b4f3-4532-b09e-6debe24c41df.png" alt="global result"></p>
+
+<p>request가 취소된 후에도 GlobalScope에서 실행된 코루틴은 살아있는 것을 확인할 수 있다.</p>
+
+<h2 id="부모-코루틴의-의무">부모 코루틴의 의무</h2>
+
+<hr>
+
+<p>부모 코루틴은 모든 자식 코루틴이 실행 완료 될 때까지 기다린다. 이때 <code class="language-plaintext highlighter-rouge">Job.join()</code> 함수를 사용할 필요가 없다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">=</span> <span class="nf">runBlocking</span> <span class="p">{</span>
+
+    <span class="kd">val</span> <span class="py">request</span> <span class="p">=</span> <span class="nf">launch</span> <span class="p">{</span>
+        <span class="nf">repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">{</span> <span class="n">i</span> <span class="p">-&gt;</span> <span class="c1">// launch a few children jobs</span>
+            <span class="nf">launch</span>  <span class="p">{</span>
+                <span class="nf">delay</span><span class="p">((</span><span class="n">i</span> <span class="p">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">*</span> <span class="mi">200L</span><span class="p">)</span> <span class="c1">// variable delay 200ms, 400ms, 600ms</span>
+                <span class="nf">println</span><span class="p">(</span><span class="s">"Coroutine $i is done"</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"request: I'm done and I don't explicitly join my children that are still active"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180617380-1724a5d1-09de-403c-b1c0-c128e47be06b.png" alt="wait result"></p>
+
+<p>request는 3개의 자식 코루틴을 만들고 launch를 하지 않았음에도 모든 자식 코루틴이 실행된 후에 종료되었다.</p>
+
+<h2 id="디버깅을-위해-코루틴-이름-지어주기">디버깅을 위해 코루틴 이름 지어주기</h2>
+
+<hr>
+
+<p>디버깅 할 때 기본적으로 자동 할당된 id를 확인할 수 있는데 어떤 코루틴인지 확실하게 알기 위해서 이름을 지정하면 좋다.</p>
+
+<p>CoroutineName 이라는 컨텍스트 요소를 통해 코루틴 이름을 지어줄 수 있다. 디버깅 모드일 때 CoroutineName이 수행 중인 스레드 이름과 함께 코루틴 이름도 나타난다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">kotlinx.coroutines.CoroutineName</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.async</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.delay</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.runBlocking</span>
+
+<span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">=</span> <span class="nf">runBlocking</span> <span class="p">{</span>
+    <span class="nf">log</span><span class="p">(</span><span class="s">"Started main coroutine"</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="py">v1</span> <span class="p">=</span> <span class="nf">async</span><span class="p">(</span><span class="nc">CoroutineName</span><span class="p">(</span><span class="s">"v1coroutine"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nf">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+        <span class="nf">log</span><span class="p">(</span><span class="s">"Computing v1"</span><span class="p">)</span>
+        <span class="mi">252</span>
+    <span class="p">}</span>
+    <span class="kd">val</span> <span class="py">v2</span> <span class="p">=</span> <span class="nf">async</span><span class="p">(</span><span class="nc">CoroutineName</span><span class="p">(</span><span class="s">"v2coroutine"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nf">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="nf">log</span><span class="p">(</span><span class="s">"Computing v2"</span><span class="p">)</span>
+        <span class="mi">6</span>
+    <span class="p">}</span>
+    <span class="nf">log</span><span class="p">(</span><span class="s">"The answer for v1 / v2 = ${v1.await() / v2.await()}"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180617523-ace76166-c8a1-49e8-b58e-90fe343fb453.png" alt="naming result"></p>
+
+<h2 id="컨텍스트-요소-병합">컨텍스트 요소 병합</h2>
+
+<hr>
+
+<p>코루틴 컨텍스트 요소를 두개 이상 동시에 지정해야 하는 경우 +(plus) 연산자를 통해 병합할 수 있다. 예를 들어 디스패처를 지정하면서 코루틴 이름을 지정할 수 있다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">kotlinx.coroutines.CoroutineName</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.Dispatchers</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.launch</span>
+<span class="k">import</span> <span class="nn">kotlinx.coroutines.runBlocking</span>
+
+<span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">=</span> <span class="n">runBlocking</span><span class="p">&lt;</span><span class="nc">Unit</span><span class="p">&gt;</span> <span class="p">{</span>
+
+    <span class="nf">launch</span><span class="p">(</span><span class="nc">Dispatchers</span><span class="p">.</span><span class="nc">Default</span> <span class="p">+</span> <span class="nc">CoroutineName</span><span class="p">(</span><span class="s">"test"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nf">println</span><span class="p">(</span><span class="s">"I'm working in thread ${Thread.currentThread().name}"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/44221447/180617629-9b6fae1a-4bd4-4694-b8d4-30e1be3581fa.png" alt="combine result"></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/kotlin/2022/07/19/kotlin-contiuous-list.html" title="How to get longest continuous list in kotlin">How to get longest continuous list...</a><a class="next" href="/jekyll-theme-yat/git/2022/07/25/git-merge-rebase.html" title="Git merge와 rebase. 언제 어떻게 사용해야 할까">Git merge와 rebase. 언제 어떻게 사용해야...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/android/2022/05/24/android-tip-suffixtext-always.html" title="Git merge와 rebase. 언제 어떻게 사용해야 할까">Android. How to always display Suffix Text on EditText</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/01/clean-code-5.html" title="Git merge와 rebase. 언제 어떻게 사용해야 할까">Clean Code_5장. 형식 맞추기</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/kotlin/2022/07/30/kotlin-flow-basic-2.html" title="Git merge와 rebase. 언제 어떻게 사용해야 할까">비동기 플로우에 대해서 알아보자 (2)</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/book/2022/03/11/effective-kotlin-3.html" title="Git merge와 rebase. 언제 어떻게 사용해야 할까">Effective Kotlin_아이템3. 최대한 플랫폼 타입을 사용하지 말라</a></li>
+</ul>
+    </div>
+<div class="post-comments">  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/07/23/coroutine-context-and-dispatchers.html';
+      this.page.identifier = 'https://mangbaam.github.io//jekyll-theme-yat/kotlin/2022/07/23/coroutine-context-and-dispatchers.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://https-mangbaam-github-io.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Copyright Mangbaam © 2022-2023 mangbaam</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
