@@ -26,7 +26,7 @@ Yazon2006은 Now in android 가 클린 아키텍처를 따르지 않고 있어�
 
 Now in android(이하 NIA)가 클린 아키텍처와 SOLID 원칙을 위반하는 것 같습니다. 특히 domain 계층이 data 계층에 의존하고 있기 때문에 순수한 비즈니스 로직이 아닙니다.
 이로 인해 프로젝트 구조가  혼란스럽고, 잘못된 방향을 제공할 수도 있습니다.
-domain 계층이 data 계층에 의존하도록 리팩터링하거나 README에 해명과 설명을 첨부해주십시오.
+domain 계층이 data 계층에 의존하도록 리팩터링하거나 README에 해명과 설명을 첨부해주세요.
 
 #### dturner (Maintainer)
 
